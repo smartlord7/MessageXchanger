@@ -67,5 +67,5 @@ PC3 -
 	default gateway - 193.136.212.145
 
 PC4 -
-	eth0 -
-	default gateway - 193.136.212.150
+	eth0 - 193.136.212.150
+	default gateway - 193.136.212.145
