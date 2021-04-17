@@ -1,0 +1,71 @@
+Rede DMZ: 
+
+IP - 10.9.0.0/24
+Gama de IPs válidos - [10.9.0.1, 10.9.0.254]
+Endereço de broadcast - 10.9.0.255
+Máscara - 255.255.255.0
+
+R3 - 
+	f1/0 - 10.9.0.1
+
+Server -
+	eth0 - 10.9.0.2
+	default gateway - 10.9.0.1
+
+
+Rede externa geral: 
+
+IP - 193.136.212.128/25
+
+Rede interna:
+
+IP - 193.136.212.128/29
+Gama de IPs válidos - [193.136.212.129, 193.136.212.134]
+Endereço de broadcast - 193.136.212.135
+Máscara - 255.255.255.248
+
+R1 -
+	f1/0 - 193.136.212.130
+
+R2 -
+	e0/0 - 193.136.212.131
+
+R3 -
+	e0/0 - 193.136.212.129
+
+Rede esquerda:
+
+IP - 193.136.212.136/29 -> 193.136.212.10001000/29
+Gama de IPs válidos - [193.136.212.137, 193.136.212.142]
+Endereço de broadcast - 193.136.212.143
+Máscara - 255.255.255.248
+
+R1 -
+	e0/0 - 193.136.212.137
+
+PC1 -
+	eth0 - 193.136.212.141
+	default gateway - 193.136.212.137
+
+PC2 -
+	eth0 - 193.136.212.142
+	default gateway - 193.136.212.137
+
+
+Rede direita:
+
+IP - 193.136.212.144/29 -> 193.136.212.10010000/29
+Gama de IPs válidos - [193.136.212.145, 193.136.212.150]
+Endereço de broadcast - 193.136.212.151
+Máscara - 255.255.255.248
+
+R2 -
+	f1/0 - 193.136.212.145
+
+PC3 -
+	eth0 - 193.136.212.149
+	default gateway - 193.136.212.145
+
+PC4 -
+	eth0 -
+	default gateway - 193.136.212.150
