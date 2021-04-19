@@ -1,0 +1,63 @@
+Apr 19 18:37:26.025 HYPERVISOR: Release 0.2.21-amd64/Linux (tag 2019071212)
+Apr 19 18:37:26.025 HYPERVISOR: Started on IP = localhost, TCP port = 40751.
+Apr 19 18:37:26.036 HYPERVISOR: exec_cmd: hypervisor version 
+Apr 19 18:37:26.036 HYPERVISOR: exec_cmd: hypervisor working_dir /home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips 
+Apr 19 18:37:26.036 GENERAL: working_dir=/home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips
+Apr 19 18:37:26.036 HYPERVISOR: exec_cmd: hypervisor working_dir /home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips/48c0968a-ffce-4250-bec0-be706c495ecb 
+Apr 19 18:37:26.036 GENERAL: working_dir=/home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips/48c0968a-ffce-4250-bec0-be706c495ecb
+Apr 19 18:37:26.036 HYPERVISOR: exec_cmd: vm create R3 3 c2600 
+Apr 19 18:37:26.037 VM: VM R3 created.
+Apr 19 18:37:26.037 HYPERVISOR: exec_cmd: vm set_con_tcp_port R3 5002 
+Apr 19 18:37:26.037 HYPERVISOR: exec_cmd: c2600 get_mac_addr R3 
+Apr 19 18:37:26.038 HYPERVISOR: exec_cmd: vm set_ios R3 /home/sancho/GNS3/images/IOS/c2600-is-mz.123-17a.bin 
+Apr 19 18:37:26.038 HYPERVISOR: exec_cmd: c2600 set_mac_addr R3 c803.0667.0000 
+Apr 19 18:37:26.038 HYPERVISOR: exec_cmd: vm set_nvram R3 200 
+Apr 19 18:37:26.039 HYPERVISOR: exec_cmd: vm set_ram R3 80 
+Apr 19 18:37:26.039 HYPERVISOR: exec_cmd: vm get_status R3 
+Apr 19 18:37:26.039 HYPERVISOR: exec_cmd: vm slot_add_binding R3 1 0 NM-1FE-TX 
+Apr 19 18:37:26.039 HYPERVISOR: exec_cmd: vm set_sparse_mem R3 1 
+Apr 19 18:37:26.039 HYPERVISOR: exec_cmd: vm get_status R3 
+Apr 19 18:37:26.039 HYPERVISOR: exec_cmd: vm slot_add_binding R3 0 16 WIC-1T 
+Apr 19 18:37:26.376 HYPERVISOR: exec_cmd: nio create_udp udp-ec8f77bb-b6e1-4a14-ba31-25dcd358c5d4 10002 127.0.0.1 10003 
+Apr 19 18:37:26.590 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R3 1 0 udp-ec8f77bb-b6e1-4a14-ba31-25dcd358c5d4 
+Apr 19 18:37:26.591 HYPERVISOR: exec_cmd: vm get_status R3 
+Apr 19 18:37:26.663 HYPERVISOR: exec_cmd: nio create_udp udp-93cb6117-ea40-4d6a-9eb2-8e72596cdc43 10006 127.0.0.1 10007 
+Apr 19 18:37:26.664 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R3 0 0 udp-93cb6117-ea40-4d6a-9eb2-8e72596cdc43 
+Apr 19 18:37:26.665 HYPERVISOR: exec_cmd: vm get_status R3 
+Apr 19 18:37:34.656 HYPERVISOR: exec_cmd: vm create Ghost 0 c2600 
+Apr 19 18:37:34.656 VM: VM Ghost created.
+Apr 19 18:37:34.657 HYPERVISOR: exec_cmd: vm set_ios Ghost /home/sancho/GNS3/images/IOS/c2600-is-mz.123-17a.bin 
+Apr 19 18:37:34.657 HYPERVISOR: exec_cmd: vm set_ghost_status Ghost 1 
+Apr 19 18:37:34.658 HYPERVISOR: exec_cmd: vm set_ghost_file Ghost /home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips/c2600-is-mz.123-17a.bin-80.ghost 
+Apr 19 18:37:34.658 HYPERVISOR: exec_cmd: vm set_ram Ghost 80 
+Apr 19 18:37:34.658 HYPERVISOR: exec_cmd: vm get_status Ghost 
+Apr 19 18:37:34.659 HYPERVISOR: exec_cmd: vm set_config Ghost configs/i0_startup-config.cfg 
+Apr 19 18:37:34.659 HYPERVISOR: exec_cmd: vm start Ghost 
+Apr 19 18:37:34.877 HYPERVISOR: exec_cmd: vm get_status Ghost 
+Apr 19 18:37:34.878 HYPERVISOR: exec_cmd: vm stop Ghost 
+Apr 19 18:37:35.262 VM: VM Ghost shutdown.
+Apr 19 18:37:35.262 HYPERVISOR: exec_cmd: vm extract_config Ghost 
+Apr 19 18:37:35.263 HYPERVISOR: exec_cmd: vm clean_delete Ghost 
+Apr 19 18:37:35.263 VM: VM Ghost destroyed.
+Apr 19 18:37:35.263 HYPERVISOR: exec_cmd: vm set_ghost_status R3 2 
+Apr 19 18:37:35.264 HYPERVISOR: exec_cmd: vm set_ghost_file R3 /home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips/c2600-is-mz.123-17a.bin-80.ghost 
+Apr 19 18:37:35.264 HYPERVISOR: exec_cmd: vm get_status R3 
+Apr 19 18:37:35.264 HYPERVISOR: exec_cmd: vm set_config R3 configs/i3_startup-config.cfg configs/i3_private-config.cfg 
+Apr 19 18:37:35.264 HYPERVISOR: exec_cmd: vm start R3 
+Apr 19 18:37:35.265 GHOST: loaded ghost image /home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips/c2600-is-mz.123-17a.bin-80.ghost (fd=11) at addr=0x7fbd9f000000 (size=0x5000000)
+Apr 19 18:37:35.266 GHOST: loaded image /home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips/c2600-is-mz.123-17a.bin-80.ghost successfully.
+Apr 19 18:37:58.417 HYPERVISOR: exec_cmd: vm set_ghost_status R3 2 
+Apr 19 18:37:58.418 HYPERVISOR: exec_cmd: vm set_ghost_file R3 /home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips/c2600-is-mz.123-17a.bin-80.ghost 
+Apr 19 18:37:58.418 HYPERVISOR: exec_cmd: vm get_status R3 
+Apr 19 18:39:44.212 HYPERVISOR: exec_cmd: vm get_status R3 
+Apr 19 18:39:44.212 HYPERVISOR: exec_cmd: vm stop R3 
+Apr 19 18:39:44.300 GHOST: unloaded ghost image /home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips/c2600-is-mz.123-17a.bin-80.ghost (fd=11) at addr=0x7fbd9f000000 (size=0x5000000)
+Apr 19 18:39:44.423 VM: VM R3 shutdown.
+Apr 19 18:39:44.423 HYPERVISOR: exec_cmd: vm extract_config R3 
+Apr 19 18:40:07.235 HYPERVISOR: exec_cmd: vm set_ghost_status R3 2 
+Apr 19 18:40:07.236 HYPERVISOR: exec_cmd: vm set_ghost_file R3 /home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips/c2600-is-mz.123-17a.bin-80.ghost 
+Apr 19 18:40:07.236 HYPERVISOR: exec_cmd: vm get_status R3 
+Apr 19 18:40:07.237 HYPERVISOR: exec_cmd: vm set_config R3 configs/i3_startup-config.cfg configs/i3_private-config.cfg 
+Apr 19 18:40:07.237 HYPERVISOR: exec_cmd: vm start R3 
+Apr 19 18:40:07.238 GHOST: loaded ghost image /home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips/c2600-is-mz.123-17a.bin-80.ghost (fd=11) at addr=0x7fbd9f000000 (size=0x5000000)
+Apr 19 18:40:07.238 GHOST: loaded image /home/sancho/Repos/MessageXchanger/projeto_GNS3/project-files/dynamips/c2600-is-mz.123-17a.bin-80.ghost successfully.
