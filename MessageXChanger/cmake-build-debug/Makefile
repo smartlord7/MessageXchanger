@@ -142,32 +142,32 @@ MessageXChanger/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/build
 .PHONY : MessageXChanger/fast
 
-helpers/client_reg_reader/client_reg_reader.o: helpers/client_reg_reader/client_reg_reader.c.o
+helpers/client_reg_file_manager/client_reg_file__manager.o: helpers/client_reg_file_manager/client_reg_file__manager.c.o
 
-.PHONY : helpers/client_reg_reader/client_reg_reader.o
+.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.o
 
 # target to build an object file
-helpers/client_reg_reader/client_reg_reader.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.o
-.PHONY : helpers/client_reg_reader/client_reg_reader.c.o
+helpers/client_reg_file_manager/client_reg_file__manager.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.o
+.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.c.o
 
-helpers/client_reg_reader/client_reg_reader.i: helpers/client_reg_reader/client_reg_reader.c.i
+helpers/client_reg_file_manager/client_reg_file__manager.i: helpers/client_reg_file_manager/client_reg_file__manager.c.i
 
-.PHONY : helpers/client_reg_reader/client_reg_reader.i
+.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.i
 
 # target to preprocess a source file
-helpers/client_reg_reader/client_reg_reader.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.i
-.PHONY : helpers/client_reg_reader/client_reg_reader.c.i
+helpers/client_reg_file_manager/client_reg_file__manager.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.i
+.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.c.i
 
-helpers/client_reg_reader/client_reg_reader.s: helpers/client_reg_reader/client_reg_reader.c.s
+helpers/client_reg_file_manager/client_reg_file__manager.s: helpers/client_reg_file_manager/client_reg_file__manager.c.s
 
-.PHONY : helpers/client_reg_reader/client_reg_reader.s
+.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.s
 
 # target to generate assembly for a file
-helpers/client_reg_reader/client_reg_reader.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.s
-.PHONY : helpers/client_reg_reader/client_reg_reader.c.s
+helpers/client_reg_file_manager/client_reg_file__manager.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.s
+.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.c.s
 
 main.o: main.c.o
 
@@ -223,6 +223,33 @@ structs/user.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/structs/user.c.s
 .PHONY : structs/user.c.s
 
+util/read_line/read_line.o: util/read_line/read_line.c.o
+
+.PHONY : util/read_line/read_line.o
+
+# target to build an object file
+util/read_line/read_line.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o
+.PHONY : util/read_line/read_line.c.o
+
+util/read_line/read_line.i: util/read_line/read_line.c.i
+
+.PHONY : util/read_line/read_line.i
+
+# target to preprocess a source file
+util/read_line/read_line.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.i
+.PHONY : util/read_line/read_line.c.i
+
+util/read_line/read_line.s: util/read_line/read_line.c.s
+
+.PHONY : util/read_line/read_line.s
+
+# target to generate assembly for a file
+util/read_line/read_line.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.s
+.PHONY : util/read_line/read_line.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -232,15 +259,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MessageXChanger"
-	@echo "... helpers/client_reg_reader/client_reg_reader.o"
-	@echo "... helpers/client_reg_reader/client_reg_reader.i"
-	@echo "... helpers/client_reg_reader/client_reg_reader.s"
+	@echo "... helpers/client_reg_file_manager/client_reg_file__manager.o"
+	@echo "... helpers/client_reg_file_manager/client_reg_file__manager.i"
+	@echo "... helpers/client_reg_file_manager/client_reg_file__manager.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... structs/user.o"
 	@echo "... structs/user.i"
 	@echo "... structs/user.s"
+	@echo "... util/read_line/read_line.o"
+	@echo "... util/read_line/read_line.i"
+	@echo "... util/read_line/read_line.s"
 .PHONY : help
 
 

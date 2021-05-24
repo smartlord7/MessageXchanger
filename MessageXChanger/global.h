@@ -5,5 +5,6 @@
 #define false 0
 #define LARGE_SIZE 512
 #define XLARGE_SIZE 1024
+#define LARGEST_SIZE 2048
 
 #endif //MESSAGEXCHANGER_GLOBAL_H

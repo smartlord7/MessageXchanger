@@ -79,19 +79,28 @@
 		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/global.h">
 			<Option target="MessageXChanger"/>
 		</Unit>
-		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_reader/client_reg_reader.c">
+		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_ manager.c">
 			<Option target="MessageXChanger"/>
 		</Unit>
-		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_reader/client_reg_reader.h">
+		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_ manager.h">
 			<Option target="MessageXChanger"/>
 		</Unit>
 		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.c">
+			<Option target="MessageXChanger"/>
+		</Unit>
+		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.h">
 			<Option target="MessageXChanger"/>
 		</Unit>
 		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.c">
 			<Option target="MessageXChanger"/>
 		</Unit>
 		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.h">
+			<Option target="MessageXChanger"/>
+		</Unit>
+		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.c">
+			<Option target="MessageXChanger"/>
+		</Unit>
+		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.h">
 			<Option target="MessageXChanger"/>
 		</Unit>
 		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/CMakeLists.txt">

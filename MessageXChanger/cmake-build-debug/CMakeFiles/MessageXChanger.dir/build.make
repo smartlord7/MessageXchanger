@@ -89,18 +89,18 @@ CMakeFiles/MessageXChanger.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/main.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.c -o CMakeFiles/MessageXChanger.dir/main.c.s
 
-CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.o: CMakeFiles/MessageXChanger.dir/flags.make
-CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.o: ../helpers/client_reg_reader/client_reg_reader.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.o -c /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_reader/client_reg_reader.c
+CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.o: CMakeFiles/MessageXChanger.dir/flags.make
+CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.o: ../helpers/client_reg_file_manager/client_reg_file_\ manager.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.o -c "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_ manager.c"
 
-CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_reader/client_reg_reader.c > CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.i
+CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_ manager.c" > CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.i
 
-CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_reader/client_reg_reader.c -o CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.s
+CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_ manager.c" -o CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.s
 
 CMakeFiles/MessageXChanger.dir/structs/user.c.o: CMakeFiles/MessageXChanger.dir/flags.make
 CMakeFiles/MessageXChanger.dir/structs/user.c.o: ../structs/user.c
@@ -115,21 +115,36 @@ CMakeFiles/MessageXChanger.dir/structs/user.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/structs/user.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.c -o CMakeFiles/MessageXChanger.dir/structs/user.c.s
 
+CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o: CMakeFiles/MessageXChanger.dir/flags.make
+CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o: ../util/read_line/read_line.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o -c /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.c
+
+CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.c > CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.i
+
+CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.c -o CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.s
+
 # Object files for target MessageXChanger
 MessageXChanger_OBJECTS = \
 "CMakeFiles/MessageXChanger.dir/main.c.o" \
-"CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.o" \
-"CMakeFiles/MessageXChanger.dir/structs/user.c.o"
+"CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.o" \
+"CMakeFiles/MessageXChanger.dir/structs/user.c.o" \
+"CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o"
 
 # External object files for target MessageXChanger
 MessageXChanger_EXTERNAL_OBJECTS =
 
 MessageXChanger: CMakeFiles/MessageXChanger.dir/main.c.o
-MessageXChanger: CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.o
+MessageXChanger: CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.o
 MessageXChanger: CMakeFiles/MessageXChanger.dir/structs/user.c.o
+MessageXChanger: CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o
 MessageXChanger: CMakeFiles/MessageXChanger.dir/build.make
 MessageXChanger: CMakeFiles/MessageXChanger.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable MessageXChanger"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable MessageXChanger"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MessageXChanger.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

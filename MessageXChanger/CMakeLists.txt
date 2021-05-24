@@ -3,4 +3,4 @@ project(MessageXChanger C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(MessageXChanger main.c structs/user.h global.h helpers/client_reg_reader/client_reg_reader.c helpers/client_reg_reader/client_reg_reader.h structs/user.c)
+add_executable(MessageXChanger main.c structs/user.h global.h "helpers/client_reg_file_manager/client_reg_file_ manager.c" "helpers/client_reg_file_manager/client_reg_file_ manager.h" structs/user.c main.h util/read_line/read_line.c util/read_line/read_line.h)

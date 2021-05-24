@@ -1,0 +1,4 @@
+joaoartur,312312,privatepasshash,1,0,0
+joaoartur2,31232,privatepasshash1,1,0,0
+joaoartur3,43451,privatepasshash2,1,0,1
+sanchosimoes,42346,privatepasshash2,1,1,1
