@@ -1,11 +1,14 @@
 #ifndef MESSAGEXCHANGER_USER_H
 #define MESSAGEXCHANGER_USER_H
 
+#include "sys/types.h"
+#include "../global.h"
+
 typedef struct user_t{
     char user_name[LARGE_SIZE];
-    int host_ip;
     char password_hash[XLARGE_SIZE];
-    uint8 is_client_server : 1, is_p2p : 1, has_group : 1, is_deleted : 1;
+    int host_ip;
+    uint has_client_server_conn : 1, has_p2p_conn : 1, has_group : 1, is_deleted : 1;
 } user_t;
 
 #endif //MESSAGEXCHANGER_USER_H

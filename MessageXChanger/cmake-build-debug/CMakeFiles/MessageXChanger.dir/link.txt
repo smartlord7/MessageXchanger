@@ -1,1 +1,1 @@
-/usr/bin/cc -g CMakeFiles/MessageXChanger.dir/main.c.o -o MessageXChanger 
+/usr/bin/cc -g CMakeFiles/MessageXChanger.dir/main.c.o CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.o CMakeFiles/MessageXChanger.dir/structs/user.c.o -o MessageXChanger 

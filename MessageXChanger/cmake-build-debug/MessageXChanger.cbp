@@ -79,7 +79,16 @@
 		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/global.h">
 			<Option target="MessageXChanger"/>
 		</Unit>
+		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_reader/client_reg_reader.c">
+			<Option target="MessageXChanger"/>
+		</Unit>
+		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_reader/client_reg_reader.h">
+			<Option target="MessageXChanger"/>
+		</Unit>
 		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.c">
+			<Option target="MessageXChanger"/>
+		</Unit>
+		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.c">
 			<Option target="MessageXChanger"/>
 		</Unit>
 		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.h">

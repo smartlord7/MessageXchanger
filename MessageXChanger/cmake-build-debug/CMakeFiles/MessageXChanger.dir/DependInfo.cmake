@@ -4,7 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_reader/client_reg_reader.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/helpers/client_reg_reader/client_reg_reader.c.o"
   "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/main.c.o"
+  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/structs/user.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
