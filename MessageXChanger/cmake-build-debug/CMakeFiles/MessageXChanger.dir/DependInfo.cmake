@@ -4,10 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_ manager.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.o"
-  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/main.c.o"
-  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/structs/user.c.o"
-  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/avl_tree.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/helpers/avl_tree/avl_tree.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_ manager.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/main.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/main.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/user.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/structs/user.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/read_line/read_line.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

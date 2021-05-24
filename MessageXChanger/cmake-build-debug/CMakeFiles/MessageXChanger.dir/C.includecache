@@ -6,33 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/global.h
-
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_ manager.c
-string.h
--
-assert.h
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/assert.h
-stdlib.h
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/stdlib.h
-../../global.h
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/global.h
-../../structs/user.h
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.h
-../../util/read_line/read_line.h
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.h
-client_reg_file_ manager.h
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_ manager.h
-
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_ manager.h
-
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.h
-sys/types.h
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/sys/types.h
-../global.h
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/global.h
-
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.h
+/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/avl_tree.c
 stdio.h
-/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/stdio.h
+-
+stdlib.h
+-
+../../structs/avl_node.h
+/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/avl_node.h
+avl_tree.h
+/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/avl_tree.h
+
+/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/avl_tree.h
+../../structs/avl_node.h
+/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/avl_node.h
+
+/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/avl_node.h
 

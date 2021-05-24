@@ -63,10 +63,10 @@ RM = /snap/clion/151/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger
+CMAKE_SOURCE_DIR = /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug
+CMAKE_BINARY_DIR = /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -93,14 +93,14 @@ clean: CMakeFiles/MessageXChanger.dir/clean
 CMakeFiles/MessageXChanger.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5 "Built target MessageXChanger"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target MessageXChanger"
 .PHONY : CMakeFiles/MessageXChanger.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/MessageXChanger.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/MessageXChanger.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/MessageXChanger.dir/rule
 
 # Convenience name for target.
