@@ -63,9 +63,7 @@ int is_numeric(const char * string, size_t size) {
     assert(string != NULL && size > 0);
 
     for(int i = 0; i < size; i++) {
-        printf("%c\n", string[i]);
         if(!isdigit(string[i])) {
-            printf("sdasd\n");
             return false;
         }
     }

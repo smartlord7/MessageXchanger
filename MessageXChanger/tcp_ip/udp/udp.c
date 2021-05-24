@@ -27,14 +27,27 @@ int udp_send_msg(int socket_fd, sockaddr_in * destination, char * message, size_
     return EXIT_SUCCESS;
 }
 
-int init_udp_client(int server_port, uint server_address, sockaddr_in * addr) {
+int init_udp_client(int port, uint ip_address, sockaddr_in * addr) {
     int socket_fd;
 
     addr->sin_family = AF_INET;
-    addr->sin_addr.s_addr = htonl(server_address);
-    addr->sin_port = htons(server_port);
+    addr->sin_addr.s_addr = htonl(ip_address);
+    addr->sin_port = htons(port);
 
     assert((socket_fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) != -1);
+
+    return socket_fd;
+}
+
+int init_udp_server(int port, uint ip_address, sockaddr_in * addr) {
+    int socket_fd;
+
+    addr->sin_family = AF_INET;
+    addr->sin_addr.s_addr = htonl(ip_address);
+    addr->sin_port = htons(port);
+
+    assert((socket_fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) != -1);
+    assert(bind(socket_fd, (sockaddr *) &addr, sizeof(sockaddr_in)) != -1);
 
     return socket_fd;
 }

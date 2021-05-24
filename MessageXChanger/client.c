@@ -144,6 +144,7 @@ void comms_available(uint permissions_code, char * buffer) {
             }
         }
     }
+
     snprintf(aux, sizeof(aux), "\nPress any option to end the session.\nOption: ");
     buffer = append(buffer, aux);
 }
