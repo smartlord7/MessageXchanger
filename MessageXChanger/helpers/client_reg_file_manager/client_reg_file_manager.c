@@ -4,7 +4,7 @@
 #include "../../global.h"
 #include "../../structs/user.h"
 #include "../../util/read_line/read_line.h"
-#include "client_reg_file_ manager.h"
+#include "client_reg_file_manager.h"
 
 static char * client_reg_file_path = NULL, * client_reg_file_path_b = NULL;
 static int current_line = -1;
@@ -41,6 +41,8 @@ void write_client_regs() {
     reg_file = fopen(client_reg_file_path_b, "wb");
     assert(reg_file != NULL);
 
+
+    assert(fclose(reg_file));
 }
 
 void read_client_reg_file(FILE * reg_file) {
