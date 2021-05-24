@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="MessageXChanger"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Client">
+				<Option output="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Client/fast">
+				<Option output="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 Client/fast"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Server">
+				<Option output="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 Server"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Server/fast">
+				<Option output="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/10/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 Server/fast"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/client.c">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/client.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/global.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.c">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.c">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/main.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/server.c">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/server.h">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/avl_node.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/user.c">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/user.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/tcp/tcp.c">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/tcp/tcp.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/udp/udp.c">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/udp/udp.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/numbers/numbers.c">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/numbers/numbers.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/read_line/read_line.c">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/read_line/read_line.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/strings/strings.c">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/strings/strings.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

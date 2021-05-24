@@ -7,6 +7,7 @@ static int get_server(char * ip_address, int port);
 static int authenticate_user();
 static int communicate();
 static void comms_available(uint permissions_code, char * buffer);
+//static int mediated_chat();
 
 static char username[SMALL_SIZE];
 static sockaddr_in * server;
@@ -70,22 +71,46 @@ int authenticate_user(){
 }
 
 int communicate() {
-    int i = 0;
-    char options[LARGE_SIZE];
+    int i = 0, option;
+    char options[LARGE_SIZE], input[SMALL_SIZE];
 
-    while(i < 1) {
+    while(true) {
+
         comms_available(permissions, options);
+        printf("%s", options);
 
-        printf("\n%s\n", options);
+        fgets(input, sizeof(input), stdin);
+        if(!is_numeric(input, strlen(input)) || to_float(input, (float *) &option) < 1) {
+            option = -1;
+        }
+
+        switch (option) {
+            case (SERVER_COMMS):
+                //mediated_chat();
+                printf("comunicando com outro client com servidor\n");
+                break;
+            case (P2P):
+                //non_mediated_chat();
+                printf("comunicando com outro cliente sem server\n");
+                break;
+            case (GROUP_COMMS):
+                //group_chat();
+                printf("group chat\n");
+                break;
+            default:
+                return EXIT_SUCCESS;
+        }
 
         i++;
     }
-
-    return EXIT_SUCCESS;
 }
 
 void comms_available(uint permissions_code, char * buffer) {
     int digit_base = 1;
+    char aux[SMALL_SIZE];
+
+    snprintf(aux, sizeof(aux), "\n---- Available types of chat ----\n\n");
+    buffer = append(buffer, aux);
 
     for(int i = 0; i < NUM_PERMITS; i++) {
 
@@ -93,20 +118,24 @@ void comms_available(uint permissions_code, char * buffer) {
             switch (i) {
 
                 case (SERVER_COMMS):
-                    buffer = append(buffer, "opcao 1\n");
+                    snprintf(aux, sizeof(aux), "Mediated chat - press %d\n", SERVER_COMMS);
+                    buffer = append(buffer, aux);
                     break;
                 case (P2P):
-                    buffer = append(buffer, "opcao 2\n");
+                    snprintf(aux, sizeof(aux), "Non mediated chat - press %d\n", P2P);
+                    buffer = append(buffer, aux);
                     break;
                 case (GROUP_COMMS):
-                    buffer = append(buffer, "opcao 3\n");
+                    snprintf(aux, sizeof(aux), "Group chat - press %d\n", GROUP_COMMS);
+                    buffer = append(buffer, aux);
                     break;
                 default:
-                    buffer = append(buffer, "opcao 4\n");
                     break;
+
             }
         }
-
         digit_base *= 10;
     }
+    snprintf(aux, sizeof(aux), "\nPress any option to end the session.\nOption: ");
+    buffer = append(buffer, aux);
 }

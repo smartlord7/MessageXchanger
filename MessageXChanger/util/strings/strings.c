@@ -70,3 +70,16 @@ unsigned long hash(const char *str) {
 
     return hash;
 }
+
+int is_numeric(const char * string, size_t size) {
+    assert(string != NULL && size > 0);
+
+    for(int i = 0; i < size; i++) {
+        if(!isdigit(string[i])) {
+            printf("sdasd\n");
+            return false;
+        }
+    }
+
+    return true;
+}

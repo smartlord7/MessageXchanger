@@ -7,6 +7,7 @@
 
 #include "tcp_ip/udp/udp.h"
 #include "util/strings/strings.h"
+#include "util/numbers/numbers.h"
 
 #define IP "125.234.233.213"
 #define PORT 9000
@@ -20,7 +21,7 @@
 enum permits {
     SERVER_COMMS,
     P2P,
-    GROUP_COMMS
+    GROUP_COMMS,
 };
 
 #endif //MESSAGEXCHANGER_CLIENT_H
