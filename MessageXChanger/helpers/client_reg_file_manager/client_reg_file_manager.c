@@ -4,14 +4,14 @@
 #include "../../global.h"
 #include "../../structs/user.h"
 #include "../../util/read_line/read_line.h"
-#include "../avl_tree/users_avl.h"
+#include "../trees/user_tree.h"
 #include "client_reg_file_manager.h"
 
 static char * client_reg_file_path = NULL, * client_reg_file_path_b = NULL;
 static int current_line = -1;
 
-static node_t * read_client_reg_file(FILE * reg_file);
-static node_t * read_client_reg_file_b(FILE * reg_file);
+static user_tree_node_t * read_client_reg_file(FILE * reg_file);
+static user_tree_node_t * read_client_reg_file_b(FILE * reg_file);
 
 void client_reg_reader_init(char * file_path, char * file_path_b) {
     assert(file_path != NULL);
@@ -20,7 +20,7 @@ void client_reg_reader_init(char * file_path, char * file_path_b) {
     client_reg_file_path_b = file_path_b;
 }
 
-node_t * read_client_regs() {
+user_tree_node_t * read_client_regs() {
     assert(client_reg_file_path != NULL && client_reg_file_path_b != NULL);
     FILE * reg_file = NULL;
 
@@ -47,7 +47,7 @@ void write_client_regs(int mode) {
     assert(fclose(reg_file) != EOF);
 }
 
-node_t * read_client_reg_file(FILE * reg_file) {
+user_tree_node_t * read_client_reg_file(FILE * reg_file) {
     assert(reg_file != NULL);
 
     reg_file = fopen(client_reg_file_path, "r");
@@ -67,7 +67,7 @@ node_t * read_client_reg_file(FILE * reg_file) {
     return get_root();
 }
 
-node_t * read_client_reg_file_b(FILE * reg_file) {
+user_tree_node_t * read_client_reg_file_b(FILE * reg_file) {
     assert(reg_file != NULL);
 
     reg_file = fopen(client_reg_file_path_b, "rb");

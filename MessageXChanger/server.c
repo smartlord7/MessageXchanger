@@ -1,5 +1,5 @@
-#include <stdarg.h>
-#include <errno.h>
+#include "stdarg.h"
+#include "errno.h"
 #include "string.h"
 #include "netinet/in.h"
 #include "unistd.h"
@@ -8,7 +8,7 @@
 #include "pthread.h"
 #include "sys/wait.h"
 #include "helpers/client_reg_file_manager/client_reg_file_manager.h"
-#include "helpers/avl_tree/users_avl.h"
+#include "helpers/trees/user_tree.h"
 #include "tcp_ip/tcp/tcp.h"
 #include "server.h"
 #include "util/strings/strings.h"
@@ -137,10 +137,8 @@ static void handle_admin() {
                 break;
 
             } else if (starts_with_ignore_case(buffer, SHOW_DEL)) {
-                list_mode = !SHOW_DELETED;
+                list_mode = !list_mode;
                 send_response(admin_fd, SHOW_DELETE_TOGGLE, list_mode);
-
-                send_response(admin_fd, ERROR_INVALID_CMD, buffer);
 
             } else {
                 send_response(admin_fd, ERROR_INVALID_CMD, buffer);

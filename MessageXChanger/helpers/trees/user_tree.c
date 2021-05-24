@@ -2,23 +2,23 @@
 #include "string.h"
 #include "stdlib.h"
 #include "assert.h"
-#include "../../structs/avl_node.h"
-#include "users_avl.h"
-static void write_users_avl_b(FILE * dest_file, node_t * node, int mode);
-static node_t * find_user_(node_t * node, char *user_name, int mode);
-static node_t * insert_user_(node_t * node, user_t * user);
-static user_t * delete_user_(node_t * source, char user_name[LARGE_SIZE]);
-static void get_user_list_(node_t * node, int mode, char * buffer);
+#include "../../structs/user_tree_node_t.h"
+#include "user_tree.h"
+static void write_users_(FILE * dest_file, user_tree_node_t * node, int mode);
+static user_tree_node_t * find_user_(user_tree_node_t * node, char *user_name, int mode);
+static user_tree_node_t * insert_user_(user_tree_node_t * node, user_t * user);
+static user_t * delete_user_(user_tree_node_t * source, char user_name[LARGE_SIZE]);
+static void get_user_list_(user_tree_node_t * node, int mode, char * buffer);
 
-static node_t * root = NULL;
-static int num_active_users = 0, num_del_users = 0, num_total_users = 0;
+static user_tree_node_t * root = NULL;
+static int num_existing_users = 0, num_del_users = 0, num_total_users = 0;
 
-node_t * get_root() {
+user_tree_node_t * get_root() {
     return root;
 }
 
 int get_num_active_users() {
-    return num_active_users;
+    return num_existing_users;
 }
 
 int get_num_del_users() {
@@ -35,7 +35,7 @@ char * get_user_list_as_str(int mode) {
     return buffer;
 }
 
-void print_users(node_t * node) {
+void print_users(user_tree_node_t * node) {
     if (node == NULL) {
         return;
     }
@@ -51,7 +51,7 @@ void print_users(node_t * node) {
 }
 
 void write_users_b(FILE * dest_file, int mode) {
-    write_users_avl_b(dest_file, root, mode);
+    write_users_(dest_file, root, mode);
 }
 
 user_t * delete_user(char user_name[LARGE_SIZE]) {
@@ -59,14 +59,14 @@ user_t * delete_user(char user_name[LARGE_SIZE]) {
 
     if (aux != NULL) {
         num_del_users++;
-        num_active_users--;
+        num_existing_users--;
     }
 
     return aux;
 }
 
 user_t * find_user(char user_name[LARGE_SIZE], int mode) {
-    node_t * aux = find_user_(root, user_name, mode);
+    user_tree_node_t * aux = find_user_(root, user_name, mode);
 
     if (aux == NULL) {
         return NULL;
@@ -78,18 +78,18 @@ user_t * find_user(char user_name[LARGE_SIZE], int mode) {
 user_t * insert_user(user_t * user) {
     root = insert_user_(root, user);
 
-    user->id = num_active_users++;
+    user->id = num_existing_users++;
     num_total_users++;
 
     return user;
 }
 
-node_t * insert_user_(node_t * node, user_t * user){
+user_tree_node_t * insert_user_(user_tree_node_t * node, user_t * user){
     int balancing_factor;
 
     if(node == NULL){
 
-        node = (node_t *) malloc(sizeof(node_t));
+        node = (user_tree_node_t *) malloc(sizeof(user_tree_node_t));
         node->user = user;
 
         return node;
@@ -108,7 +108,7 @@ node_t * insert_user_(node_t * node, user_t * user){
 }
 
 
-static node_t * find_user_(node_t * node, char *user_name, int mode){
+static user_tree_node_t * find_user_(user_tree_node_t * node, char *user_name, int mode){
     int cmp;
 
     while(true){
@@ -135,10 +135,10 @@ static node_t * find_user_(node_t * node, char *user_name, int mode){
     }
 }
 
-user_t * delete_user_(node_t * source, char user_name[LARGE_SIZE]) {
+user_t * delete_user_(user_tree_node_t * source, char user_name[LARGE_SIZE]) {
     assert(source != NULL);
 
-    node_t * res = NULL;
+    user_tree_node_t * res = NULL;
 
     if ((res = find_user_(source, user_name, HIDE_DELETED)) == NULL) {
         return NULL;
@@ -150,25 +150,23 @@ user_t * delete_user_(node_t * source, char user_name[LARGE_SIZE]) {
     }
 }
 
-static void write_users_avl_b(FILE * dest_file, node_t * node, int mode) {
+static void write_users_(FILE * dest_file, user_tree_node_t * node, int mode) {
     if (node == NULL) {
         return;
     }
 
     user_t user = * node->user;
 
-    write_users_avl_b(dest_file, node->left, mode);
+    write_users_(dest_file, node->left, mode);
 
-    if(!node->user->is_deleted) {
-        assert(fwrite(&user, sizeof(user_t), 1, dest_file) > 0);
-    } else if (mode == SHOW_DELETED && node->user->is_deleted == (uint) 1) {
+    if(!node->user->is_deleted || (mode == SHOW_DELETED && node->user->is_deleted == (uint) 1)) {
         assert(fwrite(&user, sizeof(user_t), 1, dest_file) > 0);
     }
 
-    write_users_avl_b(dest_file, node->right, mode);
+    write_users_(dest_file, node->right, mode);
 }
 
-static void get_user_list_(node_t * node, int mode, char * buffer) {
+static void get_user_list_(user_tree_node_t * node, int mode, char * buffer) {
     assert(buffer != NULL);
 
     if (node == NULL) {
@@ -178,8 +176,11 @@ static void get_user_list_(node_t * node, int mode, char * buffer) {
     char * aux = NULL;
 
     get_user_list_(node->left, mode, buffer);
-    aux = user_to_string(node->user);
-    strcat(buffer, aux);
+
+    if (!node->user->is_deleted || (mode == SHOW_DELETED && node->user->is_deleted == (uint) 1)) {
+        aux = user_to_string(node->user);
+        strcat(buffer, aux);
+    }
     free(aux);
     get_user_list_(node->right, mode, buffer);
 }
