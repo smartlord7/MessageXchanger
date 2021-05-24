@@ -3,8 +3,6 @@
 
 #include "../../structs/avl_node.h"
 
-#define FIELD_DELIM ","
-
 extern void client_reg_reader_init(char * file_path, char * file_path_b);
 extern node_t * read_client_regs();
 extern void write_client_regs(int mode);

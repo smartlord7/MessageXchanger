@@ -31,18 +31,6 @@ int main () {
     return  0;
 }
 
-unsigned long hash(const char *str) {
-    printf("%s\n", str);
-    unsigned long hash = 5381;
-    int c;
-
-    while (c = str++) {
-        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */;
-    }
-
-    return hash;
-}
-
 int get_server(char * ip_address, int port){
     assert(ip_address != NULL && port > 0);
 

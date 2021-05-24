@@ -7,7 +7,6 @@ typedef struct node_t node_t;
 
 typedef struct node_t {
     int height;
-    uint deleted : 1;
     user_t * user;
     node_t * left, * right;
 
