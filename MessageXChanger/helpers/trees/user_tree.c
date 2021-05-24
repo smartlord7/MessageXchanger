@@ -75,21 +75,27 @@ user_t * find_user(char user_name[LARGE_SIZE], int mode) {
     return aux->user;
 }
 
-user_t * insert_user(user_t * user) {
-    root = insert_user_(root, user);
+int insert_user(user_t * user) {
+    user_tree_node_t * aux = insert_user_(root, user);
 
-    user->id = num_existing_users++;
-    num_total_users++;
+    if (aux != NULL) {
+        if (root == NULL) {
+            root = aux;
+        }
 
-    return user;
+        user->id = num_existing_users++;
+        num_total_users++;
+
+        return true;
+    }
+
+    return false;
 }
 
 user_tree_node_t * insert_user_(user_tree_node_t * node, user_t * user){
-    int balancing_factor;
-
     if(node == NULL){
-
         node = (user_tree_node_t *) malloc(sizeof(user_tree_node_t));
+
         node->user = user;
 
         return node;
@@ -102,6 +108,8 @@ user_tree_node_t * insert_user_(user_tree_node_t * node, user_t * user){
 
         } else if(cmp < 0) {
             node->left = insert_user_(node->left, user);
+        } else {
+            return NULL;
         }
         return node;
     }

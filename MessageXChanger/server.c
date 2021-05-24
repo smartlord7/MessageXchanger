@@ -79,6 +79,10 @@ static void * udp_worker(void * data) {
     }
 }
 
+static void * session_worker(void * data) {
+
+}
+
 static void handle_admin() {
     int n_read, list_mode = HIDE_DELETED, stay = true;
     char buffer[LARGEST_SIZE], * aux = NULL, * admin_ip;

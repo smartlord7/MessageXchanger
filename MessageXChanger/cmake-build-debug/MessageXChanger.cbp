@@ -140,6 +140,10 @@
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/main.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
 		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/server.c">
 			<Option target="Server"/>
 		</Unit>
