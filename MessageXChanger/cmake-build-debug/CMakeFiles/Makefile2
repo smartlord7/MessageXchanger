@@ -72,7 +72,8 @@ CMAKE_BINARY_DIR = /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/c
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/MessageXChanger.dir/all
+all: CMakeFiles/Client.dir/all
+all: CMakeFiles/Server.dir/all
 
 .PHONY : all
 
@@ -82,36 +83,64 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/MessageXChanger.dir/clean
+clean: CMakeFiles/Client.dir/clean
+clean: CMakeFiles/Server.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/MessageXChanger.dir
+# Target rules for target CMakeFiles/Client.dir
 
 # All Build rule for target.
-CMakeFiles/MessageXChanger.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target MessageXChanger"
-.PHONY : CMakeFiles/MessageXChanger.dir/all
+CMakeFiles/Client.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9 "Built target Client"
+.PHONY : CMakeFiles/Client.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/MessageXChanger.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 8
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/MessageXChanger.dir/all
+CMakeFiles/Client.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 9
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Client.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/MessageXChanger.dir/rule
+.PHONY : CMakeFiles/Client.dir/rule
 
 # Convenience name for target.
-MessageXChanger: CMakeFiles/MessageXChanger.dir/rule
+Client: CMakeFiles/Client.dir/rule
 
-.PHONY : MessageXChanger
+.PHONY : Client
 
 # clean rule for target.
-CMakeFiles/MessageXChanger.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/clean
-.PHONY : CMakeFiles/MessageXChanger.dir/clean
+CMakeFiles/Client.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/clean
+.PHONY : CMakeFiles/Client.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/Server.dir
+
+# All Build rule for target.
+CMakeFiles/Server.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=10,11,12,13,14,15,16,17 "Built target Server"
+.PHONY : CMakeFiles/Server.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/Server.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 8
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Server.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/Server.dir/rule
+
+# Convenience name for target.
+Server: CMakeFiles/Server.dir/rule
+
+.PHONY : Server
+
+# clean rule for target.
+CMakeFiles/Server.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/clean
+.PHONY : CMakeFiles/Server.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

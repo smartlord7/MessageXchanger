@@ -130,17 +130,57 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named MessageXChanger
+# Target rules for targets named Client
 
 # Build rule for target.
-MessageXChanger: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MessageXChanger
-.PHONY : MessageXChanger
+Client: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Client
+.PHONY : Client
 
 # fast build rule for target.
-MessageXChanger/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/build
-.PHONY : MessageXChanger/fast
+Client/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/build
+.PHONY : Client/fast
+
+#=============================================================================
+# Target rules for targets named Server
+
+# Build rule for target.
+Server: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Server
+.PHONY : Server
+
+# fast build rule for target.
+Server/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/build
+.PHONY : Server/fast
+
+client.o: client.c.o
+
+.PHONY : client.o
+
+# target to build an object file
+client.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/client.c.o
+.PHONY : client.c.o
+
+client.i: client.c.i
+
+.PHONY : client.i
+
+# target to preprocess a source file
+client.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/client.c.i
+.PHONY : client.c.i
+
+client.s: client.c.s
+
+.PHONY : client.s
+
+# target to generate assembly for a file
+client.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/client.c.s
+.PHONY : client.c.s
 
 helpers/avl_tree/users_avl.o: helpers/avl_tree/users_avl.c.o
 
@@ -148,7 +188,8 @@ helpers/avl_tree/users_avl.o: helpers/avl_tree/users_avl.c.o
 
 # target to build an object file
 helpers/avl_tree/users_avl.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/helpers/avl_tree/users_avl.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/helpers/avl_tree/users_avl.c.o
 .PHONY : helpers/avl_tree/users_avl.c.o
 
 helpers/avl_tree/users_avl.i: helpers/avl_tree/users_avl.c.i
@@ -157,7 +198,8 @@ helpers/avl_tree/users_avl.i: helpers/avl_tree/users_avl.c.i
 
 # target to preprocess a source file
 helpers/avl_tree/users_avl.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/helpers/avl_tree/users_avl.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/helpers/avl_tree/users_avl.c.i
 .PHONY : helpers/avl_tree/users_avl.c.i
 
 helpers/avl_tree/users_avl.s: helpers/avl_tree/users_avl.c.s
@@ -166,7 +208,8 @@ helpers/avl_tree/users_avl.s: helpers/avl_tree/users_avl.c.s
 
 # target to generate assembly for a file
 helpers/avl_tree/users_avl.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/helpers/avl_tree/users_avl.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/helpers/avl_tree/users_avl.c.s
 .PHONY : helpers/avl_tree/users_avl.c.s
 
 helpers/client_reg_file_manager/client_reg_file_manager.o: helpers/client_reg_file_manager/client_reg_file_manager.c.o
@@ -175,7 +218,8 @@ helpers/client_reg_file_manager/client_reg_file_manager.o: helpers/client_reg_fi
 
 # target to build an object file
 helpers/client_reg_file_manager/client_reg_file_manager.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o
 .PHONY : helpers/client_reg_file_manager/client_reg_file_manager.c.o
 
 helpers/client_reg_file_manager/client_reg_file_manager.i: helpers/client_reg_file_manager/client_reg_file_manager.c.i
@@ -184,7 +228,8 @@ helpers/client_reg_file_manager/client_reg_file_manager.i: helpers/client_reg_fi
 
 # target to preprocess a source file
 helpers/client_reg_file_manager/client_reg_file_manager.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.i
 .PHONY : helpers/client_reg_file_manager/client_reg_file_manager.c.i
 
 helpers/client_reg_file_manager/client_reg_file_manager.s: helpers/client_reg_file_manager/client_reg_file_manager.c.s
@@ -193,7 +238,8 @@ helpers/client_reg_file_manager/client_reg_file_manager.s: helpers/client_reg_fi
 
 # target to generate assembly for a file
 helpers/client_reg_file_manager/client_reg_file_manager.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.s
 .PHONY : helpers/client_reg_file_manager/client_reg_file_manager.c.s
 
 server.o: server.c.o
@@ -202,7 +248,7 @@ server.o: server.c.o
 
 # target to build an object file
 server.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/server.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/server.c.o
 .PHONY : server.c.o
 
 server.i: server.c.i
@@ -211,7 +257,7 @@ server.i: server.c.i
 
 # target to preprocess a source file
 server.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/server.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/server.c.i
 .PHONY : server.c.i
 
 server.s: server.c.s
@@ -220,7 +266,7 @@ server.s: server.c.s
 
 # target to generate assembly for a file
 server.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/server.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/server.c.s
 .PHONY : server.c.s
 
 structs/user.o: structs/user.c.o
@@ -229,7 +275,8 @@ structs/user.o: structs/user.c.o
 
 # target to build an object file
 structs/user.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/structs/user.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/structs/user.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/structs/user.c.o
 .PHONY : structs/user.c.o
 
 structs/user.i: structs/user.c.i
@@ -238,7 +285,8 @@ structs/user.i: structs/user.c.i
 
 # target to preprocess a source file
 structs/user.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/structs/user.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/structs/user.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/structs/user.c.i
 .PHONY : structs/user.c.i
 
 structs/user.s: structs/user.c.s
@@ -247,7 +295,8 @@ structs/user.s: structs/user.c.s
 
 # target to generate assembly for a file
 structs/user.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/structs/user.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/structs/user.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/structs/user.c.s
 .PHONY : structs/user.c.s
 
 tcp_ip/tcp/tcp.o: tcp_ip/tcp/tcp.c.o
@@ -256,7 +305,8 @@ tcp_ip/tcp/tcp.o: tcp_ip/tcp/tcp.c.o
 
 # target to build an object file
 tcp_ip/tcp/tcp.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/tcp_ip/tcp/tcp.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/tcp_ip/tcp/tcp.c.o
 .PHONY : tcp_ip/tcp/tcp.c.o
 
 tcp_ip/tcp/tcp.i: tcp_ip/tcp/tcp.c.i
@@ -265,7 +315,8 @@ tcp_ip/tcp/tcp.i: tcp_ip/tcp/tcp.c.i
 
 # target to preprocess a source file
 tcp_ip/tcp/tcp.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/tcp_ip/tcp/tcp.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/tcp_ip/tcp/tcp.c.i
 .PHONY : tcp_ip/tcp/tcp.c.i
 
 tcp_ip/tcp/tcp.s: tcp_ip/tcp/tcp.c.s
@@ -274,7 +325,8 @@ tcp_ip/tcp/tcp.s: tcp_ip/tcp/tcp.c.s
 
 # target to generate assembly for a file
 tcp_ip/tcp/tcp.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/tcp_ip/tcp/tcp.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/tcp_ip/tcp/tcp.c.s
 .PHONY : tcp_ip/tcp/tcp.c.s
 
 tcp_ip/udp/udp.o: tcp_ip/udp/udp.c.o
@@ -283,7 +335,8 @@ tcp_ip/udp/udp.o: tcp_ip/udp/udp.c.o
 
 # target to build an object file
 tcp_ip/udp/udp.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/tcp_ip/udp/udp.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/tcp_ip/udp/udp.c.o
 .PHONY : tcp_ip/udp/udp.c.o
 
 tcp_ip/udp/udp.i: tcp_ip/udp/udp.c.i
@@ -292,7 +345,8 @@ tcp_ip/udp/udp.i: tcp_ip/udp/udp.c.i
 
 # target to preprocess a source file
 tcp_ip/udp/udp.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/tcp_ip/udp/udp.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/tcp_ip/udp/udp.c.i
 .PHONY : tcp_ip/udp/udp.c.i
 
 tcp_ip/udp/udp.s: tcp_ip/udp/udp.c.s
@@ -301,7 +355,8 @@ tcp_ip/udp/udp.s: tcp_ip/udp/udp.c.s
 
 # target to generate assembly for a file
 tcp_ip/udp/udp.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/tcp_ip/udp/udp.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/tcp_ip/udp/udp.c.s
 .PHONY : tcp_ip/udp/udp.c.s
 
 util/read_line/read_line.o: util/read_line/read_line.c.o
@@ -310,7 +365,8 @@ util/read_line/read_line.o: util/read_line/read_line.c.o
 
 # target to build an object file
 util/read_line/read_line.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/util/read_line/read_line.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/util/read_line/read_line.c.o
 .PHONY : util/read_line/read_line.c.o
 
 util/read_line/read_line.i: util/read_line/read_line.c.i
@@ -319,7 +375,8 @@ util/read_line/read_line.i: util/read_line/read_line.c.i
 
 # target to preprocess a source file
 util/read_line/read_line.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/util/read_line/read_line.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/util/read_line/read_line.c.i
 .PHONY : util/read_line/read_line.c.i
 
 util/read_line/read_line.s: util/read_line/read_line.c.s
@@ -328,8 +385,36 @@ util/read_line/read_line.s: util/read_line/read_line.c.s
 
 # target to generate assembly for a file
 util/read_line/read_line.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/util/read_line/read_line.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/util/read_line/read_line.c.s
 .PHONY : util/read_line/read_line.c.s
+
+util/strings/strings.o: util/strings/strings.c.o
+
+.PHONY : util/strings/strings.o
+
+# target to build an object file
+util/strings/strings.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/util/strings/strings.c.o
+.PHONY : util/strings/strings.c.o
+
+util/strings/strings.i: util/strings/strings.c.i
+
+.PHONY : util/strings/strings.i
+
+# target to preprocess a source file
+util/strings/strings.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/util/strings/strings.c.i
+.PHONY : util/strings/strings.c.i
+
+util/strings/strings.s: util/strings/strings.c.s
+
+.PHONY : util/strings/strings.s
+
+# target to generate assembly for a file
+util/strings/strings.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Client.dir/build.make CMakeFiles/Client.dir/util/strings/strings.c.s
+.PHONY : util/strings/strings.c.s
 
 # Help Target
 help:
@@ -339,7 +424,11 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... MessageXChanger"
+	@echo "... Client"
+	@echo "... Server"
+	@echo "... client.o"
+	@echo "... client.i"
+	@echo "... client.s"
 	@echo "... helpers/avl_tree/users_avl.o"
 	@echo "... helpers/avl_tree/users_avl.i"
 	@echo "... helpers/avl_tree/users_avl.s"
@@ -361,6 +450,9 @@ help:
 	@echo "... util/read_line/read_line.o"
 	@echo "... util/read_line/read_line.i"
 	@echo "... util/read_line/read_line.s"
+	@echo "... util/strings/strings.o"
+	@echo "... util/strings/strings.i"
+	@echo "... util/strings/strings.s"
 .PHONY : help
 
 
