@@ -62,10 +62,10 @@ RM = /snap/clion/151/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger
+CMAKE_SOURCE_DIR = /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug
+CMAKE_BINARY_DIR = /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/MessageXChanger.dir/depend.make
@@ -76,105 +76,120 @@ include CMakeFiles/MessageXChanger.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/MessageXChanger.dir/flags.make
 
-CMakeFiles/MessageXChanger.dir/main.c.o: CMakeFiles/MessageXChanger.dir/flags.make
-CMakeFiles/MessageXChanger.dir/main.c.o: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/MessageXChanger.dir/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/main.c.o -c /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.c
-
-CMakeFiles/MessageXChanger.dir/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MessageXChanger.dir/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.c > CMakeFiles/MessageXChanger.dir/main.c.i
-
-CMakeFiles/MessageXChanger.dir/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.c -o CMakeFiles/MessageXChanger.dir/main.c.s
-
 CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o: CMakeFiles/MessageXChanger.dir/flags.make
 CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o: ../helpers/client_reg_file_manager/client_reg_file_manager.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o -c /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o -c /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.c
 
 CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.c > CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.c > CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.i
 
 CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.c -o CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.c -o CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.s
 
 CMakeFiles/MessageXChanger.dir/structs/user.c.o: CMakeFiles/MessageXChanger.dir/flags.make
 CMakeFiles/MessageXChanger.dir/structs/user.c.o: ../structs/user.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/MessageXChanger.dir/structs/user.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/structs/user.c.o -c /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/MessageXChanger.dir/structs/user.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/structs/user.c.o -c /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/user.c
 
 CMakeFiles/MessageXChanger.dir/structs/user.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MessageXChanger.dir/structs/user.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.c > CMakeFiles/MessageXChanger.dir/structs/user.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/user.c > CMakeFiles/MessageXChanger.dir/structs/user.c.i
 
 CMakeFiles/MessageXChanger.dir/structs/user.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/structs/user.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.c -o CMakeFiles/MessageXChanger.dir/structs/user.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/user.c -o CMakeFiles/MessageXChanger.dir/structs/user.c.s
 
 CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o: CMakeFiles/MessageXChanger.dir/flags.make
 CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o: ../util/read_line/read_line.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o -c /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o -c /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/read_line/read_line.c
 
 CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.c > CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/read_line/read_line.c > CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.i
 
 CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.c -o CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/read_line/read_line.c -o CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.s
 
 CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o: CMakeFiles/MessageXChanger.dir/flags.make
 CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o: ../helpers/avl_tree/users_avl.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o -c /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o -c /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.c
 
 CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.c > CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.c > CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.i
 
 CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.c -o CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.c -o CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.s
 
 CMakeFiles/MessageXChanger.dir/server.c.o: CMakeFiles/MessageXChanger.dir/flags.make
 CMakeFiles/MessageXChanger.dir/server.c.o: ../server.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/MessageXChanger.dir/server.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/server.c.o -c /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/server.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/MessageXChanger.dir/server.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/server.c.o -c /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/server.c
 
 CMakeFiles/MessageXChanger.dir/server.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MessageXChanger.dir/server.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/server.c > CMakeFiles/MessageXChanger.dir/server.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/server.c > CMakeFiles/MessageXChanger.dir/server.c.i
 
 CMakeFiles/MessageXChanger.dir/server.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/server.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/server.c -o CMakeFiles/MessageXChanger.dir/server.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/server.c -o CMakeFiles/MessageXChanger.dir/server.c.s
+
+CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.o: CMakeFiles/MessageXChanger.dir/flags.make
+CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.o: ../tcp_ip/tcp/tcp.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.o -c /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/tcp/tcp.c
+
+CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/tcp/tcp.c > CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.i
+
+CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/tcp/tcp.c -o CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.s
+
+CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.o: CMakeFiles/MessageXChanger.dir/flags.make
+CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.o: ../tcp_ip/udp/udp.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.o -c /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/udp/udp.c
+
+CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/udp/udp.c > CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.i
+
+CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/udp/udp.c -o CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.s
 
 # Object files for target MessageXChanger
 MessageXChanger_OBJECTS = \
-"CMakeFiles/MessageXChanger.dir/main.c.o" \
 "CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o" \
 "CMakeFiles/MessageXChanger.dir/structs/user.c.o" \
 "CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o" \
 "CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o" \
-"CMakeFiles/MessageXChanger.dir/server.c.o"
+"CMakeFiles/MessageXChanger.dir/server.c.o" \
+"CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.o" \
+"CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.o"
 
 # External object files for target MessageXChanger
 MessageXChanger_EXTERNAL_OBJECTS =
 
-MessageXChanger: CMakeFiles/MessageXChanger.dir/main.c.o
 MessageXChanger: CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o
 MessageXChanger: CMakeFiles/MessageXChanger.dir/structs/user.c.o
 MessageXChanger: CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o
 MessageXChanger: CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o
 MessageXChanger: CMakeFiles/MessageXChanger.dir/server.c.o
+MessageXChanger: CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.o
+MessageXChanger: CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.o
 MessageXChanger: CMakeFiles/MessageXChanger.dir/build.make
 MessageXChanger: CMakeFiles/MessageXChanger.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable MessageXChanger"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking C executable MessageXChanger"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MessageXChanger.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -187,6 +202,6 @@ CMakeFiles/MessageXChanger.dir/clean:
 .PHONY : CMakeFiles/MessageXChanger.dir/clean
 
 CMakeFiles/MessageXChanger.dir/depend:
-	cd /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/MessageXChanger.dir/depend
 

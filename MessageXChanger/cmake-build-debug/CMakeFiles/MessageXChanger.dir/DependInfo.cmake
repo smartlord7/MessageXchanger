@@ -4,12 +4,13 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o"
-  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o"
-  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/main.c.o"
-  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/server.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/server.c.o"
-  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/structs/user.c.o"
-  "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/util/read_line/read_line.c" "/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/server.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/server.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/user.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/structs/user.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/tcp/tcp.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/udp/udp.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.o"
+  "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/read_line/read_line.c" "/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles/MessageXChanger.dir/util/read_line/read_line.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

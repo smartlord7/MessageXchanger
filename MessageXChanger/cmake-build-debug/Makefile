@@ -67,10 +67,10 @@ RM = /snap/clion/151/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger
+CMAKE_SOURCE_DIR = /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug
+CMAKE_BINARY_DIR = /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -99,9 +99,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -196,33 +196,6 @@ helpers/client_reg_file_manager/client_reg_file_manager.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.s
 .PHONY : helpers/client_reg_file_manager/client_reg_file_manager.c.s
 
-main.o: main.c.o
-
-.PHONY : main.o
-
-# target to build an object file
-main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/main.c.o
-.PHONY : main.c.o
-
-main.i: main.c.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/main.c.i
-.PHONY : main.c.i
-
-main.s: main.c.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/main.c.s
-.PHONY : main.c.s
-
 server.o: server.c.o
 
 .PHONY : server.o
@@ -277,6 +250,60 @@ structs/user.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/structs/user.c.s
 .PHONY : structs/user.c.s
 
+tcp_ip/tcp/tcp.o: tcp_ip/tcp/tcp.c.o
+
+.PHONY : tcp_ip/tcp/tcp.o
+
+# target to build an object file
+tcp_ip/tcp/tcp.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.o
+.PHONY : tcp_ip/tcp/tcp.c.o
+
+tcp_ip/tcp/tcp.i: tcp_ip/tcp/tcp.c.i
+
+.PHONY : tcp_ip/tcp/tcp.i
+
+# target to preprocess a source file
+tcp_ip/tcp/tcp.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.i
+.PHONY : tcp_ip/tcp/tcp.c.i
+
+tcp_ip/tcp/tcp.s: tcp_ip/tcp/tcp.c.s
+
+.PHONY : tcp_ip/tcp/tcp.s
+
+# target to generate assembly for a file
+tcp_ip/tcp/tcp.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/tcp/tcp.c.s
+.PHONY : tcp_ip/tcp/tcp.c.s
+
+tcp_ip/udp/udp.o: tcp_ip/udp/udp.c.o
+
+.PHONY : tcp_ip/udp/udp.o
+
+# target to build an object file
+tcp_ip/udp/udp.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.o
+.PHONY : tcp_ip/udp/udp.c.o
+
+tcp_ip/udp/udp.i: tcp_ip/udp/udp.c.i
+
+.PHONY : tcp_ip/udp/udp.i
+
+# target to preprocess a source file
+tcp_ip/udp/udp.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.i
+.PHONY : tcp_ip/udp/udp.c.i
+
+tcp_ip/udp/udp.s: tcp_ip/udp/udp.c.s
+
+.PHONY : tcp_ip/udp/udp.s
+
+# target to generate assembly for a file
+tcp_ip/udp/udp.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/tcp_ip/udp/udp.c.s
+.PHONY : tcp_ip/udp/udp.c.s
+
 util/read_line/read_line.o: util/read_line/read_line.c.o
 
 .PHONY : util/read_line/read_line.o
@@ -319,15 +346,18 @@ help:
 	@echo "... helpers/client_reg_file_manager/client_reg_file_manager.o"
 	@echo "... helpers/client_reg_file_manager/client_reg_file_manager.i"
 	@echo "... helpers/client_reg_file_manager/client_reg_file_manager.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"
 	@echo "... structs/user.o"
 	@echo "... structs/user.i"
 	@echo "... structs/user.s"
+	@echo "... tcp_ip/tcp/tcp.o"
+	@echo "... tcp_ip/tcp/tcp.i"
+	@echo "... tcp_ip/tcp/tcp.s"
+	@echo "... tcp_ip/udp/udp.o"
+	@echo "... tcp_ip/udp/udp.i"
+	@echo "... tcp_ip/udp/udp.s"
 	@echo "... util/read_line/read_line.o"
 	@echo "... util/read_line/read_line.i"
 	@echo "... util/read_line/read_line.s"
