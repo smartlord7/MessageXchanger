@@ -5,7 +5,7 @@ typedef struct user_t{
     char user_name[LARGE_SIZE];
     int host_ip;
     char password_hash[XLARGE_SIZE];
-    uint8 is_client_server : 1, is_p2p : 1, has_group : 1;
+    uint8 is_client_server : 1, is_p2p : 1, has_group : 1, is_deleted : 1;
 } user_t;
 
 #endif //MESSAGEXCHANGER_USER_H
