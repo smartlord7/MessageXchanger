@@ -97,6 +97,12 @@
 		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.h">
 			<Option target="MessageXChanger"/>
 		</Unit>
+		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/server.c">
+			<Option target="MessageXChanger"/>
+		</Unit>
+		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/server.h">
+			<Option target="MessageXChanger"/>
+		</Unit>
 		<Unit filename="/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/avl_node.h">
 			<Option target="MessageXChanger"/>
 		</Unit>
