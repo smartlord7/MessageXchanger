@@ -1,0 +1,1 @@
+/usr/bin/cc -g CMakeFiles/MessageXChanger.dir/main.c.o -o MessageXChanger 
