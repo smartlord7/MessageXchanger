@@ -67,10 +67,10 @@ RM = /snap/clion/151/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger
+CMAKE_SOURCE_DIR = /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug
+CMAKE_BINARY_DIR = /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -99,9 +99,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -142,59 +142,59 @@ MessageXChanger/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/build
 .PHONY : MessageXChanger/fast
 
-helpers/avl_tree/avl_tree.o: helpers/avl_tree/avl_tree.c.o
+helpers/avl_tree/users_avl.o: helpers/avl_tree/users_avl.c.o
 
-.PHONY : helpers/avl_tree/avl_tree.o
-
-# target to build an object file
-helpers/avl_tree/avl_tree.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/avl_tree/avl_tree.c.o
-.PHONY : helpers/avl_tree/avl_tree.c.o
-
-helpers/avl_tree/avl_tree.i: helpers/avl_tree/avl_tree.c.i
-
-.PHONY : helpers/avl_tree/avl_tree.i
-
-# target to preprocess a source file
-helpers/avl_tree/avl_tree.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/avl_tree/avl_tree.c.i
-.PHONY : helpers/avl_tree/avl_tree.c.i
-
-helpers/avl_tree/avl_tree.s: helpers/avl_tree/avl_tree.c.s
-
-.PHONY : helpers/avl_tree/avl_tree.s
-
-# target to generate assembly for a file
-helpers/avl_tree/avl_tree.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/avl_tree/avl_tree.c.s
-.PHONY : helpers/avl_tree/avl_tree.c.s
-
-helpers/client_reg_file_manager/client_reg_file__manager.o: helpers/client_reg_file_manager/client_reg_file__manager.c.o
-
-.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.o
+.PHONY : helpers/avl_tree/users_avl.o
 
 # target to build an object file
-helpers/client_reg_file_manager/client_reg_file__manager.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.o
-.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.c.o
+helpers/avl_tree/users_avl.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.o
+.PHONY : helpers/avl_tree/users_avl.c.o
 
-helpers/client_reg_file_manager/client_reg_file__manager.i: helpers/client_reg_file_manager/client_reg_file__manager.c.i
+helpers/avl_tree/users_avl.i: helpers/avl_tree/users_avl.c.i
 
-.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.i
+.PHONY : helpers/avl_tree/users_avl.i
 
 # target to preprocess a source file
-helpers/client_reg_file_manager/client_reg_file__manager.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.i
-.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.c.i
+helpers/avl_tree/users_avl.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.i
+.PHONY : helpers/avl_tree/users_avl.c.i
 
-helpers/client_reg_file_manager/client_reg_file__manager.s: helpers/client_reg_file_manager/client_reg_file__manager.c.s
+helpers/avl_tree/users_avl.s: helpers/avl_tree/users_avl.c.s
 
-.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.s
+.PHONY : helpers/avl_tree/users_avl.s
 
 # target to generate assembly for a file
-helpers/client_reg_file_manager/client_reg_file__manager.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file__manager.c.s
-.PHONY : helpers/client_reg_file_manager/client_reg_file__manager.c.s
+helpers/avl_tree/users_avl.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/avl_tree/users_avl.c.s
+.PHONY : helpers/avl_tree/users_avl.c.s
+
+helpers/client_reg_file_manager/client_reg_file_manager.o: helpers/client_reg_file_manager/client_reg_file_manager.c.o
+
+.PHONY : helpers/client_reg_file_manager/client_reg_file_manager.o
+
+# target to build an object file
+helpers/client_reg_file_manager/client_reg_file_manager.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.o
+.PHONY : helpers/client_reg_file_manager/client_reg_file_manager.c.o
+
+helpers/client_reg_file_manager/client_reg_file_manager.i: helpers/client_reg_file_manager/client_reg_file_manager.c.i
+
+.PHONY : helpers/client_reg_file_manager/client_reg_file_manager.i
+
+# target to preprocess a source file
+helpers/client_reg_file_manager/client_reg_file_manager.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.i
+.PHONY : helpers/client_reg_file_manager/client_reg_file_manager.c.i
+
+helpers/client_reg_file_manager/client_reg_file_manager.s: helpers/client_reg_file_manager/client_reg_file_manager.c.s
+
+.PHONY : helpers/client_reg_file_manager/client_reg_file_manager.s
+
+# target to generate assembly for a file
+helpers/client_reg_file_manager/client_reg_file_manager.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MessageXChanger.dir/build.make CMakeFiles/MessageXChanger.dir/helpers/client_reg_file_manager/client_reg_file_manager.c.s
+.PHONY : helpers/client_reg_file_manager/client_reg_file_manager.c.s
 
 main.o: main.c.o
 
@@ -286,12 +286,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MessageXChanger"
-	@echo "... helpers/avl_tree/avl_tree.o"
-	@echo "... helpers/avl_tree/avl_tree.i"
-	@echo "... helpers/avl_tree/avl_tree.s"
-	@echo "... helpers/client_reg_file_manager/client_reg_file__manager.o"
-	@echo "... helpers/client_reg_file_manager/client_reg_file__manager.i"
-	@echo "... helpers/client_reg_file_manager/client_reg_file__manager.s"
+	@echo "... helpers/avl_tree/users_avl.o"
+	@echo "... helpers/avl_tree/users_avl.i"
+	@echo "... helpers/avl_tree/users_avl.s"
+	@echo "... helpers/client_reg_file_manager/client_reg_file_manager.o"
+	@echo "... helpers/client_reg_file_manager/client_reg_file_manager.i"
+	@echo "... helpers/client_reg_file_manager/client_reg_file_manager.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

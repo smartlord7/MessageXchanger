@@ -6,19 +6,35 @@
 
 #IncludeRegexTransform: 
 
-/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/avl_tree.c
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/global.h
+
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.h
 stdio.h
--
-stdlib.h
--
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/avl_tree/stdio.h
 ../../structs/avl_node.h
-/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/avl_node.h
-avl_tree.h
-/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/avl_tree.h
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/avl_node.h
 
-/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/avl_tree.h
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.h
 ../../structs/avl_node.h
-/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/avl_node.h
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/avl_node.h
 
-/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/avl_node.h
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.c
+helpers/client_reg_file_manager/client_reg_file_manager.h
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.h
+main.h
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.h
+helpers/avl_tree/users_avl.h
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.h
+
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/main.h
+
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/avl_node.h
+user.h
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.h
+
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/user.h
+sys/types.h
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/structs/sys/types.h
+../global.h
+/home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/global.h
 

@@ -4,13 +4,14 @@
 #include "../../global.h"
 #include "../../structs/user.h"
 #include "../../util/read_line/read_line.h"
+#include "../avl_tree/users_avl.h"
 #include "client_reg_file_manager.h"
 
 static char * client_reg_file_path = NULL, * client_reg_file_path_b = NULL;
 static int current_line = -1;
 
-static void read_client_reg_file(FILE * reg_file);
-static void read_client_reg_file_b();
+static node_t * read_client_reg_file(FILE * reg_file);
+static node_t * read_client_reg_file_b(FILE * reg_file);
 
 void client_reg_reader_init(char * file_path, char * file_path_b) {
     assert(file_path != NULL);
@@ -19,21 +20,21 @@ void client_reg_reader_init(char * file_path, char * file_path_b) {
     client_reg_file_path_b = file_path_b;
 }
 
-void read_client_regs() {
+node_t * read_client_regs() {
     assert(client_reg_file_path != NULL && client_reg_file_path_b != NULL);
     FILE * reg_file = NULL;
 
     reg_file = fopen(client_reg_file_path_b, "rb");
 
-    if (reg_file == NULL) {
-        read_client_reg_file_b(reg_file);
+    if (reg_file != NULL) {
+        return read_client_reg_file_b(reg_file);
     } else {
         reg_file = fopen(client_reg_file_path, "r");
-        read_client_reg_file_b(reg_file);
+        return read_client_reg_file(reg_file);
     }
 }
 
-void write_client_regs() {
+void write_client_regs(int mode) {
     assert(client_reg_file_path_b != NULL);
 
     FILE * reg_file = NULL;
@@ -41,11 +42,12 @@ void write_client_regs() {
     reg_file = fopen(client_reg_file_path_b, "wb");
     assert(reg_file != NULL);
 
+    write_users(reg_file, mode);
 
-    assert(fclose(reg_file));
+    assert(fclose(reg_file) != EOF);
 }
 
-void read_client_reg_file(FILE * reg_file) {
+node_t * read_client_reg_file(FILE * reg_file) {
     assert(reg_file != NULL);
 
     reg_file = fopen(client_reg_file_path, "r");
@@ -86,12 +88,16 @@ void read_client_reg_file(FILE * reg_file) {
         has_group = atoi(token);
 
         user = new_user(user_name, password_hash, host_ip, has_client_server_conn, has_p2p_conn, has_group);
+
+        insert_user(user);
     }
 
     assert(fclose(reg_file) != EOF);
+
+    return get_root();
 }
 
-void read_client_reg_file_b(FILE * reg_file) {
+node_t * read_client_reg_file_b(FILE * reg_file) {
     assert(reg_file != NULL);
 
     reg_file = fopen(client_reg_file_path_b, "rb");
@@ -100,14 +106,21 @@ void read_client_reg_file_b(FILE * reg_file) {
     size_t n;
 
     while (true) {
-        n = fread((void *) user, sizeof(user_t), 1, reg_file);
+        user = (user_t *) malloc(sizeof(user_t));
 
-        assert(n > 0);
+        n = fread((void *) user, sizeof(user_t), 1, reg_file);
 
         if (feof(reg_file)) {
             break;
         }
+
+        assert(n > 0);
+
+        insert_user(user);
+
     }
 
     assert(fclose(reg_file) != EOF);
+
+    return get_root();
 }

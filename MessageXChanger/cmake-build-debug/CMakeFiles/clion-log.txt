@@ -1,4 +1,4 @@
-/snap/clion/151/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger
+/snap/clion/151/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/cmake-build-debug
+-- Build files have been written to: /home/sancho/Documents/GitRepos/MessageXchanger/MessageXChanger/cmake-build-debug

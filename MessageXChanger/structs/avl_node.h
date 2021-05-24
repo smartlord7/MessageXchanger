@@ -1,22 +1,16 @@
-//
-// Created by joao on 24/05/21.
-//
-
 #ifndef MESSAGEXCHANGER_AVL_NODE_H
 #define MESSAGEXCHANGER_AVL_NODE_H
 
-typedef struct node_key_t node_key_t;
-struct node_key_t {
-    int value;
-};
+#include "user.h"
 
 typedef struct node_t node_t;
-struct node_t {
+
+typedef struct node_t {
     int height;
     uint deleted : 1;
-    node_key_t key;
+    user_t * user;
     node_t * left, * right;
 
-};
+} node_t;
 
 #endif //MESSAGEXCHANGER_AVL_NODE_H
