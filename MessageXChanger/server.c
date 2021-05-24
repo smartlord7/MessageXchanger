@@ -1,3 +1,5 @@
+#include <stdarg.h>
+#include <errno.h>
 #include "string.h"
 #include "netinet/in.h"
 #include "unistd.h"
@@ -13,10 +15,11 @@
 #include "crypt.h"
 
 _Noreturn static void * tcp_worker(void * data);
-static void * udp_worker(void * data);
+_Noreturn static void * udp_worker(void * data);
 static void handle_admin();
 static void signal_handler(int signum);
 static user_t * validate_user(char buffer[LARGEST_SIZE]);
+static void show_error_if(int cond, const char * msg, ...);
 
 in_addr admin_addr_in;
 int clients_port, admin_port, server_fd, admin_fd;
@@ -32,10 +35,7 @@ int main(int argc, char * argv[]) {
     signal(SIGINT, signal_handler);
     signal(SIGPIPE, signal_handler);
 
-    if (argc != 5) {
-        fprintf(stderr, "ERROR: INVALID ARGUMENTS USAGE! THEIR FORMAT MUST BE ./server <clients_port> <admin_port> <reg_file_path_txt> <reg_file_path_bin>");
-        exit(EXIT_FAILURE);
-    }
+    show_error_if(argc != 5, INVALID_CMD_ARGS);
 
     clients_port = atoi(argv[1]);
     admin_port = atoi(argv[2]);
@@ -80,7 +80,7 @@ static void * udp_worker(void * data) {
 }
 
 static void handle_admin() {
-    int n_read, list_mode = HIDE_DELETED;
+    int n_read, list_mode = HIDE_DELETED, stay = true;
     char buffer[LARGEST_SIZE], * aux = NULL, * admin_ip;
     user_t * user = NULL;
 
@@ -88,7 +88,7 @@ static void handle_admin() {
 
     printf(ADMIN_CONNECT, admin_ip);
 
-    while (true) {
+    while (stay) {
         do {
             aux = &buffer[0];
             n_read = (int) read(admin_fd, buffer, LARGEST_SIZE - 1);
@@ -133,7 +133,8 @@ static void handle_admin() {
                 free(aux);
             } else if (starts_with_ignore_case(buffer, CMD_QUIT)) {
                 send_response(admin_fd, SERVER_DISCONNECT);
-                return;
+                stay = false;
+                break;
 
             } else if (starts_with_ignore_case(buffer, SHOW_DEL)) {
                 list_mode = !SHOW_DELETED;
@@ -146,7 +147,6 @@ static void handle_admin() {
             }
         } while (n_read > 0);
     }
-
     free(admin_ip);
 }
 
@@ -222,5 +222,24 @@ static void signal_handler(int signum) {
             exit(EXIT_SUCCESS);
         default:
             printf("SIGNAL %d RECEIVED!\n", signum);
+    }
+}
+
+void show_error_if(int cond, const char * msg, ...) {
+    if (cond) {
+        va_list args;
+        va_start(args, msg);
+
+        char buffer[LARGE_SIZE];
+        vsnprintf(buffer, LARGE_SIZE, msg, args);
+
+        if (errno != 0) {
+            printf("%s\nERRNO: %d - %s", buffer, errno, strerror(errno));
+        } else {
+            printf("%s\n", buffer);
+        }
+
+        va_end(args);
+        exit(EXIT_FAILURE);
     }
 }

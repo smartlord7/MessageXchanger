@@ -17,6 +17,7 @@
 #define SHOW_DEL "SHOWDEL"
 
 #define ADD_DELIM " "
+#define INVALID_CMD_ARGS "ERROR: INVALID ARGUMENTS USAGE! THEIR FORMAT MUST BE ./server <clients_port> <admin_port> <reg_file_path_txt> <reg_file_path_bin>"
 #define SERVER_INIT SERVER "INITIALIZING SERVER...\n"
 #define REG_LOADED SERVER "CLIENT REGISTRIES LOADED\n"
 #define ADMIN_CONNECT ADMIN "CONNECTED\n"

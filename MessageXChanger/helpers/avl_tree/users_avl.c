@@ -4,12 +4,6 @@
 #include "assert.h"
 #include "../../structs/avl_node.h"
 #include "users_avl.h"
-
-static node_t * left_rotation(node_t * node);
-static node_t * right_rotation(node_t * node);
-static int max(int num1, int num2);
-static int calculate_height(node_t * node);
-static int calculate_balance(node_t * node);
 static void write_users_avl_b(FILE * dest_file, node_t * node, int mode);
 static node_t * find_user_(node_t * node, char *user_name, int mode);
 static node_t * insert_user_(node_t * node, user_t * user);
@@ -109,18 +103,6 @@ node_t * insert_user_(node_t * node, user_t * user){
         } else if(cmp < 0) {
             node->left = insert_user_(node->left, user);
         }
-
-        balancing_factor = calculate_balance(node);
-
-        if(balancing_factor > 1){
-            if(cmp > 0) node->left = left_rotation(node->left);
-            return right_rotation(node);
-
-        } else if(balancing_factor < -1){
-            if(cmp < 0) node->right = right_rotation(node->right);
-            return left_rotation(node);
-        }
-
         return node;
     }
 }
@@ -166,69 +148,6 @@ user_t * delete_user_(node_t * source, char user_name[LARGE_SIZE]) {
 
         return res->user;
     }
-}
-
-static int max(int num1, int num2) {
-    return (num1 > num2) ? num1 : num2;
-}
-
-static int calculate_height(node_t * node){
-    assert(node != NULL);
-
-    if(node->right == NULL && node->left == NULL) {
-        return 0;
-    }
-    else if(node->right == NULL) {
-        return node->left->height + 1;
-    }
-    else if(node->left == NULL) {
-        return node->right->height + 1;
-    }
-    else {
-        return max(node->right->height, node->left->height) + 1;
-    }
-}
-
-static int calculate_balance(node_t * node){
-    assert(node != NULL);
-
-    int left, right;
-
-    if(node->left == NULL) {
-        left = 0;
-    } else {
-        left = node->left->height;
-    }
-
-    if(node->right == NULL) {
-        right = 0;
-    } else {
-        right = node->right->height;
-    }
-
-    return left - right;
-}
-
-static node_t * left_rotation(node_t * node){
-
-    node_t * aux = node->right;
-    node->right = aux->left;
-    node->height = calculate_height(node);
-    aux->left = node;
-    aux->height = calculate_height(aux);
-
-    return aux;
-}
-
-static node_t * right_rotation(node_t * node){
-
-    node_t * aux = node->left;
-    node->left = aux->right;
-    node->height = calculate_height(node);
-    aux->right = node;
-    aux->height = calculate_height(aux);
-
-    return aux;
 }
 
 static void write_users_avl_b(FILE * dest_file, node_t * node, int mode) {
