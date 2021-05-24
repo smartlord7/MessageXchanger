@@ -91,28 +91,22 @@ user_t * insert_user(user_t * user) {
 }
 
 node_t * insert_user_(node_t * node, user_t * user){
-    assert(user != NULL);
-
-    int balancing_factor, cmp;
+    int balancing_factor;
 
     if(node == NULL){
-        node = (node_t *) malloc(sizeof(node_t));
-        assert(node != NULL);
 
+        node = (node_t *) malloc(sizeof(node_t));
         node->user = user;
-        node->left = NULL;
-        node->right = NULL;
-        node->user->is_deleted = false;
 
         return node;
     } else {
 
-        cmp = strcmp(user->user_name, node->user->user_name);
+        int cmp = strcmp(user->user_name, node->user->user_name);
 
         if(cmp > 0) {
             node->right = insert_user_(node->right, user);
 
-        } else if(cmp <= 0) {
+        } else if(cmp < 0) {
             node->left = insert_user_(node->left, user);
         }
 
@@ -120,14 +114,13 @@ node_t * insert_user_(node_t * node, user_t * user){
 
         if(balancing_factor > 1){
             if(cmp > 0) node->left = left_rotation(node->left);
-
             return right_rotation(node);
 
         } else if(balancing_factor < -1){
-            if(cmp > 0) node->right = right_rotation(node->right);
-
+            if(cmp < 0) node->right = right_rotation(node->right);
             return left_rotation(node);
         }
+
         return node;
     }
 }
@@ -218,10 +211,6 @@ static int calculate_balance(node_t * node){
 
 static node_t * left_rotation(node_t * node){
 
-    if (node == NULL) {
-        return NULL;
-    }
-
     node_t * aux = node->right;
     node->right = aux->left;
     node->height = calculate_height(node);
@@ -232,10 +221,6 @@ static node_t * left_rotation(node_t * node){
 }
 
 static node_t * right_rotation(node_t * node){
-
-    if (node == NULL) {
-        return NULL;
-    }
 
     node_t * aux = node->left;
     node->left = aux->right;

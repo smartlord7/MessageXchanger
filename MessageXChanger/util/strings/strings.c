@@ -59,18 +59,6 @@ int get_input(char * expected, char * result) {
 
     return EXIT_SUCCESS;
 }
-
-unsigned long hash(const char *str) {
-    unsigned long hash = 5381;
-    int c;
-
-    while ((c = (int) str++)) {
-        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */;
-    }
-
-    return hash;
-}
-
 int is_numeric(const char * string, size_t size) {
     assert(string != NULL && size > 0);
 

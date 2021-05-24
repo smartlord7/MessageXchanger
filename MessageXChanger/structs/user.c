@@ -7,13 +7,13 @@
 #include "../util/strings/strings.h"
 #include "../tcp_ip/tcp/tcp.h"
 
-user_t * new_user(char user_name[LARGE_SIZE], ulong password_hash, uint host_ip, uint has_client_server_conn, uint has_p2p_conn, uint has_group) {
+user_t * new_user(char user_name[LARGE_SIZE], char password_hash[SMALL_SIZE], uint host_ip, uint has_client_server_conn, uint has_p2p_conn, uint has_group) {
     user_t * user = (user_t *) malloc(sizeof(user_t));
 
     assert(user != NULL);
 
     strcpy(user->user_name, user_name);
-    user->password_hash = password_hash;
+    strcpy(user->password_hash, password_hash);
     user->host_ip = host_ip;
     user->has_client_server_conn = has_client_server_conn;
     user->has_p2p_conn = has_p2p_conn;
@@ -37,7 +37,7 @@ char * user_to_string(user_t * user) {
 
     assert(buffer != NULL);
 
-    snprintf(buffer, XLARGE_SIZE, "-ID: %d, NAME: %s, IP: %s, PASSWORD HASH: %04lu "
+    snprintf(buffer, XLARGE_SIZE, "-ID: %d, NAME: %s, IP: %s, PASSWORD HASH: %s "
                                  "CLIENT-SERVER: %u, P2P: %u, GROUP: %u, LOGGED: %u, DELETED: %u\n",
                                   user->id, user->user_name, ipv4, user->password_hash,
                                   user->has_client_server_conn, user->has_p2p_conn, user->has_group, user->is_logged, user->is_deleted);
@@ -49,8 +49,8 @@ char * user_to_string(user_t * user) {
 
 user_t * parse_user(char buffer[LARGEST_SIZE]) {
     char * token = NULL,
-            user_name[LARGE_SIZE];
-    ulong password_hash;
+            user_name[LARGE_SIZE],
+            password_hash[SMALL_SIZE];
     int host_ip;
     uint has_client_server_conn, has_p2p_conn, has_group;
     user_t * user = NULL;
@@ -61,7 +61,7 @@ user_t * parse_user(char buffer[LARGEST_SIZE]) {
 
     token = trim_string(strtok(NULL, FIELD_DELIM));
     assert(token != NULL);
-    password_hash = atoi(token);
+    strcpy(password_hash, token);
 
     token = trim_string(strtok(NULL, FIELD_DELIM));
     assert(token != NULL);

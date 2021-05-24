@@ -10,6 +10,7 @@
 #include "tcp_ip/tcp/tcp.h"
 #include "server.h"
 #include "util/strings/strings.h"
+#include "crypt.h"
 
 _Noreturn static void * tcp_worker(void * data);
 static void * udp_worker(void * data);
@@ -18,18 +19,35 @@ static void signal_handler(int signum);
 static user_t * validate_user(char buffer[LARGEST_SIZE]);
 
 in_addr admin_addr_in;
-int server_fd, admin_fd;
+int clients_port, admin_port, server_fd, admin_fd;
 
 
-int main(void) {
+int main(int argc, char * argv[]) {
+    char * reg_file_path = NULL, * reg_file_path_b = NULL;
+
+    printf(SERVER_INIT);
+
     signal(SIGABRT, signal_handler);
     signal(SIGSEGV, signal_handler);
     signal(SIGINT, signal_handler);
+    signal(SIGPIPE, signal_handler);
+
+    if (argc != 5) {
+        fprintf(stderr, "ERROR: INVALID ARGUMENTS USAGE! THEIR FORMAT MUST BE ./server <clients_port> <admin_port> <reg_file_path_txt> <reg_file_path_bin>");
+        exit(EXIT_FAILURE);
+    }
+
+    clients_port = atoi(argv[1]);
+    admin_port = atoi(argv[2]);
+    reg_file_path = argv[3];
+    reg_file_path_b = argv[4];
 
     pthread_t tcp_handler_thread = {0}, udp_handler_thread = {0};
 
-    client_reg_reader_init(CLIENT_REG_FILE_PATH, CLIENT_REG_FILE_PATH_B);
+    client_reg_reader_init(reg_file_path, reg_file_path_b);
     read_client_regs();
+
+    printf(REG_LOADED);
 
     pthread_create(&tcp_handler_thread, NULL, tcp_worker, NULL);
     pthread_create(&tcp_handler_thread, NULL, udp_worker, NULL);
@@ -38,11 +56,11 @@ int main(void) {
     pthread_join(udp_handler_thread, NULL);
 }
 
-_Noreturn static void * tcp_worker(void * data) {
+static void * tcp_worker(void * data) {
     sockaddr_in admin_addr = {0};
     int admin_addr_size = sizeof(admin_addr);
 
-    server_fd = init_tcp(SERVER_TCP_PORT, NUM_MAX_TCP_CONNECTIONS);
+    server_fd = init_tcp(admin_port, NUM_MAX_TCP_CONNECTIONS);
 
     while (true) {
         while (waitpid(-1, NULL, WNOHANG) > 0);
@@ -75,6 +93,7 @@ static void handle_admin() {
             aux = &buffer[0];
             n_read = (int) read(admin_fd, buffer, LARGEST_SIZE - 1);
             buffer[n_read - 1] = '\0';
+            printf(ADMIN "%s\n", admin_ip, buffer);
 
             if (starts_with_ignore_case(buffer, CMD_ADD)) {
                 aux += strlen(CMD_ADD);
@@ -127,12 +146,12 @@ static void handle_admin() {
             }
         } while (n_read > 0);
     }
+
+    free(admin_ip);
 }
 
 static user_t * validate_user(char buffer[LARGEST_SIZE]) {
-    char * token = NULL, user_name[LARGE_SIZE];
-    char host_ip[SMALL_SIZE];
-    ulong password_hash;
+    char * token = NULL, user_name[LARGE_SIZE], host_ip[SMALL_SIZE], password_hash[SMALL_SIZE];
     uint has_client_server_conn, has_p2p_conn, has_group;
     user_t * user = NULL;
 
@@ -148,7 +167,7 @@ static user_t * validate_user(char buffer[LARGEST_SIZE]) {
         send_response(admin_fd, ERROR_MISSING_PARAM, "password");
         return NULL;
     }
-    password_hash = hash(token);
+    strcpy(password_hash, crypt(token, "an"));
 
     token = strtok(NULL, ADD_DELIM);
     if (token == NULL) {
@@ -189,6 +208,7 @@ static void signal_handler(int signum) {
             printf("SIGINT RECEIVED! CLOSING SERVER...\n");
             close(admin_fd);
             close(server_fd);
+            write_client_regs(SHOW_DELETED);
             exit(EXIT_SUCCESS);
         case SIGABRT:
             printf("SIGABRT RECEIVED! CLOSING SERVER...\n");
