@@ -1,39 +1,10 @@
-
 #include <string.h>
 #include "udp.h"
+#include "assert.h"
 
-int create_socket(int ip_version, int type, int protocol) {
-    int socket_fd;
-
-    if((socket_fd = socket(ip_version, type, protocol)) < 0) {
-        perror("Couldn't create socket\n");
-        return EXIT_FAILURE;
-    }
-
-    return socket_fd;
-}
-
-int bind_socket(int socket_fd, sockaddr * address) {
-
-    if(bind(socket_fd, address, sizeof(*address)) < 0) {
-        perror("Couldn't bind socket\n");
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
-}
-
-void initialize_socket(sockaddr_in * socket, int family, int port, char * ip_address) {
-    bzero((void *) socket, sizeof(*socket));
-
-    socket->sin_family = family;
-    socket->sin_port = htons(port);
-    inet_aton(ip_address, (struct in_addr *) &socket->sin_addr.s_addr);
-
-}
 
 int udp_receive_msg(int socket_fd, sockaddr_in * source, char * buffer, size_t msg_size) {
-    socklen_t size  = sizeof(*source);
+    socklen_t size  = sizeof(* source);
 
     if(recvfrom(socket_fd, buffer, msg_size * sizeof(char), 0, (sockaddr *) source, (socklen_t *)&size) < 0) {
         perror("Couldn't received udp message\n");
@@ -54,4 +25,16 @@ int udp_send_msg(int socket_fd, sockaddr_in * destination, char * message, size_
     }
 
     return EXIT_SUCCESS;
+}
+
+int init_udp_client(int server_port, uint server_address, sockaddr_in * addr) {
+    int socket_fd;
+
+    addr->sin_family = AF_INET;
+    addr->sin_addr.s_addr = htonl(server_address);
+    addr->sin_port = htons(server_port);
+
+    assert((socket_fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) != -1);
+
+    return socket_fd;
 }

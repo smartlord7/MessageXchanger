@@ -1,22 +1,22 @@
 #include "assert.h"
 #include <stdio.h>
+#include <unistd.h>
 #include "client.h"
 
-static unsigned long hash(const char *str);
+unsigned long hash(const char *str);
 static int get_server(char * ip_address, int port);
 static int authenticate_user();
-static int communicate();
+static void communicate();
 static void comms_available(uint permissions_code, char * buffer);
-//static int mediated_chat();
+static int mediated_chat();
 
 static char username[SMALL_SIZE];
-static sockaddr_in * server;
 static int server_fd;
 static uint permissions;
 static unsigned long password_hash;
+static sockaddr_in server = {0};
 
 int main () {
-
     get_server(IP, PORT);
 
     if(authenticate_user() == EXIT_FAILURE) {
@@ -35,12 +35,9 @@ int main () {
 int get_server(char * ip_address, int port){
     assert(ip_address != NULL && port > 0);
 
-    if((server_fd = create_socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == EXIT_FAILURE) {
-        perror("Couldn't obtain server\n");
-        return EXIT_FAILURE;
-    }
+    uint address = string_to_ipv4( ip_address);
 
-    initialize_socket((sockaddr_in *) &server, AF_INET, port, ip_address);
+    server_fd = init_udp_client(port, address, &server);
 
     return EXIT_SUCCESS;
 }
@@ -48,29 +45,21 @@ int get_server(char * ip_address, int port){
 int authenticate_user(){
     char password[SMALL_SIZE], buffer[SMALL_SIZE];
 
-    if(get_input("username", username) == EXIT_FAILURE || get_input("password", password) == EXIT_FAILURE) {
+    if(get_input("Username", username) == EXIT_FAILURE || get_input("Password", password) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
     //password_hash = hash(password);
-
-    snprintf(buffer, sizeof(buffer), "%s %lu\n", username, password_hash);
-
-    //udp_send_msg(server_fd, server, buffer, (size_t) strlen(buffer));
+    snprintf(buffer, sizeof(buffer), "LOGIN %s %lu\n", username, password_hash);
+    udp_send_msg(server_fd, &server, buffer, (size_t) strlen(buffer));
 
     //udp_receive_msg(server_fd, server, buffer, sizeof(buffer));
 
-    /*if(strcasecmp(buffer, REJECTED) == 0) {
-        return EXIT_FAILURE;
-    }*/
-
     permissions = 101;
-
-    //permissions = atoi(buffer);
 
     return EXIT_SUCCESS;
 }
 
-int communicate() {
+void communicate() {
     int i = 0, option;
     char options[LARGE_SIZE], input[SMALL_SIZE];
 
@@ -80,25 +69,46 @@ int communicate() {
         printf("%s", options);
 
         fgets(input, sizeof(input), stdin);
-        if(!is_numeric(input, strlen(input)) || to_float(input, (float *) &option) < 1) {
+        trim_string(input);
+        if(!is_numeric(input, strlen(input))) {
             option = -1;
+        } else {
+            option = atoi(input);
         }
 
         switch (option) {
             case (SERVER_COMMS):
-                //mediated_chat();
-                printf("comunicando com outro client com servidor\n");
+
+                if(((permissions >> SERVER_COMMS) % 2)) {
+                    mediated_chat();
+                    printf("comunicando com outro client com servidor\n");
+                } else {
+                    return;
+                }
+
                 break;
             case (P2P):
-                //non_mediated_chat();
-                printf("comunicando com outro cliente sem server\n");
+
+                if(((permissions >> P2P) % 2)) {
+                    //non_mediated_chat();
+                    printf("comunicando com outro cliente sem server\n");
+                } else {
+                    return;
+                }
+
                 break;
             case (GROUP_COMMS):
-                //group_chat();
-                printf("group chat\n");
+
+                if(((permissions >> GROUP_COMMS) % 2)) {
+                    //group_chat();
+                    printf("group chat\n");
+                } else {
+                    return;
+                }
                 break;
+
             default:
-                return EXIT_SUCCESS;
+                return;
         }
 
         i++;
@@ -106,7 +116,6 @@ int communicate() {
 }
 
 void comms_available(uint permissions_code, char * buffer) {
-    int digit_base = 1;
     char aux[SMALL_SIZE];
 
     snprintf(aux, sizeof(aux), "\n---- Available types of chat ----\n\n");
@@ -114,7 +123,7 @@ void comms_available(uint permissions_code, char * buffer) {
 
     for(int i = 0; i < NUM_PERMITS; i++) {
 
-        if(permissions_code / digit_base) {
+        if(((permissions_code >> i) % 2)) {
             switch (i) {
 
                 case (SERVER_COMMS):
@@ -134,8 +143,11 @@ void comms_available(uint permissions_code, char * buffer) {
 
             }
         }
-        digit_base *= 10;
     }
     snprintf(aux, sizeof(aux), "\nPress any option to end the session.\nOption: ");
     buffer = append(buffer, aux);
+}
+
+int mediated_chat() {
+    return 1;
 }
