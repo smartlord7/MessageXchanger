@@ -1,7 +1,6 @@
 #include "stdlib.h"
 #include "string.h"
 #include "assert.h"
-#include "../../global.h"
 #include "../../structs/user.h"
 #include "../../util/read_line/read_line.h"
 #include "../trees/user_tree.h"

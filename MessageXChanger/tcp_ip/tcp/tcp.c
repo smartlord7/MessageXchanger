@@ -6,7 +6,7 @@
 #include "arpa/inet.h"
 #include "netinet/in.h"
 #include "tcp.h"
-#include "../../global.h"
+#include "../../util/strings/strings.h"
 
 int init_tcp(int server_port, int num_max_conns) {
     sockaddr_in addr = {0};

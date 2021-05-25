@@ -2,13 +2,14 @@
 #define MESSAGEXCHANGER_USER_H
 
 #include "sys/types.h"
-#include "../global.h"
 #include "../util/strings/strings.h"
+#include "user_session.h"
 
 #define FIELD_DELIM ","
 
 typedef struct user_t{
     char user_name[LARGE_SIZE], password_hash[SMALL_SIZE];
+    user_session_t * curr_session;
     int id;
     uint host_ip,
          has_client_server_conn : 1,

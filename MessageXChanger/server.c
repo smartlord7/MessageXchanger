@@ -21,8 +21,8 @@
 #include "helpers/trees/session_tree.h"
 #include "structs/response_msg_t.h"
 
-_Noreturn static void * tcp_worker(void * data);
-_Noreturn static void * udp_worker(void * data);
+_Noreturn static void * tcp_worker();
+_Noreturn static void * udp_worker();
 static void handle_admin();
 static void signal_handler(int signum);
 static user_t * validate_user(char buffer[LARGEST_SIZE]);
@@ -61,20 +61,20 @@ int main(int argc, char * argv[]) {
     printf(REG_LOADED);
 
     assert(pthread_create(&udp_handler_thread, NULL, udp_worker, NULL) == 0);
-    //assert(pthread_create(&tcp_handler_thread, NULL, tcp_worker, NULL) == 0);
+    assert(pthread_create(&tcp_handler_thread, NULL, tcp_worker, NULL) == 0);
 
     pthread_join(udp_handler_thread, NULL);
     pthread_join(tcp_handler_thread, NULL);
     destroy_msg_queue(msq_id);
 }
 
-static void * tcp_worker(void * data) {
+static void * tcp_worker() {
     sockaddr_in admin_addr = {0};
     int admin_addr_size = sizeof(admin_addr);
 
     server_fd = init_tcp(admin_port, NUM_MAX_TCP_CONNECTIONS);
 
-    printf(TCP_ONLINE);
+    printf(TCP_ONLINE, admin_port);
 
     while (true) {
         while (waitpid(-1, NULL, WNOHANG) > 0);
@@ -86,7 +86,7 @@ static void * tcp_worker(void * data) {
     }
 }
 
-static void * udp_worker(void * data) {
+static void * udp_worker() {
     clients_fd = init_udp_server(clients_port);
     set_udp_timeout(clients_fd, UDP_ALL_TIMEOUT_SEC);
 
@@ -98,7 +98,7 @@ static void * udp_worker(void * data) {
     char * aux = NULL;
     int i = 0, j = 0;
 
-    printf(UDP_ONLINE);
+    printf(UDP_ONLINE, clients_port);
 
     while (i < NUM_MAX_UDP_CLIENTS) {
         handshake.msg.method = NA;
@@ -189,6 +189,7 @@ static int authenticate_server(handshake_t handshake) {
 
     // create a new session for the user in question.
     session = (user_session_t *) malloc(sizeof(user_session_t));
+    user->curr_session = session;
 
     session->user = user;
     session->port = handshake.client_addr.sin_port;
@@ -243,7 +244,7 @@ static void handle_admin() {
             aux = &buffer[0];
             n_read = (int) read(admin_fd, buffer, LARGEST_SIZE - 1);
             buffer[n_read - 1] = '\0';
-            printf(ADMIN "%s\n", admin_ip, buffer);
+            printf(SERVER_TCP " <-" ADMIN "%s\n", admin_ip, buffer);
 
             if (starts_with_ignore_case(buffer, CMD_ADD)) {
                 aux += strlen(CMD_ADD);

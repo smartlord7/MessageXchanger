@@ -9,7 +9,8 @@
 #define SMALL_SIZE 128
 #define MEDIUM_SIZE 256
 #define LARGE_SIZE 512
-#define LARGEST_SIZE 1024
+#define XLARGE_SIZE 1024
+#define LARGEST_SIZE 2048
 #define true 1
 #define false 0
 

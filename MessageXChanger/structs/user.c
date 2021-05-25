@@ -20,6 +20,7 @@ user_t * new_user(char user_name[LARGE_SIZE], char password_hash[SMALL_SIZE], ui
     user->has_group = has_group;
     user->is_deleted = false;
     user->is_logged = false;
+    user->curr_session = NULL;
 
     return user;
 }
