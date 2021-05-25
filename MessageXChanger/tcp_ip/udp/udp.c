@@ -6,7 +6,7 @@ int udp_receive_msg(int socket_fd, sockaddr_in * source, char * buffer, size_t m
     socklen_t size  = sizeof(* source);
 
     if(recvfrom(socket_fd, buffer, msg_size * sizeof(char), 0, (sockaddr *) source, (socklen_t *) &size) < 0) {
-        perror("Couldn't received udp message\n");
+        printf("Couldn't receive udp message\n");
 
         return EXIT_FAILURE;
     }
@@ -18,7 +18,7 @@ int udp_send_msg(int socket_fd, sockaddr_in * destination, char * message, size_
     socklen_t size = sizeof(*destination);
 
     if(sendto(socket_fd, message, msg_size * sizeof(char), 0, (sockaddr *) destination, size) < 0) {
-        perror("Couldn't send udp message\n");
+        printf("Couldn't send udp message\n");
 
         return EXIT_FAILURE;
     }

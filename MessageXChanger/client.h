@@ -9,10 +9,13 @@
 #include "util/strings/strings.h"
 #include "util/numbers/numbers.h"
 #include "tcp_ip/tcp/tcp.h"
+#include "structs/request_msg.h"
+#include "structs/response_msg_t.h"
 
 #define IP "125.234.233.213"
 #define PORT 9000
 #define NUM_PERMITS 3
+#define PASSWORD_HASH_OPT "DZ"
 
 #define END "END"
 

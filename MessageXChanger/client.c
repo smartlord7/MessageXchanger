@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "client.h"
+#include "unistd.h"
 
 unsigned long hash(const char *str);
 static int get_server(char * ip_address, int port);
@@ -15,14 +16,13 @@ static void group_chat();
 static char username[SMALL_SIZE];
 static int server_fd;
 static uint permissions;
-static unsigned long password_hash;
+static char password_hash[SMALL_SIZE];
 static sockaddr_in server = {0};
 
 int main () {
     get_server(IP, PORT);
 
     if(authenticate_user() == EXIT_FAILURE) {
-        printf("Couldn't authenticate user\n");
         return EXIT_SUCCESS;
     }
 
@@ -45,18 +45,33 @@ int get_server(char * ip_address, int port){
 }
 
 int authenticate_user(){
+    response_msg_t response;
+    request_msg_t request;
     char password[SMALL_SIZE], buffer[SMALL_SIZE];
+
+    set_udp_timeout(server_fd, 5);
 
     if(get_input("Username", username) == EXIT_FAILURE || get_input("Password", password) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
-    //password_hash = hash(password);
-    snprintf(buffer, sizeof(buffer), "LOGIN %s %lu\n", username, password_hash);
-    udp_send_msg(server_fd, &server, buffer, (size_t) strlen(buffer));
 
-    //udp_receive_msg(server_fd, server, buffer, sizeof(buffer));
+    request.method = LOGIN;
+    strcpy(request.hash, crypt(password, PASSWORD_HASH_OPT));
+    strcpy(request.user_name, username);
 
-    permissions = 101;
+    printf("envia msg\n");
+    udp_send_msg(server_fd, &server, (char *) &request, (size_t) sizeof(request_msg_t));
+
+    printf("espera resposta\n");
+    udp_receive_msg(server_fd, &server, (char *) &response, sizeof(response_msg_t));
+
+    if(response.type != RESP_LOGIN_SUCCESS) {
+        printf("Login failed\n");
+        return EXIT_FAILURE;
+    } else {
+        printf("Login successful\n");
+        permissions = response.permissions;
+    }
 
     return EXIT_SUCCESS;
 }
@@ -64,6 +79,7 @@ int authenticate_user(){
 void communicate() {
     int i = 0, option;
     char options[LARGE_SIZE], input[SMALL_SIZE];
+
 
     while(true) {
 
