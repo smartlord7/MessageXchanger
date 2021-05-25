@@ -9,8 +9,6 @@
 #include "stdlib.h"
 #include "arpa/inet.h"
 
-#define UDP_ALL_TIMEOUT_SEC 60
-
 typedef struct sockaddr sockaddr;
 typedef struct sockaddr_in sockaddr_in;
 

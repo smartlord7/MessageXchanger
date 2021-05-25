@@ -45,7 +45,6 @@ void print_users(user_tree_node_t * node) {
     print_users(node->left);
     user_str = user_to_string(node->user);
     printf("%s", user_str);
-    free(user_str);
 
     print_users(node->right);
 }
@@ -97,8 +96,9 @@ user_tree_node_t * insert_user_(user_tree_node_t * node, user_t * user){
         node = (user_tree_node_t *) malloc(sizeof(user_tree_node_t));
 
         node->user = user;
+        node->right = NULL;
+        node->left = NULL;
 
-        return node;
     } else {
 
         int cmp = strcmp(user->user_name, node->user->user_name);
@@ -108,11 +108,12 @@ user_tree_node_t * insert_user_(user_tree_node_t * node, user_t * user){
 
         } else if(cmp < 0) {
             node->left = insert_user_(node->left, user);
-        } else {
-            return NULL;
+        } else if (node->user->is_deleted) {
+            node->user = user;
         }
-        return node;
     }
+
+    return node;
 }
 
 
@@ -189,7 +190,6 @@ static void get_user_list_(user_tree_node_t * node, int mode, char * buffer) {
         aux = user_to_string(node->user);
         strcat(buffer, aux);
     }
-    free(aux);
     get_user_list_(node->right, mode, buffer);
 }
 

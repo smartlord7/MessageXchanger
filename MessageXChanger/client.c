@@ -4,7 +4,7 @@
 #include "client.h"
 
 static int get_server(char * ip_address, int port);
-static int authenticate_user();
+static int authenticate_client();
 static void communicate();
 static void comms_available(uint permissions_code, char * buffer);
 static void active_direct_chat(sockaddr_in destination, int mode);
@@ -19,7 +19,7 @@ static sockaddr_in server = {0};
 int main () {
     get_server(IP, PORT);
 
-    if(authenticate_user() == EXIT_FAILURE) {
+    if(authenticate_client() == EXIT_FAILURE) {
         return EXIT_SUCCESS;
     }
 
@@ -40,7 +40,7 @@ int get_server(char * ip_address, int port){
     return EXIT_SUCCESS;
 }
 
-int authenticate_user(){
+int authenticate_client(){
     response_msg_t response;
     request_msg_t request;
     char password[SMALL_SIZE];
@@ -51,9 +51,11 @@ int authenticate_user(){
         return EXIT_FAILURE;
     }
 
-    request.method = LOGIN;
-    strcpy(request.hash, crypt(password, PASSWORD_HASH_OPT));
-    strcpy(request.user_name, username);
+    password[strlen(password) - 1] = '\0';
+
+    request.method = REQ_LOGIN;
+    strcpy(request.user_name,username);
+    strcpy(request.hash, (crypt(trim_string(password), PASSWORD_HASH_OPT)));
 
     udp_send_msg(server_fd, &server, (char *) &request, (size_t) sizeof(request_msg_t));
 

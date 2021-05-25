@@ -4,6 +4,7 @@
 typedef enum response_type {
     RESP_NA,
     RESP_LOGIN_SUCCESS,
+    RESP_ALREADY_LOGGED_IN,
     RESP_WRONG_PASSWORD,
     RESP_NO_SESSION,
     RESP_IP_NOT_ALLOWED,

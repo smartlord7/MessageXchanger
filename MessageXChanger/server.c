@@ -28,7 +28,7 @@ static void signal_handler(int signum);
 static user_t * validate_user(char buffer[LARGEST_SIZE]);
 static void show_error_if(int cond, const char * msg, ...);
 static void * session_worker(void * data);
-static int authenticate_server(handshake_t handshake);
+static int authenticate_server(handshake_t * handshake);
 
 in_addr admin_addr_in;
 int clients_port, admin_port, server_fd, admin_fd, clients_fd, msq_id;
@@ -90,9 +90,9 @@ static void * udp_worker() {
     clients_fd = init_udp_server(clients_port);
     set_udp_timeout(clients_fd, UDP_ALL_TIMEOUT_SEC);
 
-    handshake_t handshake = {0};
     user_session_t * session = NULL;
     sockaddr_in client_addr = {0};
+    handshake_t handshakes[NUM_MAX_UDP_CLIENTS];
     pthread_t client_threads[NUM_MAX_UDP_CLIENTS];
     long client_ids[NUM_MAX_UDP_CLIENTS];
     char * aux = NULL;
@@ -101,15 +101,15 @@ static void * udp_worker() {
     printf(UDP_ONLINE, clients_port);
 
     while (i < NUM_MAX_UDP_CLIENTS) {
-        handshake.msg.method = NA;
-        show_error_if(udp_receive_msg(clients_fd, &client_addr, (char *) &handshake.msg, sizeof(request_msg_t)) == -1, ERROR_UDP_RCV, clients_fd);
-        if (handshake.msg.method == NA) {
+        handshakes[i].msg.method = REQ_NA;
+        show_error_if(udp_receive_msg(clients_fd, &client_addr, (char *) &handshakes[i].msg, sizeof(request_msg_t)) == -1, ERROR_UDP_RCV, clients_fd);
+        if (handshakes[i].msg.method == REQ_NA) {
             printf(SERVER_DISCONNECT_TIMEOUT);
             break;
         }
 
-        aux = ipv4_to_string(&handshake.client_addr.sin_addr);
-        handshake.client_addr = client_addr;
+        handshakes[i].client_addr = client_addr;
+        aux = ipv4_to_string(&client_addr.sin_addr);
         printf(CLIENT_CONNECT, aux);
 
         // check if the user has an active session.
@@ -117,19 +117,19 @@ static void * udp_worker() {
 
         if (session == NULL) {
 
-            if (!authenticate_server(handshake)) {
+            if (!authenticate_server(&handshakes[i])) {
                 continue;
             }
 
             client_ids[i] = i + 1;
-            handshake.client_id = i + 1;
+            handshakes[i].client_id = i + 1;
 
             assert(pthread_create(&client_threads[i], NULL, session_worker, (void *) &client_ids[i]) == 0);
             free(aux);
             i++;
         } else {
             // just send the udp message to the respective client worker through the msg queue, since it is authenticated.
-            snd_msg(msq_id, (void *) &handshake, sizeof(handshake_t));
+            snd_msg(msq_id, (void *) &handshakes[i], sizeof(handshake_t));
         }
     }
 
@@ -142,46 +142,59 @@ static void * udp_worker() {
     pthread_exit(NULL);
 }
 
-static int authenticate_server(handshake_t handshake) {
+static int authenticate_server(handshake_t * handshake) {
     user_t * user = NULL;
     user_session_t * session = NULL;
     response_msg_t resp_msg = {0};
+    char * ipv4 = NULL;
+
+    ipv4 = ipv4_to_string(&handshake->client_addr.sin_addr);
 
     // check if the request is to login since the user has no current session.
-    if (handshake.msg.method != LOGIN) {
+    if (handshake->msg.method != REQ_LOGIN) {
         resp_msg.type = RESP_NO_SESSION;
         send_resp();
+
+        printf(CLIENT_NO_SESSION, ipv4, handshake->msg.user_name);
 
         return false;
     }
 
     // remove the new line character.
-    handshake.msg.user_name[strlen(handshake.msg.user_name) - 1] = '\0';
+    handshake->msg.user_name[strlen(handshake->msg.user_name) - 1] = '\0';
 
     // check if the user exists
-    user = find_user(handshake.msg.user_name, HIDE_DELETED);
+    user = find_user(handshake->msg.user_name, HIDE_DELETED);
 
     if (user == NULL) {
         // the user doesn't exist.
         resp_msg.type = RESP_USER_NOT_FOUND;
         send_resp();
 
+        printf(CLIENT_USER_NOT_FOUND, ipv4, handshake->msg.user_name);
+
         return false;
     } else {
 
-        if (user->host_ip != handshake.client_addr.sin_addr.s_addr) {
+        if (user->host_ip != handshake->client_addr.sin_addr.s_addr) {
             resp_msg.type = RESP_IP_NOT_ALLOWED;
             send_resp();
+
+            printf(CLIENT_IP_NOT_ALLOWED, ipv4);
 
             return false;
         }
 
         // check if the user has inserted the correct password.
-        if (strcmp(handshake.msg.hash, user->password_hash) == 0) {
+        if (strcmp(handshake->msg.hash, user->password_hash) == 0) {
+            resp_msg.type = RESP_LOGIN_SUCCESS;
 
+            send_resp();
         } else {
             resp_msg.type = RESP_WRONG_PASSWORD;
             send_resp();
+
+            printf(CLIENT_WRONG_PASSWORD, ipv4);
 
             return false;
         }
@@ -192,35 +205,45 @@ static int authenticate_server(handshake_t handshake) {
     user->curr_session = session;
 
     session->user = user;
-    session->port = handshake.client_addr.sin_port;
+    session->port = handshake->client_addr.sin_port;
     session->user = user;
 
     insert_session(session);
+    printf(CLIENT_LOGGED_IN, ipv4);
 
     return true;
 }
 
 static void * session_worker(void * data) {
     long client_id = * (long *) data;
-    handshake_t handshake = {0};
+    handshake_t msg_rcved = {0};
+    handshake_t * handshake = &msg_rcved;
+    response_msg_t resp_msg = {0};
     char * client_ip = NULL;
     int leave = false;
 
-    client_ip = ipv4_to_string(&handshake.client_addr.sin_addr);
+    client_ip = ipv4_to_string(&msg_rcved.client_addr.sin_addr);
     while (!leave) {
-        rcv_msg(msq_id, (void *) &handshake, sizeof(handshake_t), client_id);
-        switch (handshake.msg.method) {
-            case LOGIN:
+        rcv_msg(msq_id, (void *) &msg_rcved, sizeof(handshake_t), client_id);
+        printf("%d\n", msg_rcved.msg.method);
+        switch (msg_rcved.msg.method) {
+            case REQ_LOGIN:
+                resp_msg.type = RESP_ALREADY_LOGGED_IN;
+                send_resp();
                 break;
-            case SEND:
+            case REQ_SEND:
                 break;
-            case GET_USER:
+            case REQ_GET_USER:
                 break;
-            case LIST_USERS:
+            case REQ_LIST_USERS:
                 break;
-            case MULTICAST:
+            case REQ_MULTICAST:
                 break;
-            case END:
+            case REQ_END:
+                resp_msg.type = RESP_END;
+                send_resp();
+
+                delete_session(msg_rcved.client_addr.sin_addr.s_addr, msg_rcved.client_addr.sin_port);
                 leave = true;
                 break;
         }
@@ -296,7 +319,6 @@ static void handle_admin() {
             }
         } while (n_read > 0);
     }
-    free(admin_ip);
 }
 
 static user_t * validate_user(char buffer[LARGEST_SIZE]) {
@@ -313,17 +335,18 @@ static user_t * validate_user(char buffer[LARGEST_SIZE]) {
 
     token = strtok(NULL, ADD_DELIM);
     if (token == NULL) {
-        send_tcp_response(admin_fd, ERROR_MISSING_PARAM, "password");
-        return NULL;
-    }
-    strcpy(password_hash, crypt(token, PASSWORD_HASH_OPT));
-
-    token = strtok(NULL, ADD_DELIM);
-    if (token == NULL) {
         send_tcp_response(admin_fd, ERROR_MISSING_PARAM, "host ip");
         return NULL;
     }
     strcpy(host_ip, token);
+
+    token = strtok(NULL, ADD_DELIM);
+    printf("%s\n", token);
+    if (token == NULL) {
+        send_tcp_response(admin_fd, ERROR_MISSING_PARAM, "password");
+        return NULL;
+    }
+    strcpy(password_hash, crypt(token, PASSWORD_HASH_OPT));
 
     token = strtok(NULL, ADD_DELIM);
     if (token == NULL) {

@@ -12,11 +12,11 @@
 #include "structs/request_msg.h"
 #include "structs/response_msg_t.h"
 
-#define IP "125.234.233.213"
-#define PORT 9000
+#define IP "0.0.0.0"
+#define PORT 4500
 #define NUM_PERMITS 3
 #define PASSWORD_HASH_OPT "DZ"
-#define UDP_TIMEOUT_SEC 3
+#define UDP_TIMEOUT_SEC 120
 #define CHECK_TIMEOUT_SEC 1
 
 #define USERNAME "USERNAME"
