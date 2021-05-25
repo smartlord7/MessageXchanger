@@ -246,6 +246,12 @@ static void * session_worker(void * data) {
                 delete_session(msg_rcved.client_addr.sin_addr.s_addr, msg_rcved.client_addr.sin_port);
                 leave = true;
                 break;
+            case REQ_NA:
+                break;
+            case REQ_MEDIATED:
+                break;
+            case REQ_NON_MEDIATED:
+                break;
         }
     }
 
