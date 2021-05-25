@@ -386,6 +386,33 @@ tcp_ip/udp/udp.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/tcp_ip/udp/udp.c.s
 .PHONY : tcp_ip/udp/udp.c.s
 
+util/msg_queue/msg_queue.o: util/msg_queue/msg_queue.c.o
+
+.PHONY : util/msg_queue/msg_queue.o
+
+# target to build an object file
+util/msg_queue/msg_queue.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/util/msg_queue/msg_queue.c.o
+.PHONY : util/msg_queue/msg_queue.c.o
+
+util/msg_queue/msg_queue.i: util/msg_queue/msg_queue.c.i
+
+.PHONY : util/msg_queue/msg_queue.i
+
+# target to preprocess a source file
+util/msg_queue/msg_queue.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/util/msg_queue/msg_queue.c.i
+.PHONY : util/msg_queue/msg_queue.c.i
+
+util/msg_queue/msg_queue.s: util/msg_queue/msg_queue.c.s
+
+.PHONY : util/msg_queue/msg_queue.s
+
+# target to generate assembly for a file
+util/msg_queue/msg_queue.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Server.dir/build.make CMakeFiles/Server.dir/util/msg_queue/msg_queue.c.s
+.PHONY : util/msg_queue/msg_queue.c.s
+
 util/numbers/numbers.o: util/numbers/numbers.c.o
 
 .PHONY : util/numbers/numbers.o
@@ -507,6 +534,9 @@ help:
 	@echo "... tcp_ip/udp/udp.o"
 	@echo "... tcp_ip/udp/udp.i"
 	@echo "... tcp_ip/udp/udp.s"
+	@echo "... util/msg_queue/msg_queue.o"
+	@echo "... util/msg_queue/msg_queue.i"
+	@echo "... util/msg_queue/msg_queue.s"
 	@echo "... util/numbers/numbers.o"
 	@echo "... util/numbers/numbers.i"
 	@echo "... util/numbers/numbers.s"

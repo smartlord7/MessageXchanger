@@ -146,14 +146,19 @@
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
-		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/main.h">
-			<Option target="Client"/>
-			<Option target="Server"/>
-		</Unit>
 		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/server.c">
 			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/server.h">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/handshake_t.h">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/request_msg.h">
+			<Option target="Client"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/response_msg_t.h">
 			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/session_tree_node_t.h">
@@ -190,6 +195,12 @@
 		</Unit>
 		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/tcp_ip/udp/udp.h">
 			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/msg_queue/msg_queue.c">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/msg_queue/msg_queue.h">
 			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/util/numbers/numbers.c">
