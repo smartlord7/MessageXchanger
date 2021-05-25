@@ -1,5 +1,0 @@
-auto eth0
-iface eth0 inet static
-	address 193.136.212.141
-	netmask 255.255.255.248
-	gateway 193.136.212.137
