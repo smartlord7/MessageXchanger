@@ -1,12 +1,11 @@
-#include <string.h>
+#include "string.h"
 #include "udp.h"
 #include "assert.h"
-
 
 int udp_receive_msg(int socket_fd, sockaddr_in * source, char * buffer, size_t msg_size) {
     socklen_t size  = sizeof(* source);
 
-    if(recvfrom(socket_fd, buffer, msg_size * sizeof(char), 0, (sockaddr *) source, (socklen_t *)&size) < 0) {
+    if(recvfrom(socket_fd, buffer, msg_size * sizeof(char), 0, (sockaddr *) source, (socklen_t *) &size) < 0) {
         perror("Couldn't received udp message\n");
 
         return EXIT_FAILURE;
@@ -39,15 +38,25 @@ int init_udp_client(int port, uint ip_address, sockaddr_in * addr) {
     return socket_fd;
 }
 
-int init_udp_server(int port, uint ip_address, sockaddr_in * addr) {
+int init_udp_server(int port) {
     int socket_fd;
+    sockaddr_in addr;
 
-    addr->sin_family = AF_INET;
-    addr->sin_addr.s_addr = htonl(ip_address);
-    addr->sin_port = htons(port);
+    addr.sin_family = AF_INET;
+    addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    addr.sin_port = htons(port);
 
     assert((socket_fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) != -1);
     assert(bind(socket_fd, (sockaddr *) &addr, sizeof(sockaddr_in)) != -1);
 
     return socket_fd;
+}
+
+void set_udp_timeout(int fd, int num_sec) {
+    assert(fd > 0 && num_sec > 0);
+
+    struct timeval read_timeout;
+    read_timeout.tv_sec = num_sec;
+    read_timeout.tv_usec = 0;
+    setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &read_timeout, sizeof(read_timeout));
 }

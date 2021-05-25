@@ -7,7 +7,7 @@ typedef struct user_t user_t;
 
 typedef struct user_session_t {
     user_t * user;
-    uint host_ip, port, logged_in : 1;
+    uint host_ip, port;
 } user_session_t;
 
 #endif //MESSAGEXCHANGER_USER_SESSION_H

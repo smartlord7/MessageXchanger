@@ -26,8 +26,8 @@ char * trim_string(char * s){
 
     int i;
 
-    while (isspace (*s)) s++;   // skip left side white spaces
-    for (i = (int) strlen(s) - 1; (isspace (s[i])); i--) ;   // skip right side white spaces
+    while (isspace (*s) || (* s) == '\n') s++;   // skip left side white spaces
+    for (i = (int) strlen(s) - 1; (isspace (s[i] || s[i] == '\n')); i--) ;   // skip right side white spaces
     s[i + 1] = '\0';
 
     return s;
@@ -63,7 +63,6 @@ int is_numeric(const char * string, size_t size) {
     assert(string != NULL && size > 0);
 
     for(int i = 0; i < (int) size; i++) {
-    for(int i = 0; i < size; i++) {
         if(!isdigit(string[i])) {
             return false;
         }

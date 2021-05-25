@@ -13,6 +13,12 @@
 #include "server.h"
 #include "util/strings/strings.h"
 #include "crypt.h"
+#include "tcp_ip/udp/udp.h"
+#include "structs/request_msg.h"
+#include "structs/handshake_t.h"
+#include "util/msg_queue/msg_queue.h"
+#include "structs/user_session.h"
+#include "helpers/trees/session_tree.h"
 
 _Noreturn static void * tcp_worker(void * data);
 _Noreturn static void * udp_worker(void * data);
@@ -20,9 +26,10 @@ static void handle_admin();
 static void signal_handler(int signum);
 static user_t * validate_user(char buffer[LARGEST_SIZE]);
 static void show_error_if(int cond, const char * msg, ...);
+static void * session_worker(void * data);
 
 in_addr admin_addr_in;
-int clients_port, admin_port, server_fd, admin_fd;
+int clients_port, admin_port, server_fd, admin_fd, clients_fd, msq_id;
 
 
 int main(int argc, char * argv[]) {
@@ -42,6 +49,8 @@ int main(int argc, char * argv[]) {
     reg_file_path = argv[3];
     reg_file_path_b = argv[4];
 
+    msq_id = create_msg_queue();
+
     pthread_t tcp_handler_thread = {0}, udp_handler_thread = {0};
 
     client_reg_reader_init(reg_file_path, reg_file_path_b);
@@ -49,11 +58,12 @@ int main(int argc, char * argv[]) {
 
     printf(REG_LOADED);
 
-    pthread_create(&tcp_handler_thread, NULL, tcp_worker, NULL);
-    pthread_create(&tcp_handler_thread, NULL, udp_worker, NULL);
+    assert(pthread_create(&udp_handler_thread, NULL, udp_worker, NULL) == 0);
+    //assert(pthread_create(&tcp_handler_thread, NULL, tcp_worker, NULL) == 0);
 
-    pthread_join(tcp_handler_thread, NULL);
     pthread_join(udp_handler_thread, NULL);
+    pthread_join(tcp_handler_thread, NULL);
+    destroy_msg_queue(msq_id);
 }
 
 static void * tcp_worker(void * data) {
@@ -61,6 +71,8 @@ static void * tcp_worker(void * data) {
     int admin_addr_size = sizeof(admin_addr);
 
     server_fd = init_tcp(admin_port, NUM_MAX_TCP_CONNECTIONS);
+
+    printf(TCP_ONLINE);
 
     while (true) {
         while (waitpid(-1, NULL, WNOHANG) > 0);
@@ -73,14 +85,106 @@ static void * tcp_worker(void * data) {
 }
 
 static void * udp_worker(void * data) {
+    clients_fd = init_udp_server(clients_port);
+    set_udp_timeout(clients_fd, UDP_ALL_TIMEOUT_SEC);
 
-    while (true) {
+    handshake_t handshake = {0};
+    sockaddr_in client_addr = {0};
+    user_session_t * session = NULL;
+    user_t * user = NULL;
+    pthread_t client_threads[NUM_MAX_UDP_CLIENTS];
+    long client_ids[NUM_MAX_UDP_CLIENTS];
+    char * aux = NULL;
+    int i = 0, j = 0;
 
+    printf(UDP_ONLINE);
+
+    while (i < NUM_MAX_UDP_CLIENTS) {
+        handshake.msg.method = NA;
+        show_error_if(udp_receive_msg(clients_fd, &client_addr, (char *) &handshake.msg, sizeof(request_msg_t)) == -1, ERROR_UDP_RCV, clients_fd);
+        if (handshake.msg.method == NA) {
+            printf(SERVER_DISCONNECT_TIMEOUT);
+            break;
+        }
+
+        aux = ipv4_to_string(&handshake.client_addr.sin_addr);
+        printf(CLIENT_CONNECT, aux);
+
+        session = find_session(client_addr.sin_addr.s_addr, client_addr.sin_port);
+
+        if (session == NULL) {
+
+            handshake.msg.user_name[strlen(handshake.msg.user_name) - 1] = '\0';
+            user = find_user(handshake.msg.user_name, HIDE_DELETED);
+
+            if (user == NULL) {
+                udp_send_msg(clients_fd, &client_addr, UDP_ERROR_USER_NOT_FOUND, strlen(UDP_ERROR_USER_NOT_FOUND));
+                continue;
+            } else {
+                if (strcmp(handshake.msg.hash, user->password_hash) == 0) {
+
+                } else {
+                    udp_send_msg(clients_fd, &client_addr, ERROR_WRONG_PASSWORD, strlen(ERROR_WRONG_PASSWORD));
+                    continue;
+                }
+            }
+
+            session = (user_session_t *) malloc(sizeof(user_session_t));
+
+            session->user = user;
+            session->port = client_addr.sin_port;
+            session->user = user;
+
+            client_ids[i] = i + 1;
+            handshake.client_id = i + 1;
+
+            assert(pthread_create(&client_threads[i], NULL, session_worker, (void *) &client_ids[i]) == 0);
+            free(aux);
+            i++;
+        } else {
+            handshake.client_addr = client_addr;
+            snd_msg(msq_id, (void *) &handshake, sizeof(handshake_t));
+        }
     }
+
+    while (j < i) {
+        assert(pthread_join(client_threads[j], NULL) == 0);
+        j++;
+    }
+
+    pthread_exit(NULL);
 }
 
 static void * session_worker(void * data) {
+    long client_id = * (long *) data;
+    handshake_t handshake = {0};
+    char * client_ip = NULL;
+    int leave = false;
 
+    client_ip = ipv4_to_string(&handshake.client_addr.sin_addr);
+    while (!leave) {
+        rcv_msg(msq_id, (void *) &handshake, sizeof(handshake_t), client_id);
+        switch (handshake.msg.method) {
+            case LOGIN:
+
+
+                break;
+            case SEND:
+                break;
+            case GET_USER:
+                break;
+            case LIST_USERS:
+                break;
+            case MULTICAST:
+                break;
+            case END:
+                leave = true;
+                break;
+        }
+    }
+
+    free(client_ip);
+    pthread_exit(NULL);
 }
 
 static void handle_admin() {
@@ -126,7 +230,7 @@ static void handle_admin() {
                 aux = trim_string(aux);
 
                 if (delete_user(aux) == NULL) {
-                    send_response(admin_fd, ERROR_USER_NOT_FOUND, aux);
+                    send_response(admin_fd, TCP_ERROR_USER_NOT_FOUND, aux);
                 } else {
                     send_response(admin_fd, USER_DELETE, aux);
                 }
@@ -169,7 +273,7 @@ static user_t * validate_user(char buffer[LARGEST_SIZE]) {
         send_response(admin_fd, ERROR_MISSING_PARAM, "password");
         return NULL;
     }
-    strcpy(password_hash, crypt(token, "an"));
+    strcpy(password_hash, crypt(token, PASSWORD_HASH_OPT));
 
     token = strtok(NULL, ADD_DELIM);
     if (token == NULL) {
