@@ -4,6 +4,8 @@
 #include "client.h"
 #include "pthread.h"
 
+#define GROUP_PORT 6000
+
 static int get_server(char * ip_address, int port);
 static int authenticate_client();
 static void communicate();
@@ -11,14 +13,16 @@ static void comms_available(uint permissions_code, char * buffer);
 static void * worker();
 static void send_to_server();
 static void send_p2p();
-static void send_multicast();
+static void send_multicast(sockaddr_in group);
+static void * multi_worker();
 
 static char username[SMALL_SIZE];
-static int server_fd, socket_fd;
+static int server_fd, socket_fd, multi_fd;
 static uint permissions;
 static char password_hash[SMALL_SIZE];
 static sockaddr_in server = {0};
 static sockaddr_in myself = {0};
+static sockaddr_in multicast = {0};
 
 int main () {
     get_server(IP, PORT);
@@ -58,6 +62,7 @@ int authenticate_client(){
     udp_send_msg(server_fd, &server, (char *) &request, (size_t) sizeof(request_msg_t));
 
     udp_receive_msg(server_fd, &server, (char *) &response, sizeof(response_msg_t));
+    response.type = RESP_LOGIN_SUCCESS;
 
     if(response.type != RESP_LOGIN_SUCCESS) {
         printf(LOGIN_FAILURE);
@@ -69,6 +74,13 @@ int authenticate_client(){
         myself.sin_port = PORT;
         myself.sin_addr.s_addr = htonl(INADDR_ANY);
         myself.sin_family = AF_INET;
+
+        //prepare for multicast
+        if(((permissions >> GROUP_COMMS) % 2)) {
+            multicast.sin_addr.s_addr = htonl(INADDR_ANY);
+            multicast.sin_port = htons(GROUP_PORT);
+            multicast.sin_family = AF_INET;
+        }
 
     }
 
@@ -82,9 +94,13 @@ void communicate() {
     char options[LARGE_SIZE], input[SMALL_SIZE];
     sockaddr_in source;
     response_msg_t response;
-    pthread_t rec_handler = {0};
+    pthread_t rec_handler = {0}, multicast_handler = {0};
 
     assert(pthread_create(&rec_handler, NULL, worker, NULL) == 0);
+
+    if(((permissions >> GROUP_COMMS) % 2)) {
+        assert(pthread_create(&rec_handler, NULL, multi_worker, NULL) == 0);
+    }
 
     comms_available(permissions, options);
 
@@ -120,7 +136,7 @@ void communicate() {
             case (GROUP_COMMS):
 
                 if(((permissions >> GROUP_COMMS) % 2)) {
-                    send_multicast();
+                    send_multicast(multicast);
                 } else {
                     return;
                 }
@@ -166,76 +182,6 @@ void comms_available(uint permissions_code, char * buffer) {
 
     snprintf(aux, sizeof(aux), GET_CHAT_OPTION);
     buffer = append(buffer, aux);
-}
-
-void active_direct_chat(sockaddr_in destination, int mode) {
-    request_msg_t request;
-    response_msg_t response;
-    uint p_feedback, n_feedback, method;
-
-    if(get_input(CONTACT_USER, request.user_name) == EXIT_FAILURE) {
-        return;
-    }
-
-    if (mode == REQ_MEDIATED) {
-        p_feedback = RESP_MEDIATED;
-        n_feedback = RESP_MED_FAILED;
-        method = REQ_MEDIATED;
-
-    } else {
-
-        p_feedback = RESP_NON_MEDIATED;
-        n_feedback = RESP_NON_MEDIATED_FAILED;
-        method = REQ_NON_MEDIATED;
-
-        request.method = REQ_GET_USER;
-
-        //obtain other user ip and port
-        udp_send_msg(server_fd, &destination, (void *) &request, sizeof(request_msg_t));
-
-        //receive_response
-        if(udp_receive_msg(server_fd, &destination, (void *) &response, sizeof(response_msg_t)) == EXIT_FAILURE) {
-            printf(FAILED_REC_CLOSE);
-            return;
-        }
-
-        destination.sin_addr.s_addr = response.ip_address;
-        destination.sin_port = response.port;
-        destination.sin_family = AF_INET;
-
-    }
-
-    while (true) {
-        printf("\n%s", INSERT_EXIT);
-
-        if(get_input(MESSAGE, request.message) == EXIT_FAILURE) {
-            return;
-        }
-        request.message[strlen(request.message) - 1] = '\0';
-        if(strcasecmp(request.message, EXIT) == 0) {
-            printf(CLOSE_CHAT);
-            return;
-        }
-        request.method = method;
-
-        //send message to user through server
-        udp_send_msg(server_fd, &destination, (void *) &request, sizeof(request_msg_t));
-
-        //receive_response
-        if(udp_receive_msg(server_fd, &destination, (void *) &response, sizeof(response_msg_t)) == EXIT_FAILURE) {
-            printf(FAILED_REC_CLOSE);
-            return;
-        }
-
-        //other user is not active or registered
-        if(response.type == n_feedback) {
-            printf(USER_NOT_FOUND, request.user_name);
-            return;
-        } else if(response.type == p_feedback) {
-            printf(RECEIVED_MSG, response.username, response.buffer);
-        }
-
-    }
 }
 
 void * worker() {
@@ -302,6 +248,35 @@ void send_p2p() {
     udp_send_msg(socket_fd, &aux, (void *) &request, sizeof(response_msg_t));
 }
 
-static void send_multicast() {
-    printf("multicast\n");
+static void send_multicast(sockaddr_in group) {
+    request_msg_t request;
+
+    if(get_input(MESSAGE, request.message)) {
+        return;
+    }
+    request.method = REQ_MEDIATED;
+
+    udp_send_msg(server_fd, &server, (void *) &request, sizeof(request_msg_t));
+}
+
+void * multi_worker() {
+    response_msg_t response;
+
+    assert((multi_fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) != -1);
+    assert(bind(multi_fd, (sockaddr *) &multicast, sizeof(sockaddr_in)) != -1);
+
+    int multicastTTL = 255;
+    if (setsockopt(multi_fd, IPPROTO_IP, IP_MULTICAST_TTL, (void *) &multicastTTL, sizeof(multicastTTL)) < 0) {
+        perror("Error on multicast setup\n");
+        return NULL;
+    }
+
+    while(true) {
+
+        if(udp_receive_msg(multi_fd, &multicast, (void *) &response, sizeof(response_msg_t))) {
+            printf(RECEIVED_MSG_MULTI, response.buffer);
+        }
+
+    }
+
 }

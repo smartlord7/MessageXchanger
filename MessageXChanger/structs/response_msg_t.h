@@ -23,7 +23,7 @@ typedef enum response_type {
 
 typedef struct response_msg_t {
     response_type type;
-    uint ip_address, port, permissions;
+    uint ip_address, port, permissions, multi_address, multi_port;
     char buffer[LARGE_SIZE];
     char username[SMALL_SIZE];
 } response_msg_t;
