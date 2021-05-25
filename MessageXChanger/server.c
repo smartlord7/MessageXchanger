@@ -263,6 +263,7 @@ static void * session_worker(void * data) {
                 if (user->curr_session == NULL) {
                     printf(CLIENT_REQ_USER_NOT_ONLINE, client_ip, msg_rcved.msg.user_name);
                     resp_msg.type = RESP_USER_NOT_ACTIVE;
+                    send_resp();
 
                     continue;
                 }
@@ -309,7 +310,9 @@ static void * session_worker(void * data) {
                 resp_msg.port = user->curr_session->port;
                 resp_msg.type = RESP_MEDIATED;
                 strcpy(resp_msg.buffer, msg_rcved.msg.user_name);
-                udp_send_msg(clients_fd, client_addr, (char *) &resp_msg, sizeof(response_msg_t));
+                udp_send_msg(clients_fd, &msg_rcved.client_addr, (void *) &resp_msg, sizeof(response_msg_t));
+                resp_msg.type = RESP_MESSAGE_SENT;
+                send_resp();
 
                 break;
 

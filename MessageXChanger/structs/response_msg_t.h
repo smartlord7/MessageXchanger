@@ -9,6 +9,7 @@ typedef enum response_type {
     RESP_NO_SESSION,
     RESP_IP_NOT_ALLOWED,
     RESP_USER_NOT_FOUND,
+    RESP_MESSAGE_SENT,
     RESP_USER_NOT_ACTIVE,
     RESP_MEDIATED,
     RESP_MED_FAILED,

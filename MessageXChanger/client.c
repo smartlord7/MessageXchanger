@@ -64,16 +64,15 @@ int authenticate_client(){
     udp_receive_msg(server_fd, &server, (char *) &response, sizeof(response_msg_t));
     response.type = RESP_LOGIN_SUCCESS;
 
-    if(response.type != RESP_LOGIN_SUCCESS) {
-        printf(LOGIN_FAILURE);
-        return EXIT_FAILURE;
-    } else {
+    if(response.type == RESP_LOGIN_SUCCESS) {
         printf(LOGIN_SUCCESS);
         permissions = response.permissions;
 
-        myself.sin_port = PORT;
-        myself.sin_addr.s_addr = htonl(INADDR_ANY);
-        myself.sin_family = AF_INET;
+    } else if (response.type == RESP_ALREADY_LOGGED_IN) {
+        printf("USER ALREADY LOGGED IN!\n");
+    } else if (response.type == RESP_USER_NOT_FOUND) {
+        printf(LOGIN_FAILURE);
+        printf("ERROR: USER NOT FOUND!\n");
 
         //prepare for multicast
         if(((permissions >> GROUP_COMMS) % 2)) {
@@ -95,6 +94,10 @@ void communicate() {
     sockaddr_in source;
     response_msg_t response;
     pthread_t rec_handler = {0}, multicast_handler = {0};
+
+    myself.sin_port = PORT;
+    myself.sin_addr.s_addr = htonl(INADDR_ANY);
+    myself.sin_family = AF_INET;
 
     assert(pthread_create(&rec_handler, NULL, worker, NULL) == 0);
 
@@ -119,7 +122,18 @@ void communicate() {
 
                 if(((permissions >> SERVER_COMMS) % 2)) {
                     send_to_server();
+                    udp_receive_msg(socket_fd, &server, (void *) &response, sizeof(response_msg_t));
+
+                    if (response.type == RESP_USER_NOT_FOUND) {
+                        printf("ERROR: USER NOT FOUND!\n");
+                    } else if (response.type == RESP_USER_NOT_ACTIVE) {
+                        printf("ERROR: USER NOT ACTIVE!\n");
+                    } else if (response.type == RESP_MESSAGE_SENT) {
+                        printf("MESSAGE SUCCESSFULLY SENT!\n");
+                    }
+
                 } else {
+                    printf("ACTION NOT ALLOWED!\n");
                     return;
                 }
 
@@ -129,6 +143,7 @@ void communicate() {
                 if(((permissions >> P2P) % 2)) {
                     send_p2p();
                 } else {
+                    printf("ACTION NOT ALLOWED!\n");
                     return;
                 }
 
@@ -138,11 +153,13 @@ void communicate() {
                 if(((permissions >> GROUP_COMMS) % 2)) {
                     send_multicast(multicast);
                 } else {
+                    printf("ACTION NOT ALLOWED!\n");
                     return;
                 }
                 break;
 
             default:
+                printf("ACTION NOT ALLOWED!\n");
                 return;
         }
 
@@ -181,7 +198,7 @@ void comms_available(uint permissions_code, char * buffer) {
     }
 
     snprintf(aux, sizeof(aux), GET_CHAT_OPTION);
-    buffer = append(buffer, aux);
+    append(buffer, aux);
 }
 
 void * worker() {
@@ -206,9 +223,7 @@ void send_to_server() {
         return;
     }
 
-
     request.method = REQ_MEDIATED;
-
     udp_send_msg(server_fd, &server, (void *) &request, sizeof(request_msg_t));
 
 }
