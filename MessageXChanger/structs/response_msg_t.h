@@ -15,6 +15,8 @@ typedef enum response_type {
     RESP_NON_MEDIATED_FAILED,
     RESP_MULTICAST,
     RESP_MULTICAST_FAILED,
+    USER_NOT_FOUND,
+    USER_FOUND,
     RESP_END
 } response_type;
 

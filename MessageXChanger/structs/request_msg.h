@@ -10,7 +10,7 @@ typedef enum request_method {
     REQ_MULTICAST,
     REQ_END,
     REQ_MEDIATED,
-    REQ_NON_MEDIATED
+    REQ_NON_MEDIATED,
 } request_method;
 
 typedef struct request_msg_t {

@@ -191,19 +191,39 @@ void active_direct_chat(sockaddr_in destination, int mode) {
 
     set_udp_timeout(server_fd, UDP_TIMEOUT_SEC);
 
+    if(get_input(CONTACT_USER, request.user_name) == EXIT_FAILURE) {
+        return;
+    }
+
     if(mode == REQ_MEDIATED) {
         p_feedback = RESP_MEDIATED;
         n_feedback = RESP_MED_FAILED;
         method = REQ_MEDIATED;
 
-        if(get_input(CONTACT_USER, request.user_name) == EXIT_FAILURE) {
-            return;
-        }
+
+
 
     } else {
+
         p_feedback = RESP_NON_MEDIATED;
         n_feedback = RESP_NON_MEDIATED_FAILED;
         method = REQ_NON_MEDIATED;
+
+        request.method = GET_USER;
+
+        //obtain other user ip and port
+        udp_send_msg(server_fd, &destination, (char *) &request, sizeof(request_msg_t));
+
+        //receive_response
+        if(udp_receive_msg(server_fd, &destination, (char *) &response, sizeof(response_msg_t)) == EXIT_FAILURE) {
+            printf(FAILED_REC_CLOSE);
+            return;
+        }
+
+        destination.sin_addr.s_addr = response.ip_address;
+        destination.sin_port = response.port;
+        destination.sin_family = AF_INET;
+
     }
 
 
