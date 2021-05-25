@@ -62,7 +62,6 @@ int authenticate_client(){
     udp_send_msg(server_fd, &server, (char *) &request, (size_t) sizeof(request_msg_t));
 
     udp_receive_msg(server_fd, &server, (char *) &response, sizeof(response_msg_t));
-    response.type = RESP_LOGIN_SUCCESS;
 
     if(response.type == RESP_LOGIN_SUCCESS) {
         printf(LOGIN_SUCCESS);
@@ -74,15 +73,20 @@ int authenticate_client(){
         printf(LOGIN_FAILURE);
         printf("ERROR: USER NOT FOUND!\n");
 
-        //prepare for multicast
-        if(((permissions >> GROUP_COMMS) % 2)) {
-            multicast.sin_addr.s_addr = htonl(INADDR_ANY);
-            multicast.sin_port = htons(GROUP_PORT);
-            multicast.sin_family = AF_INET;
-        }
+        return EXIT_FAILURE;
+    } else if (response.type == RESP_WRONG_PASSWORD) {
+        printf(LOGIN_FAILURE);
+        printf("ERROR: WRONG PASSWORD!\n");
 
+        return EXIT_FAILURE;
     }
 
+    //prepare for multicast
+    if(((permissions >> GROUP_COMMS) % 2)) {
+        multicast.sin_addr.s_addr = htonl(INADDR_ANY);
+        multicast.sin_port = htons(GROUP_PORT);
+        multicast.sin_family = AF_INET;
+    }
     permissions = 111;
 
     return EXIT_SUCCESS;
@@ -205,7 +209,7 @@ void * worker() {
     response_msg_t response;
 
     assert((socket_fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) != -1);
-    assert(bind(socket_fd, (sockaddr *) &myself, sizeof(sockaddr_in)) != -1);
+    //assert(bind(socket_fd, (sockaddr *) &myself, sizeof(sockaddr_in)) != -1);
 
     while(true) {
 

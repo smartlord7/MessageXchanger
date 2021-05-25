@@ -52,6 +52,6 @@
 #define USER_DELETE SERVER_TCP "USER '%s' SUCCESSFULLY DELETED!\n"
 #define SHOW_DELETE_TOGGLE SERVER_TCP "<show delete> TOGGLED TO %d!\n"
 
-#define send_resp() udp_send_msg(clients_fd, client_addr, (char *) &resp_msg, sizeof(response_msg_t))
+#define send_resp() udp_send_msg(clients_fd, client_addr, (void *) &resp_msg, sizeof(response_msg_t))
 
 #endif //MESSAGEXCHANGER_SERVER_H
