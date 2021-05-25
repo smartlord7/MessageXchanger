@@ -19,7 +19,6 @@ user_t * new_user(char user_name[LARGE_SIZE], char password_hash[SMALL_SIZE], ui
     user->has_p2p_conn = has_p2p_conn;
     user->has_group = has_group;
     user->is_deleted = false;
-    user->is_logged = false;
     user->curr_session = NULL;
 
     return user;
@@ -39,9 +38,9 @@ char * user_to_string(user_t * user) {
     assert(buffer != NULL);
 
     snprintf(buffer, XLARGE_SIZE, "-ID: %d, NAME: %s, IP: %s, PASSWORD HASH: %s "
-                                 "CLIENT-SERVER: %u, P2P: %u, GROUP: %u, LOGGED: %u, DELETED: %u\n",
+                                 "CLIENT-SERVER: %u, P2P: %u, GROUP: %u, DELETED: %u\n",
                                   user->id, user->user_name, ipv4, user->password_hash,
-                                  user->has_client_server_conn, user->has_p2p_conn, user->has_group, user->is_logged, user->is_deleted);
+                                  user->has_client_server_conn, user->has_p2p_conn, user->has_group, user->is_deleted);
 
     free(ipv4);
 

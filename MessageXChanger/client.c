@@ -23,9 +23,7 @@ static sockaddr_in myself = {0};
 int main () {
     get_server(IP, PORT);
 
-    if(authenticate_client() == EXIT_FAILURE) {
-        return EXIT_SUCCESS;
-    }
+    while (authenticate_client() == EXIT_FAILURE);
 
     communicate();
 
@@ -49,14 +47,9 @@ int authenticate_client(){
     request_msg_t request;
     char password[SMALL_SIZE];
 
-    set_udp_timeout(server_fd, UDP_TIMEOUT_SEC);
-
     if(get_input(USERNAME, username) == EXIT_FAILURE || get_input(PASSWORD, password) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
-
-    strtok(username, "\n");
-    strtok(password, "\n");
 
     request.method = REQ_LOGIN;
     strcpy(request.user_name,username);
@@ -64,7 +57,7 @@ int authenticate_client(){
 
     udp_send_msg(server_fd, &server, (char *) &request, (size_t) sizeof(request_msg_t));
 
-    //udp_receive_msg(server_fd, &server, (char *) &response, sizeof(response_msg_t));
+    udp_receive_msg(server_fd, &server, (char *) &response, sizeof(response_msg_t));
 
     if(response.type != RESP_LOGIN_SUCCESS) {
         printf(LOGIN_FAILURE);
@@ -74,7 +67,7 @@ int authenticate_client(){
         permissions = response.permissions;
 
         myself.sin_port = PORT;
-        myself.sin_addr.s_addr = INADDR_ANY;
+        myself.sin_addr.s_addr = htonl(INADDR_ANY);
         myself.sin_family = AF_INET;
 
     }
@@ -180,21 +173,14 @@ void active_direct_chat(sockaddr_in destination, int mode) {
     response_msg_t response;
     uint p_feedback, n_feedback, method;
 
-    set_udp_timeout(server_fd, UDP_TIMEOUT_SEC);
-
     if(get_input(CONTACT_USER, request.user_name) == EXIT_FAILURE) {
         return;
     }
 
-    if(mode == REQ_MEDIATED) {
+    if (mode == REQ_MEDIATED) {
         p_feedback = RESP_MEDIATED;
         n_feedback = RESP_MED_FAILED;
         method = REQ_MEDIATED;
-
-
-
-
-        strtok(request.user_name, "\n");
 
     } else {
 
@@ -270,9 +256,11 @@ void * worker() {
 void send_to_server() {
     request_msg_t request;
 
-    if(get_input(request.user_name, CONTACT_USER) == EXIT_FAILURE || get_input(request.message, MESSAGE)) {
+    if(get_input(CONTACT_USER, request.user_name) == EXIT_FAILURE || get_input(MESSAGE, request.message)) {
         return;
     }
+
+
     request.method = REQ_MEDIATED;
 
     udp_send_msg(server_fd, &server, (void *) &request, sizeof(request_msg_t));
@@ -283,8 +271,6 @@ void send_p2p() {
     request_msg_t request, message;
     response_msg_t response;
     sockaddr_in aux;
-
-    set_udp_timeout(server_fd, UDP_TIMEOUT_SEC);
 
     if(get_input(CONTACT_USER, request.user_name) == EXIT_FAILURE || get_input(MESSAGE, message.message)) {
         return;

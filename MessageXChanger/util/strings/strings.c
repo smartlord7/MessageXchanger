@@ -57,6 +57,8 @@ int get_input(char * expected, char * result) {
         return EXIT_FAILURE;
     }
 
+    strtok(result, "\n");
+
     return EXIT_SUCCESS;
 }
 int is_numeric(const char * string, size_t size) {

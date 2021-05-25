@@ -109,25 +109,26 @@ static void * udp_worker() {
         }
 
         handshake.client_addr = client_addr;
+        handshake.client_id = client_addr.sin_port;
         ipv4 = ipv4_to_string(&client_addr.sin_addr);
-        printf(CLIENT_CONNECT, ipv4, client_addr.sin_port);
 
         // check if the user has an active session (with the current port).
-        session = find_session(client_addr.sin_addr.s_addr);
+        session = find_session(client_addr.sin_addr.s_addr, client_addr.sin_port);
 
         if (session == NULL) {
+            printf(CLIENT_CONNECT, ipv4, client_addr.sin_port);
 
             auth_result = authenticate_server(&handshake);
 
             if (auth_result == USER_AUTHENTICATION_ERROR) {
                 continue;
+            } else if (auth_result == USER_ALREADY_LOGGED) {
+                snd_msg(msq_id, (void *) &handshake, sizeof(handshake_t));
             }
 
-            handshake.client_id = client_addr.sin_port + client_addr.sin_addr.s_addr;
             assert(pthread_create(&client_threads[i], NULL, session_worker, (void *) &handshake.client_id) == 0);
             free(ipv4);
         } else {
-
             if (strcmp(session->user->user_name, handshake.msg.user_name) != 0 && handshake.msg.method == REQ_LOGIN) {
 
                 resp_msg.type = RESP_IP_NOT_ALLOWED;
@@ -174,8 +175,12 @@ static int authenticate_server(handshake_t * handshake) {
 
         return USER_AUTHENTICATION_ERROR;
     } else {
-        // check if the request is to login since the user has no current session.
-        if (handshake->msg.method != REQ_LOGIN) {
+        if (user->curr_session != NULL) {
+            return USER_ALREADY_LOGGED;
+        }
+
+        // check if the request is to login and if the user is logged or not-
+        if (handshake->msg.method != REQ_LOGIN && !user->curr_session == NULL) {
             resp_msg.type = RESP_NO_SESSION;
             send_resp();
 
@@ -211,7 +216,6 @@ static int authenticate_server(handshake_t * handshake) {
     // create a new session for the user in question.
     session = (user_session_t *) malloc(sizeof(user_session_t));
     user->curr_session = session;
-    user->is_logged = true;
 
     session->user = user;
     session->host_ip = handshake->client_addr.sin_addr.s_addr;
@@ -228,7 +232,7 @@ static void * session_worker(void * data) {
     long client_id = * (long *) data;
     user_t * user = NULL;
     handshake_t msg_rcved = {0};
-    sockaddr_in * client_addr = &msg_rcved.client_addr, dest_addr = {0};
+    sockaddr_in * client_addr = &msg_rcved.client_addr;
     response_msg_t resp_msg = {0};
     char * client_ip = NULL;
     int leave = false;
@@ -246,6 +250,28 @@ static void * session_worker(void * data) {
             case REQ_SEND:
                 break;
             case REQ_GET_USER:
+                user = find_user(msg_rcved.msg.user_name, HIDE_DELETED);
+
+                if (user == NULL) {
+                    printf(CLIENT_REQ_USER_NOT_FOUND, client_ip, msg_rcved.msg.user_name);
+                    resp_msg.type = RESP_USER_NOT_FOUND;
+                    send_resp();
+
+                    continue;
+                }
+
+                if (user->curr_session == NULL) {
+                    printf(CLIENT_REQ_USER_NOT_ONLINE, client_ip, msg_rcved.msg.user_name);
+                    resp_msg.type = RESP_USER_NOT_ACTIVE;
+
+                    continue;
+                }
+
+                resp_msg.type = RESP_NON_MEDIATED;
+                resp_msg.ip_address = user->host_ip;
+                resp_msg.port = user->curr_session->port;
+                send_resp();
+
                 break;
             case REQ_LIST_USERS:
                 break;
@@ -258,7 +284,6 @@ static void * session_worker(void * data) {
                 // detroy user session.
                 user = find_user(msg_rcved.msg.user_name, HIDE_DELETED);
                 user->curr_session = NULL;
-                user->is_logged = false;
                 delete_session(msg_rcved.client_addr.sin_addr.s_addr);
                 leave = true;
                 break;
@@ -273,46 +298,21 @@ static void * session_worker(void * data) {
                     continue;
                 }
 
-                if (!user->is_logged) {
+                if (user->curr_session == NULL) {
                     printf(CLIENT_REQ_USER_NOT_ONLINE, client_ip, msg_rcved.msg.user_name);
                     resp_msg.type = RESP_USER_NOT_ACTIVE;
 
                     continue;
                 }
 
-                dest_addr = * client_addr;
-                dest_addr.sin_addr.s_addr = user->curr_session->host_ip;
-                dest_addr.sin_port = user->curr_session->port;
-
+                resp_msg.ip_address = user->curr_session->host_ip;
+                resp_msg.port = user->curr_session->port;
                 resp_msg.type = RESP_MEDIATED;
                 strcpy(resp_msg.buffer, msg_rcved.msg.user_name);
                 udp_send_msg(clients_fd, client_addr, (char *) &resp_msg, sizeof(response_msg_t));
 
                 break;
-            case REQ_NON_MEDIATED:
-                user = find_user(msg_rcved.msg.user_name, HIDE_DELETED);
 
-                if (user == NULL) {
-                    printf(CLIENT_REQ_USER_NOT_FOUND, client_ip, msg_rcved.msg.user_name);
-                    resp_msg.type = RESP_USER_NOT_FOUND;
-                    send_resp();
-
-                    continue;
-                }
-
-                if (!user->is_logged) {
-                    printf(CLIENT_REQ_USER_NOT_ONLINE, client_ip, msg_rcved.msg.user_name);
-                    resp_msg.type = RESP_USER_NOT_ACTIVE;
-
-                    continue;
-                }
-
-                resp_msg.type = RESP_NON_MEDIATED;
-                resp_msg.ip_address = user->host_ip;
-                resp_msg.port = user->curr_session->port;
-                send_resp();
-
-                break;
         }
     }
 
@@ -408,7 +408,6 @@ static user_t * validate_user(char buffer[LARGEST_SIZE]) {
     strcpy(host_ip, token);
 
     token = strtok(NULL, ADD_DELIM);
-    printf("%s\n", token);
     if (token == NULL) {
         send_tcp_response(admin_fd, ERROR_MISSING_PARAM, "password");
         return NULL;
@@ -448,6 +447,7 @@ static void signal_handler(int signum) {
             close(admin_fd);
             close(server_fd);
             write_client_regs(SHOW_DELETED);
+            destroy_msg_queue(msq_id);
             exit(EXIT_SUCCESS);
         case SIGABRT:
             printf("SIGABRT RECEIVED! CLOSING SERVER...\n");

@@ -169,6 +169,7 @@ static void write_users_(FILE * dest_file, user_tree_node_t * node, int mode) {
     write_users_(dest_file, node->left, mode);
 
     if(!node->user->is_deleted || (mode == SHOW_DELETED && node->user->is_deleted == (uint) 1)) {
+        user.curr_session = NULL;
         assert(fwrite(&user, sizeof(user_t), 1, dest_file) > 0);
     }
 

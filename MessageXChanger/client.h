@@ -16,7 +16,7 @@
 #define PORT 4500
 #define NUM_PERMITS 3
 #define PASSWORD_HASH_OPT "DZ"
-#define UDP_TIMEOUT_SEC 120
+#define UDP_TIMEOUT_SEC 3
 #define CHECK_TIMEOUT_SEC 1
 
 #define USERNAME "USERNAME"
