@@ -7,11 +7,12 @@ typedef enum response_type {
     RESP_WRONG_PASSWORD,
     RESP_NO_SESSION,
     RESP_IP_NOT_ALLOWED,
-    RESP_USER_NOT_FOUND,
-    RESP_USER_FOUND,
-    RESP_MULTICAST_SUCCESS,
+    RESP_MEDIATED,
+    RESP_MED_FAILED,
+    RESP_NON_MEDIATED,
+    RESP_NON_MEDIATED_FAILED,
+    RESP_MULTICAST,
     RESP_MULTICAST_FAILED,
-    RESP_REGULAR,
     RESP_END
 } response_type;
 
@@ -19,6 +20,8 @@ typedef struct response_msg_t {
     response_type type;
     uint ip_address, port, permissions;
     char buffer[LARGE_SIZE];
+    char username[SMALL_SIZE];
+    int ip_address, port, permissions;
 } response_msg_t;
 
 #endif //MESSAGEXCHANGER_RESPONSE_MSG_T_H

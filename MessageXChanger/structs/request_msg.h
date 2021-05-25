@@ -9,6 +9,8 @@ typedef enum request_method {
     LIST_USERS,
     MULTICAST,
     END,
+    REQ_MEDIATED,
+    REQ_NON_MEDIATED
 } request_method;
 
 typedef struct request_msg_t {

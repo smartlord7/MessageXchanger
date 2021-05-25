@@ -62,7 +62,7 @@ int get_input(char * expected, char * result) {
 int is_numeric(const char * string, size_t size) {
     assert(string != NULL && size > 0);
 
-    for(int i = 0; i < (int) size; i++) {
+    for(int i = 0; i < (int) size - 1; i++) {
         if(!isdigit(string[i])) {
             return false;
         }

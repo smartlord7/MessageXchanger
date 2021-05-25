@@ -2,16 +2,13 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "client.h"
-#include "unistd.h"
 
-unsigned long hash(const char *str);
 static int get_server(char * ip_address, int port);
 static int authenticate_user();
 static void communicate();
 static void comms_available(uint permissions_code, char * buffer);
-static void mediated_chat();
-static void non_mediated_chat();
-static void group_chat();
+static void active_direct_chat(sockaddr_in destination, int mode);
+static void passive_direct_chat(sockaddr_in source, int mode, response_msg_t msg);
 
 static char username[SMALL_SIZE];
 static int server_fd;
@@ -26,7 +23,6 @@ int main () {
         return EXIT_SUCCESS;
     }
 
-    //faz operações que quiser
     communicate();
 
     //sai e manda feedback ao server que vai sair
@@ -47,11 +43,11 @@ int get_server(char * ip_address, int port){
 int authenticate_user(){
     response_msg_t response;
     request_msg_t request;
-    char password[SMALL_SIZE], buffer[SMALL_SIZE];
+    char password[SMALL_SIZE];
 
-    set_udp_timeout(server_fd, 5);
+    set_udp_timeout(server_fd, UDP_TIMEOUT_SEC);
 
-    if(get_input("Username", username) == EXIT_FAILURE || get_input("Password", password) == EXIT_FAILURE) {
+    if(get_input(USERNAME, username) == EXIT_FAILURE || get_input(PASSWORD, password) == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
 
@@ -59,19 +55,19 @@ int authenticate_user(){
     strcpy(request.hash, crypt(password, PASSWORD_HASH_OPT));
     strcpy(request.user_name, username);
 
-    printf("envia msg\n");
     udp_send_msg(server_fd, &server, (char *) &request, (size_t) sizeof(request_msg_t));
 
-    printf("espera resposta\n");
     udp_receive_msg(server_fd, &server, (char *) &response, sizeof(response_msg_t));
 
-    if(response.type != RESP_LOGIN_SUCCESS) {
-        printf("Login failed\n");
+    /*if(response.type != RESP_LOGIN_SUCCESS) {
+        printf(LOGIN_FAILURE);
         return EXIT_FAILURE;
     } else {
-        printf("Login successful\n");
+        printf(LOGIN_SUCCESS);
         permissions = response.permissions;
-    }
+    }*/
+
+    permissions = 111;
 
     return EXIT_SUCCESS;
 }
@@ -79,15 +75,37 @@ int authenticate_user(){
 void communicate() {
     int i = 0, option;
     char options[LARGE_SIZE], input[SMALL_SIZE];
+    sockaddr_in source;
+    response_msg_t response;
 
+    comms_available(permissions, options);
 
     while(true) {
+        set_udp_timeout(server_fd, CHECK_TIMEOUT_SEC);
 
-        comms_available(permissions, options);
+        //check if received a message
+        if(udp_receive_msg(server_fd, &source, (char *) &response, sizeof(response_msg_t)) == EXIT_SUCCESS) {
+
+            switch (response.type) {
+                case RESP_MEDIATED:
+                    passive_direct_chat(server, REQ_MEDIATED, response);
+                    break;
+                case RESP_NON_MEDIATED:
+                    passive_direct_chat(source, REQ_NON_MEDIATED, response);
+                    break;
+                case RESP_MULTICAST:
+                    printf("multicast\n");
+                    break;
+                default:
+                    break;
+            }
+
+            return;
+        }
+
         printf("%s", options);
 
         fgets(input, sizeof(input), stdin);
-        trim_string(input);
         if(!is_numeric(input, strlen(input))) {
             option = -1;
         } else {
@@ -98,7 +116,7 @@ void communicate() {
             case (SERVER_COMMS):
 
                 if(((permissions >> SERVER_COMMS) % 2)) {
-                    mediated_chat();
+                    active_direct_chat(server, REQ_MEDIATED);
                 } else {
                     return;
                 }
@@ -107,7 +125,7 @@ void communicate() {
             case (P2P):
 
                 if(((permissions >> P2P) % 2)) {
-                    non_mediated_chat();
+                    active_direct_chat(server, REQ_NON_MEDIATED);
                 } else {
                     return;
                 }
@@ -116,7 +134,7 @@ void communicate() {
             case (GROUP_COMMS):
 
                 if(((permissions >> GROUP_COMMS) % 2)) {
-                    group_chat();
+                    //group_chat_active();
                 } else {
                     return;
                 }
@@ -133,7 +151,7 @@ void communicate() {
 void comms_available(uint permissions_code, char * buffer) {
     char aux[SMALL_SIZE];
 
-    snprintf(aux, sizeof(aux), "\n---- Available types of chat ----\n\n");
+    snprintf(aux, sizeof(aux), TYPES_CHAT);
     buffer = append(buffer, aux);
 
     for(int i = 0; i < NUM_PERMITS; i++) {
@@ -142,15 +160,15 @@ void comms_available(uint permissions_code, char * buffer) {
             switch (i) {
 
                 case (SERVER_COMMS):
-                    snprintf(aux, sizeof(aux), "Mediated chat - press %d\n", SERVER_COMMS);
+                    snprintf(aux, sizeof(aux), MEDIATED_CHAT, SERVER_COMMS);
                     buffer = append(buffer, aux);
                     break;
                 case (P2P):
-                    snprintf(aux, sizeof(aux), "Non mediated chat - press %d\n", P2P);
+                    snprintf(aux, sizeof(aux), NON_MEDIATED_CHAT, P2P);
                     buffer = append(buffer, aux);
                     break;
                 case (GROUP_COMMS):
-                    snprintf(aux, sizeof(aux), "Group chat - press %d\n", GROUP_COMMS);
+                    snprintf(aux, sizeof(aux), GROUP_CHAT, GROUP_COMMS);
                     buffer = append(buffer, aux);
                     break;
                 default:
@@ -160,30 +178,119 @@ void comms_available(uint permissions_code, char * buffer) {
         }
     }
 
-    snprintf(aux, sizeof(aux), "\nPress any option to end the session.\nOption: ");
+    snprintf(aux, sizeof(aux), GET_CHAT_OPTION);
     buffer = append(buffer, aux);
 }
 
-void mediated_chat() {
-    char message[MEDIUM_SIZE];
+void active_direct_chat(sockaddr_in destination, int mode) {
+    request_msg_t request;
+    response_msg_t response;
+    uint p_feedback, n_feedback, method;
 
-    printf("Initiating mediated chat...");
+    set_udp_timeout(server_fd, UDP_TIMEOUT_SEC);
 
-    /*while (true) {
-        if(strcasecmp(message, END))
-    }*/
+    if(mode == REQ_MEDIATED) {
+        p_feedback = RESP_MEDIATED;
+        n_feedback = RESP_MED_FAILED;
+        method = REQ_MEDIATED;
 
-    printf("comunicando com outro client com servidor\n");
-    return;
+        if(get_input(CONTACT_USER, request.user_name) == EXIT_FAILURE) {
+            return;
+        }
+
+    } else {
+        p_feedback = RESP_NON_MEDIATED;
+        n_feedback = RESP_NON_MEDIATED_FAILED;
+        method = REQ_NON_MEDIATED;
+    }
+
+
+
+    while (true) {
+        printf("\n%s", INSERT_EXIT);
+
+        if(get_input(MESSAGE, request.message) == EXIT_FAILURE) {
+            return;
+        }
+        request.message[strlen(request.message) - 1] = '\0';
+        if(strcasecmp(request.message, EXIT) == 0) {
+            printf(CLOSE_CHAT);
+            return;
+        }
+        request.method = method;
+
+        //send message to user through server
+        udp_send_msg(server_fd, &destination, (char *) &request, sizeof(request_msg_t));
+
+        //receive_response
+        if(udp_receive_msg(server_fd, &destination, (char *) &response, sizeof(response_msg_t)) == EXIT_FAILURE) {
+            printf(FAILED_REC_CLOSE);
+            return;
+        }
+
+        //other user is not active or registered
+        if(response.type == n_feedback) {
+            printf(USER_NOT_FOUND, request.user_name);
+            return;
+        } else if(response.type == p_feedback) {
+            printf(RECEIVED_MSG, response.username, response.buffer);
+        }
+
+    }
 }
 
-void non_mediated_chat(){
-    printf("comunicando com outro cliente sem server\n");
-    return;
-}
-void group_chat() {
+void passive_direct_chat(sockaddr_in source, int mode, response_msg_t msg) {
+    request_msg_t request;
+    response_msg_t response;
 
-    printf("group chat\n");
+    set_udp_timeout(server_fd, UDP_TIMEOUT_SEC);
 
-    return;
+    uint p_feedback, n_feedback, method;
+
+    if(mode == REQ_MEDIATED) {
+        p_feedback = RESP_MEDIATED;
+        n_feedback = RESP_MED_FAILED;
+        method = REQ_MEDIATED;
+    } else {
+        p_feedback = RESP_NON_MEDIATED;
+        n_feedback = RESP_NON_MEDIATED_FAILED;
+        method = REQ_NON_MEDIATED;
+    }
+
+    //print received message
+    printf(RECEIVED_MSG, msg.username, msg.buffer);
+
+    while (true) {
+        printf("\n%s", INSERT_EXIT);
+
+        //ask user for the response message
+        if(get_input(MESSAGE, request.message) == EXIT_FAILURE) {
+            return;
+        }
+        request.message[strlen(request.message) - 1] = '\0';
+        if(strcasecmp(request.message, EXIT) == 0) {
+            printf(CLOSE_CHAT);
+            return;
+        }
+        strcpy(request.user_name, msg.username);
+        request.method = method;
+
+        //send message to user through server
+        udp_send_msg(server_fd, &source, (char *) &request, sizeof(request_msg_t));
+
+        //receive_response
+        if(udp_receive_msg(server_fd, &source, (char *) &response, sizeof(response_msg_t)) == EXIT_FAILURE) {
+            printf(FAILED_REC_CLOSE);
+            return;
+        }
+
+        //other user is not active or registered
+        if(response.type == n_feedback) {
+            printf(USER_NOT_FOUND, request.user_name);
+            return;
+        } else if(response.type == p_feedback) {
+            printf(RECEIVED_MSG, response.username, response.buffer);
+        }
+
+    }
 }
