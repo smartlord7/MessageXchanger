@@ -17,8 +17,8 @@ typedef enum response_type {
 
 typedef struct response_msg_t {
     response_type type;
+    uint ip_address, port, permissions;
     char buffer[LARGE_SIZE];
-    int ip_address, port, permissions;
 } response_msg_t;
 
 #endif //MESSAGEXCHANGER_RESPONSE_MSG_T_H
