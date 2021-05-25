@@ -14,6 +14,8 @@
 #define PORT 9000
 #define NUM_PERMITS 3
 
+#define END "END"
+
 #define true 1
 #define false 0
 

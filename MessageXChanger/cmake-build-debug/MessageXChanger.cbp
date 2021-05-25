@@ -124,19 +124,25 @@
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
-		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.c">
-			<Option target="Client"/>
-			<Option target="Server"/>
-		</Unit>
-		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/avl_tree/users_avl.h">
-			<Option target="Client"/>
-			<Option target="Server"/>
-		</Unit>
 		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.c">
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/client_reg_file_manager/client_reg_file_manager.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/trees/session_tree.c">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/trees/session_tree.h">
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/trees/user_tree.c">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/helpers/trees/user_tree.h">
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
@@ -150,7 +156,7 @@
 		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/server.h">
 			<Option target="Server"/>
 		</Unit>
-		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/avl_node.h">
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/session_tree_node_t.h">
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>
@@ -159,6 +165,14 @@
 			<Option target="Server"/>
 		</Unit>
 		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/user.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/user_session.h">
+			<Option target="Client"/>
+			<Option target="Server"/>
+		</Unit>
+		<Unit filename="/home/joao/Desktop/projetos/MessageXchanger/MessageXChanger/structs/user_tree_node_t.h">
 			<Option target="Client"/>
 			<Option target="Server"/>
 		</Unit>

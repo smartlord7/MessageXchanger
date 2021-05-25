@@ -8,7 +8,9 @@ static int get_server(char * ip_address, int port);
 static int authenticate_user();
 static void communicate();
 static void comms_available(uint permissions_code, char * buffer);
-static int mediated_chat();
+static void mediated_chat();
+static void non_mediated_chat();
+static void group_chat();
 
 static char username[SMALL_SIZE];
 static int server_fd;
@@ -81,7 +83,6 @@ void communicate() {
 
                 if(((permissions >> SERVER_COMMS) % 2)) {
                     mediated_chat();
-                    printf("comunicando com outro client com servidor\n");
                 } else {
                     return;
                 }
@@ -90,8 +91,7 @@ void communicate() {
             case (P2P):
 
                 if(((permissions >> P2P) % 2)) {
-                    //non_mediated_chat();
-                    printf("comunicando com outro cliente sem server\n");
+                    non_mediated_chat();
                 } else {
                     return;
                 }
@@ -100,8 +100,7 @@ void communicate() {
             case (GROUP_COMMS):
 
                 if(((permissions >> GROUP_COMMS) % 2)) {
-                    //group_chat();
-                    printf("group chat\n");
+                    group_chat();
                 } else {
                     return;
                 }
@@ -149,6 +148,26 @@ void comms_available(uint permissions_code, char * buffer) {
     buffer = append(buffer, aux);
 }
 
-int mediated_chat() {
-    return 1;
+void mediated_chat() {
+    char message[MEDIUM_SIZE];
+
+    printf("Initiating mediated chat...");
+
+    /*while (true) {
+        if(strcasecmp(message, END))
+    }*/
+
+    printf("comunicando com outro client com servidor\n");
+    return;
+}
+
+void non_mediated_chat(){
+    printf("comunicando com outro cliente sem server\n");
+    return;
+}
+void group_chat() {
+
+    printf("group chat\n");
+
+    return;
 }
