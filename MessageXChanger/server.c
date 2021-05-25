@@ -21,6 +21,7 @@
 #include "helpers/trees/session_tree.h"
 #include "structs/response_msg_t.h"
 
+
 _Noreturn static void * tcp_worker();
 _Noreturn static void * udp_worker();
 static void handle_admin();
@@ -145,12 +146,12 @@ static void * udp_worker() {
             }
 
             handshake.client_id = session->user->id + 1;
-            // just send the udp message to the respective client worker through the msg queue, since it is authenticated.
+            // just send the udp message to the respective client read_worker through the msg queue, since it is authenticated.
             snd_msg(msq_id, (void *) &handshake, sizeof(handshake_t));
         }
     }
 
-    // wait for all the client worker threads.
+    // wait for all the client read_worker threads.
     while (j < i) {
         assert(pthread_join(client_threads[j], NULL) == 0);
         j++;
@@ -204,18 +205,14 @@ static int authenticate_server(handshake_t * handshake, int * client_id) {
         }
 
         // check if the user has inserted the correct password.
-        if (strcmp(handshake->msg.hash, user->password_hash) == 0) {
-            resp_msg.type = RESP_LOGIN_SUCCESS;
-            * client_id = user->id;
-
-            send_resp();
-        } else {
+        if (strcmp(handshake->msg.hash, user->password_hash) != 0) {
             resp_msg.type = RESP_WRONG_PASSWORD;
             send_resp();
 
             printf(CLIENT_WRONG_PASSWORD, ipv4);
 
             return USER_AUTHENTICATION_ERROR;
+
         }
     }
 
@@ -229,6 +226,12 @@ static int authenticate_server(handshake_t * handshake, int * client_id) {
     session->user = user;
 
     insert_session(session);
+    resp_msg.type = RESP_LOGIN_SUCCESS;
+    resp_msg.port = session->port;
+    resp_msg.permissions = user->has_client_server_conn * 1 + user->has_p2p_conn * 10 + user->has_group * 100;
+    * client_id = user->id;
+
+    send_resp();
     printf(CLIENT_LOGGED_IN, ipv4);
 
     return USER_AUTHENTICATION_SUCCESS;
@@ -238,7 +241,7 @@ static void * session_worker(void * data) {
     long client_id = * (long *) data;
     user_t * user = NULL;
     handshake_t msg_rcved = {0};
-    sockaddr_in * client_addr = NULL;
+    sockaddr_in * client_addr = NULL, dest_addr = {0};
     response_msg_t resp_msg = {0};
     char * client_ip = NULL;
     int leave = false;
@@ -253,8 +256,6 @@ static void * session_worker(void * data) {
                 printf(CLIENT_USER_ALREADY_LOGGED, client_ip, msg_rcved.msg.user_name);
                 resp_msg.type = RESP_ALREADY_LOGGED_IN;
                 send_resp();
-                break;
-            case REQ_SEND:
                 break;
             case REQ_GET_USER:
                 user = find_user(msg_rcved.msg.user_name, HIDE_DELETED);
@@ -278,10 +279,9 @@ static void * session_worker(void * data) {
                 resp_msg.type = RESP_NON_MEDIATED;
                 resp_msg.ip_address = user->host_ip;
                 resp_msg.port = user->curr_session->port;
+
                 send_resp();
 
-                break;
-            case REQ_LIST_USERS:
                 break;
             case REQ_MULTICAST:
                 break;
@@ -295,6 +295,7 @@ static void * session_worker(void * data) {
                 delete_session(msg_rcved.client_addr.sin_addr.s_addr);
                 leave = true;
                 break;
+
             case REQ_MEDIATED:
                 user = find_user(msg_rcved.msg.user_name, HIDE_DELETED);
 
@@ -314,15 +315,15 @@ static void * session_worker(void * data) {
                     continue;
                 }
 
-                resp_msg.ip_address = user->curr_session->host_ip;
-                resp_msg.port = user->curr_session->port;
-                resp_msg.type = RESP_MEDIATED;
-                strcpy(resp_msg.buffer, msg_rcved.msg.user_name);
-                //udp_send_msg(clients_fd, &msg_rcved.client_addr, (void *) &resp_msg, sizeof(response_msg_t));
-                resp_msg.type = RESP_MESSAGE_SENT;
-                send_resp();
+                dest_addr = *client_addr;
+                dest_addr.sin_addr.s_addr = user->host_ip;
+                dest_addr.sin_port = htons(user->curr_session->port);
 
-                printf("%d\n", client_addr->sin_addr.s_addr);
+                resp_msg.type = RESP_MEDIATED;
+                strcpy(resp_msg.username, msg_rcved.msg.user_name);
+                strcpy(resp_msg.buffer, msg_rcved.msg.message);
+
+                udp_send_msg(clients_fd, &dest_addr, (void *) &resp_msg, sizeof(response_msg_t));
 
                 break;
         }
