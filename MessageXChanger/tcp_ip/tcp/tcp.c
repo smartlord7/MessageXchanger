@@ -44,7 +44,7 @@ uint string_to_ipv4(const char * ipv4_str) {
     return addr.s_addr;
 }
 
-void send_response(int fd, const char * msg, ...) {
+void send_tcp_response(int fd, const char * msg, ...) {
     va_list args;
     va_start(args, msg);
 

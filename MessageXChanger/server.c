@@ -19,6 +19,7 @@
 #include "util/msg_queue/msg_queue.h"
 #include "structs/user_session.h"
 #include "helpers/trees/session_tree.h"
+#include "structs/response_msg_t.h"
 
 _Noreturn static void * tcp_worker(void * data);
 _Noreturn static void * udp_worker(void * data);
@@ -27,6 +28,7 @@ static void signal_handler(int signum);
 static user_t * validate_user(char buffer[LARGEST_SIZE]);
 static void show_error_if(int cond, const char * msg, ...);
 static void * session_worker(void * data);
+static int authenticate_server(handshake_t handshake);
 
 in_addr admin_addr_in;
 int clients_port, admin_port, server_fd, admin_fd, clients_fd, msq_id;
@@ -89,9 +91,8 @@ static void * udp_worker(void * data) {
     set_udp_timeout(clients_fd, UDP_ALL_TIMEOUT_SEC);
 
     handshake_t handshake = {0};
-    sockaddr_in client_addr = {0};
     user_session_t * session = NULL;
-    user_t * user = NULL;
+    sockaddr_in client_addr = {0};
     pthread_t client_threads[NUM_MAX_UDP_CLIENTS];
     long client_ids[NUM_MAX_UDP_CLIENTS];
     char * aux = NULL;
@@ -108,32 +109,17 @@ static void * udp_worker(void * data) {
         }
 
         aux = ipv4_to_string(&handshake.client_addr.sin_addr);
+        handshake.client_addr = client_addr;
         printf(CLIENT_CONNECT, aux);
 
+        // check if the user has an active session.
         session = find_session(client_addr.sin_addr.s_addr, client_addr.sin_port);
 
         if (session == NULL) {
 
-            handshake.msg.user_name[strlen(handshake.msg.user_name) - 1] = '\0';
-            user = find_user(handshake.msg.user_name, HIDE_DELETED);
-
-            if (user == NULL) {
-                udp_send_msg(clients_fd, &client_addr, UDP_ERROR_USER_NOT_FOUND, strlen(UDP_ERROR_USER_NOT_FOUND));
+            if (!authenticate_server(handshake)) {
                 continue;
-            } else {
-                if (strcmp(handshake.msg.hash, user->password_hash) == 0) {
-
-                } else {
-                    udp_send_msg(clients_fd, &client_addr, ERROR_WRONG_PASSWORD, strlen(ERROR_WRONG_PASSWORD));
-                    continue;
-                }
             }
-
-            session = (user_session_t *) malloc(sizeof(user_session_t));
-
-            session->user = user;
-            session->port = client_addr.sin_port;
-            session->user = user;
 
             client_ids[i] = i + 1;
             handshake.client_id = i + 1;
@@ -142,17 +128,75 @@ static void * udp_worker(void * data) {
             free(aux);
             i++;
         } else {
-            handshake.client_addr = client_addr;
+            // just send the udp message to the respective client worker through the msg queue, since it is authenticated.
             snd_msg(msq_id, (void *) &handshake, sizeof(handshake_t));
         }
     }
 
+    // wait for all the client worker threads.
     while (j < i) {
         assert(pthread_join(client_threads[j], NULL) == 0);
         j++;
     }
 
     pthread_exit(NULL);
+}
+
+static int authenticate_server(handshake_t handshake) {
+    user_t * user = NULL;
+    user_session_t * session = NULL;
+    response_msg_t resp_msg = {0};
+
+    // check if the request is to login since the user has no current session.
+    if (handshake.msg.method != LOGIN) {
+        resp_msg.type = RESP_NO_SESSION;
+        send_resp();
+
+        return false;
+    }
+
+    // remove the new line character.
+    handshake.msg.user_name[strlen(handshake.msg.user_name) - 1] = '\0';
+
+    // check if the user exists
+    user = find_user(handshake.msg.user_name, HIDE_DELETED);
+
+    if (user == NULL) {
+        // the user doesn't exist.
+        resp_msg.type = RESP_USER_NOT_FOUND;
+        send_resp();
+
+        return false;
+    } else {
+
+        if (user->host_ip != handshake.client_addr.sin_addr.s_addr) {
+            resp_msg.type = RESP_IP_NOT_ALLOWED;
+            send_resp();
+
+            return false;
+        }
+
+        // check if the user has inserted the correct password.
+        if (strcmp(handshake.msg.hash, user->password_hash) == 0) {
+
+        } else {
+            resp_msg.type = RESP_WRONG_PASSWORD;
+            send_resp();
+
+            return false;
+        }
+    }
+
+    // create a new session for the user in question.
+    session = (user_session_t *) malloc(sizeof(user_session_t));
+
+    session->user = user;
+    session->port = handshake.client_addr.sin_port;
+    session->user = user;
+
+    insert_session(session);
+
+    return true;
 }
 
 static void * session_worker(void * data) {
@@ -166,8 +210,6 @@ static void * session_worker(void * data) {
         rcv_msg(msq_id, (void *) &handshake, sizeof(handshake_t), client_id);
         switch (handshake.msg.method) {
             case LOGIN:
-
-
                 break;
             case SEND:
                 break;
@@ -214,9 +256,9 @@ static void handle_admin() {
 
                 if (find_user(user->user_name, HIDE_DELETED) == NULL) {
                     insert_user(user);
-                    send_response(admin_fd, USER_CREATE, user->user_name);
+                    send_tcp_response(admin_fd, USER_CREATE, user->user_name);
                 } else {
-                    send_response(admin_fd, ERROR_USERNAME_REPEAT, user->user_name);
+                    send_tcp_response(admin_fd, ERROR_USERNAME_REPEAT, user->user_name);
                 }
 
             } else if (starts_with_ignore_case(buffer, CMD_DEL)) {
@@ -224,32 +266,32 @@ static void handle_admin() {
                 aux = strtok(aux, ADD_DELIM);
 
                 if (aux == NULL) {
-                    send_response(admin_fd, ERROR_MISSING_PARAM, "user name");
+                    send_tcp_response(admin_fd, ERROR_MISSING_PARAM, "user name");
                     continue;
                 }
                 aux = trim_string(aux);
 
                 if (delete_user(aux) == NULL) {
-                    send_response(admin_fd, TCP_ERROR_USER_NOT_FOUND, aux);
+                    send_tcp_response(admin_fd, TCP_ERROR_USER_NOT_FOUND, aux);
                 } else {
-                    send_response(admin_fd, USER_DELETE, aux);
+                    send_tcp_response(admin_fd, USER_DELETE, aux);
                 }
 
             } else if (starts_with_ignore_case(buffer, CMD_LIST)) {
                 aux = get_user_list_as_str(list_mode);
-                send_response(admin_fd, "\n%s", aux);
+                send_tcp_response(admin_fd, "\n%s", aux);
                 free(aux);
             } else if (starts_with_ignore_case(buffer, CMD_QUIT)) {
-                send_response(admin_fd, SERVER_DISCONNECT);
+                send_tcp_response(admin_fd, SERVER_DISCONNECT);
                 stay = false;
                 break;
 
             } else if (starts_with_ignore_case(buffer, SHOW_DEL)) {
                 list_mode = !list_mode;
-                send_response(admin_fd, SHOW_DELETE_TOGGLE, list_mode);
+                send_tcp_response(admin_fd, SHOW_DELETE_TOGGLE, list_mode);
 
             } else {
-                send_response(admin_fd, ERROR_INVALID_CMD, buffer);
+                send_tcp_response(admin_fd, ERROR_INVALID_CMD, buffer);
             }
         } while (n_read > 0);
     }
@@ -263,42 +305,42 @@ static user_t * validate_user(char buffer[LARGEST_SIZE]) {
 
     token = strtok(buffer, ADD_DELIM);
     if (token == NULL) {
-        send_response(admin_fd, ERROR_MISSING_PARAM, "user name");
+        send_tcp_response(admin_fd, ERROR_MISSING_PARAM, "user name");
         return NULL;
     }
     strcpy(user_name, token);
 
     token = strtok(NULL, ADD_DELIM);
     if (token == NULL) {
-        send_response(admin_fd, ERROR_MISSING_PARAM, "password");
+        send_tcp_response(admin_fd, ERROR_MISSING_PARAM, "password");
         return NULL;
     }
     strcpy(password_hash, crypt(token, PASSWORD_HASH_OPT));
 
     token = strtok(NULL, ADD_DELIM);
     if (token == NULL) {
-        send_response(admin_fd, ERROR_MISSING_PARAM, "host ip");
+        send_tcp_response(admin_fd, ERROR_MISSING_PARAM, "host ip");
         return NULL;
     }
     strcpy(host_ip, token);
 
     token = strtok(NULL, ADD_DELIM);
     if (token == NULL) {
-        send_response(admin_fd, ERROR_MISSING_PARAM, "has client server connection");
+        send_tcp_response(admin_fd, ERROR_MISSING_PARAM, "has client server connection");
         return NULL;
     }
     has_client_server_conn = atoi(token);
 
     token = strtok(NULL, ADD_DELIM);
     if (token == NULL) {
-        send_response(admin_fd, ERROR_MISSING_PARAM, "has P2P connection");
+        send_tcp_response(admin_fd, ERROR_MISSING_PARAM, "has P2P connection");
         return NULL;
     }
     has_p2p_conn = atoi(token);
 
     token = strtok(NULL, ADD_DELIM);
     if (token == NULL) {
-        send_response(admin_fd, ERROR_MISSING_PARAM, "has group");
+        send_tcp_response(admin_fd, ERROR_MISSING_PARAM, "has group");
         return NULL;
     }
     has_group = atoi(token);
