@@ -2,7 +2,7 @@
 #include "udp.h"
 #include "assert.h"
 
-int udp_receive_msg(int socket_fd, sockaddr_in * source, char * buffer, size_t msg_size) {
+int udp_receive_msg(int socket_fd, sockaddr_in * source, void * buffer, size_t msg_size) {
     socklen_t size  = sizeof(* source);
 
     if(recvfrom(socket_fd, buffer, msg_size * sizeof(char), 0, (sockaddr *) source, (socklen_t *) &size) < 0) {
@@ -13,7 +13,7 @@ int udp_receive_msg(int socket_fd, sockaddr_in * source, char * buffer, size_t m
     return EXIT_SUCCESS;
 }
 
-int udp_send_msg(int socket_fd, sockaddr_in * destination, char * message, size_t msg_size) {
+int udp_send_msg(int socket_fd, sockaddr_in * destination, void * message, size_t msg_size) {
     socklen_t size = sizeof(*destination);
 
     if(sendto(socket_fd, message, msg_size * sizeof(char), 0, (sockaddr *) destination, size) < 0) {

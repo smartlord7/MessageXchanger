@@ -2,19 +2,23 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "client.h"
+#include "pthread.h"
 
 static int get_server(char * ip_address, int port);
 static int authenticate_client();
 static void communicate();
 static void comms_available(uint permissions_code, char * buffer);
-static void active_direct_chat(sockaddr_in destination, int mode);
-static void passive_direct_chat(sockaddr_in source, int mode, response_msg_t msg);
+static void * worker();
+static void send_to_server();
+static void send_p2p();
+static void send_multicast();
 
 static char username[SMALL_SIZE];
-static int server_fd;
+static int server_fd, socket_fd;
 static uint permissions;
 static char password_hash[SMALL_SIZE];
 static sockaddr_in server = {0};
+static sockaddr_in myself = {0};
 
 int main () {
     get_server(IP, PORT);
@@ -59,15 +63,20 @@ int authenticate_client(){
 
     udp_send_msg(server_fd, &server, (char *) &request, (size_t) sizeof(request_msg_t));
 
-    udp_receive_msg(server_fd, &server, (char *) &response, sizeof(response_msg_t));
+    //udp_receive_msg(server_fd, &server, (char *) &response, sizeof(response_msg_t));
 
-    /*if(response.type != RESP_LOGIN_SUCCESS) {
+    if(response.type != RESP_LOGIN_SUCCESS) {
         printf(LOGIN_FAILURE);
         return EXIT_FAILURE;
     } else {
         printf(LOGIN_SUCCESS);
         permissions = response.permissions;
-    }*/
+
+        myself.sin_port = PORT;
+        myself.sin_addr.s_addr = INADDR_ANY;
+        myself.sin_family = AF_INET;
+
+    }
 
     permissions = 111;
 
@@ -79,32 +88,13 @@ void communicate() {
     char options[LARGE_SIZE], input[SMALL_SIZE];
     sockaddr_in source;
     response_msg_t response;
+    pthread_t rec_handler = {0};
+
+    assert(pthread_create(&rec_handler, NULL, worker, NULL) == 0);
 
     comms_available(permissions, options);
 
     while(true) {
-        set_udp_timeout(server_fd, CHECK_TIMEOUT_SEC);
-
-        //check if received a message
-        if(udp_receive_msg(server_fd, &source, (char *) &response, sizeof(response_msg_t)) == EXIT_SUCCESS) {
-
-            switch (response.type) {
-                case RESP_MEDIATED:
-                    passive_direct_chat(server, REQ_MEDIATED, response);
-                    break;
-                case RESP_NON_MEDIATED:
-                    passive_direct_chat(source, REQ_NON_MEDIATED, response);
-                    break;
-                case RESP_MULTICAST:
-                    printf("multicast\n");
-                    break;
-                default:
-                    break;
-            }
-
-            return;
-        }
-
         printf("%s", options);
 
         fgets(input, sizeof(input), stdin);
@@ -118,7 +108,7 @@ void communicate() {
             case (SERVER_COMMS):
 
                 if(((permissions >> SERVER_COMMS) % 2)) {
-                    active_direct_chat(server, REQ_MEDIATED);
+                    send_to_server();
                 } else {
                     return;
                 }
@@ -127,7 +117,7 @@ void communicate() {
             case (P2P):
 
                 if(((permissions >> P2P) % 2)) {
-                    active_direct_chat(server, REQ_NON_MEDIATED);
+                    send_p2p();
                 } else {
                     return;
                 }
@@ -136,7 +126,7 @@ void communicate() {
             case (GROUP_COMMS):
 
                 if(((permissions >> GROUP_COMMS) % 2)) {
-                    //group_chat_active();
+                    send_multicast();
                 } else {
                     return;
                 }
@@ -209,13 +199,13 @@ void active_direct_chat(sockaddr_in destination, int mode) {
         n_feedback = RESP_NON_MEDIATED_FAILED;
         method = REQ_NON_MEDIATED;
 
-        request.method = GET_USER;
+        request.method = REQ_GET_USER;
 
         //obtain other user ip and port
-        udp_send_msg(server_fd, &destination, (char *) &request, sizeof(request_msg_t));
+        udp_send_msg(server_fd, &destination, (void *) &request, sizeof(request_msg_t));
 
         //receive_response
-        if(udp_receive_msg(server_fd, &destination, (char *) &response, sizeof(response_msg_t)) == EXIT_FAILURE) {
+        if(udp_receive_msg(server_fd, &destination, (void *) &response, sizeof(response_msg_t)) == EXIT_FAILURE) {
             printf(FAILED_REC_CLOSE);
             return;
         }
@@ -225,8 +215,6 @@ void active_direct_chat(sockaddr_in destination, int mode) {
         destination.sin_family = AF_INET;
 
     }
-
-
 
     while (true) {
         printf("\n%s", INSERT_EXIT);
@@ -242,10 +230,10 @@ void active_direct_chat(sockaddr_in destination, int mode) {
         request.method = method;
 
         //send message to user through server
-        udp_send_msg(server_fd, &destination, (char *) &request, sizeof(request_msg_t));
+        udp_send_msg(server_fd, &destination, (void *) &request, sizeof(request_msg_t));
 
         //receive_response
-        if(udp_receive_msg(server_fd, &destination, (char *) &response, sizeof(response_msg_t)) == EXIT_FAILURE) {
+        if(udp_receive_msg(server_fd, &destination, (void *) &response, sizeof(response_msg_t)) == EXIT_FAILURE) {
             printf(FAILED_REC_CLOSE);
             return;
         }
@@ -261,58 +249,70 @@ void active_direct_chat(sockaddr_in destination, int mode) {
     }
 }
 
-void passive_direct_chat(sockaddr_in source, int mode, response_msg_t msg) {
-    request_msg_t request;
+void * worker() {
     response_msg_t response;
 
-    set_udp_timeout(server_fd, UDP_TIMEOUT_SEC);
+    assert((socket_fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) != -1);
+    assert(bind(socket_fd, (sockaddr *) &myself, sizeof(sockaddr_in)) != -1);
 
-    uint p_feedback, n_feedback, method;
+    while(true) {
 
-    if(mode == REQ_MEDIATED) {
-        p_feedback = RESP_MEDIATED;
-        n_feedback = RESP_MED_FAILED;
-        method = REQ_MEDIATED;
-    } else {
-        p_feedback = RESP_NON_MEDIATED;
-        n_feedback = RESP_NON_MEDIATED_FAILED;
-        method = REQ_NON_MEDIATED;
-    }
-
-    //print received message
-    printf(RECEIVED_MSG, msg.username, msg.buffer);
-
-    while (true) {
-        printf("\n%s", INSERT_EXIT);
-
-        //ask user for the response message
-        if(get_input(MESSAGE, request.message) == EXIT_FAILURE) {
-            return;
-        }
-        request.message[strlen(request.message) - 1] = '\0';
-        if(strcasecmp(request.message, EXIT) == 0) {
-            printf(CLOSE_CHAT);
-            return;
-        }
-        strcpy(request.user_name, msg.username);
-        request.method = method;
-
-        //send message to user through server
-        udp_send_msg(server_fd, &source, (char *) &request, sizeof(request_msg_t));
-
-        //receive_response
-        if(udp_receive_msg(server_fd, &source, (char *) &response, sizeof(response_msg_t)) == EXIT_FAILURE) {
-            printf(FAILED_REC_CLOSE);
-            return;
-        }
-
-        //other user is not active or registered
-        if(response.type == n_feedback) {
-            printf(USER_NOT_FOUND, request.user_name);
-            return;
-        } else if(response.type == p_feedback) {
+        if(udp_receive_msg(socket_fd, &myself, (void *) &response, sizeof(response_msg_t))) {
             printf(RECEIVED_MSG, response.username, response.buffer);
         }
 
     }
+}
+
+void send_to_server() {
+    request_msg_t request;
+
+    if(get_input(request.user_name, CONTACT_USER) == EXIT_FAILURE || get_input(request.message, MESSAGE)) {
+        return;
+    }
+    request.method = REQ_MEDIATED;
+
+    udp_send_msg(server_fd, &server, (void *) &request, sizeof(request_msg_t));
+
+}
+
+void send_p2p() {
+    request_msg_t request, message;
+    response_msg_t response;
+    sockaddr_in aux;
+
+    set_udp_timeout(server_fd, UDP_TIMEOUT_SEC);
+
+    if(get_input(CONTACT_USER, request.user_name) == EXIT_FAILURE || get_input(MESSAGE, message.message)) {
+        return;
+    }
+    request.method = REQ_GET_USER;
+
+    udp_send_msg(server_fd, &server, (void *) &request, sizeof(request_msg_t));
+
+    if(udp_receive_msg(server_fd, &server, (void *) &response, sizeof(response_msg_t)) == EXIT_FAILURE) {
+        printf(FAILED_REC_CLOSE);
+        return;
+    }
+
+    if(response.type == RESP_USER_NOT_FOUND) {
+        printf(USER_NOT_FOUND, request.user_name);
+        return;
+    }
+
+    //fill info about destination
+    aux.sin_addr.s_addr = response.ip_address;
+    aux.sin_port = response.port;
+    aux.sin_family = AF_INET;
+
+    //fill message info
+    message.method = REQ_NON_MEDIATED;
+    strcpy(message.user_name, request.user_name);
+
+    //send message
+    udp_send_msg(socket_fd, &aux, (void *) &request, sizeof(response_msg_t));
+}
+
+static void send_multicast() {
+    printf("multicast\n");
 }
