@@ -5,8 +5,8 @@
 #include "session_tree.h"
 
 static session_tree_node_t * insert_session_(session_tree_node_t * node, user_session_t * session);
-static session_tree_node_t * find_session_(session_tree_node_t * node, uint host_ip, uint port);
-static session_tree_node_t * delete_session_(session_tree_node_t * node, uint ip, uint port);
+static session_tree_node_t *find_session_(session_tree_node_t *node, uint host_ip);
+static session_tree_node_t *delete_session_(session_tree_node_t *node, uint ip);
 static session_tree_node_t * min_value_node(session_tree_node_t * node);
 
 static session_tree_node_t * root = NULL;
@@ -17,8 +17,8 @@ user_session_t * insert_session(user_session_t * session) {
     return session;
 }
 
-user_session_t * find_session(int ip, int port) {
-    session_tree_node_t * aux = find_session_(root, ip, port);
+user_session_t * find_session(int ip) {
+    session_tree_node_t * aux = find_session_(root, ip);
 
     if (aux == NULL) {
         return NULL;
@@ -27,8 +27,8 @@ user_session_t * find_session(int ip, int port) {
     return aux->session;
 }
 
-user_session_t * delete_session(uint host_ip, uint port) {
-    root = delete_session_(root, host_ip, port);
+user_session_t * delete_session(uint host_ip) {
+    root = delete_session_(root, host_ip);
 
     return root->session;
 }
@@ -42,8 +42,8 @@ static session_tree_node_t * insert_session_(session_tree_node_t * node, user_se
         return node;
     } else {
         uint cmp1, cmp2;
-        cmp1 = session->host_ip + session->port;
-        cmp2 = node->session->host_ip + node->session->port;
+        cmp1 = session->host_ip;
+        cmp2 = node->session->host_ip;
 
         if(cmp1 > cmp2) {
             node->right = insert_session_(node->right, session);
@@ -55,7 +55,7 @@ static session_tree_node_t * insert_session_(session_tree_node_t * node, user_se
     }
 }
 
-static session_tree_node_t * find_session_(session_tree_node_t * node, uint host_ip, uint port){
+static session_tree_node_t *find_session_(session_tree_node_t *node, uint host_ip) {
     while(true){
 
         if(node == NULL) {
@@ -63,8 +63,8 @@ static session_tree_node_t * find_session_(session_tree_node_t * node, uint host
         }
 
         uint cmp1, cmp2;
-        cmp1 = host_ip + port;
-        cmp2 = node->session->host_ip + node->session->port;
+        cmp1 = host_ip;
+        cmp2 = node->session->host_ip;
 
         if (cmp1 == cmp2) {
             return node;
@@ -78,16 +78,16 @@ static session_tree_node_t * find_session_(session_tree_node_t * node, uint host
     }
 }
 
-session_tree_node_t * delete_session_(session_tree_node_t * node, uint ip, uint port) {
+session_tree_node_t *delete_session_(session_tree_node_t *node, uint ip) {
     if (root == NULL)
         return root;
 
-    int cmp1 = ip + port, cmp2 = node->session->host_ip + node->session->port;
+    int cmp1 = ip, cmp2 = node->session->host_ip;
 
     if (cmp1 < cmp2) {
-        root->left = delete_session_(root->left, ip, port);
+        root->left = delete_session_(root->left, ip);
     } else if (cmp1 > cmp2) {
-        root->right = delete_session_(root->right, ip, port);
+        root->right = delete_session_(root->right, ip);
     } else {
         if (root->left == NULL) {
             session_tree_node_t * temp = root->right;
@@ -103,7 +103,7 @@ session_tree_node_t * delete_session_(session_tree_node_t * node, uint ip, uint 
 
         root->session = temp->session;
 
-        root->right = delete_session_(root->right, ip, port);
+        root->right = delete_session_(root->right, ip);
     }
     return root;
 }

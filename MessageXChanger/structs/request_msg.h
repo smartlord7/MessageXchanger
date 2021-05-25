@@ -16,8 +16,9 @@ typedef enum request_method {
 typedef struct request_msg_t {
     request_method method;
     char user_name[LARGE_SIZE],
-         message[LARGEST_SIZE];
-    char hash[SMALL_SIZE];
+         message[LARGEST_SIZE],
+         hash[SMALL_SIZE];
+    int flags : 3;
 
 } request_msg_t;
 

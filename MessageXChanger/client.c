@@ -55,11 +55,12 @@ int authenticate_client(){
         return EXIT_FAILURE;
     }
 
-    password[strlen(password) - 1] = '\0';
+    strtok(username, "\n");
+    strtok(password, "\n");
 
     request.method = REQ_LOGIN;
     strcpy(request.user_name,username);
-    strcpy(request.hash, (crypt(trim_string(password), PASSWORD_HASH_OPT)));
+    strcpy(request.hash, (crypt(password, PASSWORD_HASH_OPT)));
 
     udp_send_msg(server_fd, &server, (char *) &request, (size_t) sizeof(request_msg_t));
 
@@ -192,6 +193,8 @@ void active_direct_chat(sockaddr_in destination, int mode) {
 
 
 
+
+        strtok(request.user_name, "\n");
 
     } else {
 
